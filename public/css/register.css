@@ -1,0 +1,186 @@
+/* CSS: login.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+/* Container for the entire page */
+.container {
+   
+    display: flex;
+    width: 100%; /* Full width of the viewport */
+    height: 100%; /* Full height of the viewport */
+   
+}
+
+.Containerforgraphic{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh; /* Full viewport height */
+    background-color: #5c9fe6; /* Same background color as before */
+    
+}
+
+/* Left section for the form */
+.left-section {
+    flex: 1; /* Allows this section to dynamically resize */
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 {
+    color: #000000;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #000000;
+}
+
+h3 {
+    display: flex;
+    justify-content: space-between;  /*buat dia ade space in between*/
+    font-size: 16px;
+    color: #333;
+    margin: 10px 0;
+}
+
+h3 a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+h3 a:hover {
+    text-decoration: underline;
+}
+
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+input[type="file"]{
+    padding:13px;
+    margin-bottom:30px;
+    font-size:14px;
+    background-color: #f9f9f9;
+    color:#333;
+    cursor:pointer;
+}
+
+input[type="file"]::-webkit-file-upload-button{
+    background-color: #0077ff;
+    color:white;
+    border:none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight:bold;
+    transition: background-color 0.3;
+}
+
+input[type="file"]::-webkit-file-upload-button::hover{
+    background-color: #00aeff;
+}
+
+#forgot{
+    display:flex;
+}
+
+#new{
+    display:flex;
+}
+
+input[type="submit"] {
+    margin-top:20px;
+    background-color: #0077ff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 14px;
+
+}
+
+input[type="submit"]:hover {
+    background-color: #00aeff;
+}
+
+.left-section a {
+    text-align: center;
+    color: #4a90e2;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.left-section a:hover {
+    text-decoration: underline;
+}
+
+/* Right section for the graphic */
+.right-section {
+    width: 100%; /* Full width of its container */
+    height: 100%; /* Full height of its container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.right-section img {
+    width: 80%; /* Fixed width for the image */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: contain; /* Ensure the image fits nicely within its container */
+}
+
+.name-fields {
+    display: flex;
+    justify-content: space-between; /* Adds space between the fields */
+    gap: 50px; /* Optional spacing between the fields */
+}
+
+.field {
+    display: flex;
+    flex-direction: column; /* Stacks label above input */
+    flex: 1; /* Ensures equal width for both fields */
+}
+
+select{
+    width: 104%;
+    padding: 13px;
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 14px;
+}

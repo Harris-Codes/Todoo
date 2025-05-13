@@ -1,0 +1,323 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+:root {
+  /* ===== Colors ===== */
+  --body-color: #f1f4fa;
+  --sidebar-color: #FFF;
+  --primary-color: #4a90e2;
+  --primary-color-light: #F6F5FF;
+  --toggle-color: #DDD;
+  --text-color: #707070;
+  --todoo-color:#ffc21b;
+
+  /* ====== Transition ====== */
+  --tran-03: all 0.2s ease;
+  --tran-03: all 0.3s ease;
+  --tran-04: all 0.3s ease;
+  --tran-05: all 0.3s ease;
+}
+.home{
+    height: 100vh; /* Ensures the full viewport height */
+    display: flex;
+    flex-direction: column;
+    color:white;
+}
+
+
+
+.creation-header{
+    background-color: var(--todoo-color);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color:white;
+    font-size: 40px;
+}
+
+.creation-main{
+    flex-grow: 1; /* Allows it to take remaining space */
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary-color);
+    
+}
+
+.creation-mainheader {
+    display: flex;
+    background-color: var(--primary-color-light);
+    height: 90px;
+    align-items: center;
+    justify-content: space-between; /* Ensures left and right sections align properly */
+    padding: 0 20px; /* Adds space inside the header */
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    gap: 20px;
+}
+
+/* Add Notes, Timer, and Points Buttons */
+.add-notes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: var(--primary-color);
+    padding: 15px 25px;
+    gap: 10px;
+    font-size: 18px;
+    border-radius: 50px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border:2px solid var(--todoo-color);
+}
+
+.add-notes:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Icons */
+.add-notes .icons {
+    font-weight: bold;
+    font-size: 22px;
+    color: var(--todoo-color);
+}
+
+/* Dropdown Content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 5px;
+    z-index: 10;
+}
+
+.dropdown-content label {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--text-color);
+    display: block;
+    margin-bottom: 5px;
+}
+
+.dropdown-content select {
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid var(--primary-color);
+}
+
+/* Positioning Dropdown */
+.button-timer, .button-points {
+    position: relative;
+}
+
+.button-timer .dropdown-content,
+.button-points .dropdown-content {
+    left: 0;
+    top: 50px;
+    min-width: 150px;
+}
+
+/* Show dropdown on hover */
+.button-timer:hover .dropdown-content,
+.button-points:hover .dropdown-content {
+    display: block;
+}
+
+/* Right-side buttons (Save & Add Question) */
+.right-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+/* Save & Add Question Buttons */
+.save-btn, .add-question-btn, .publish-btn {
+    display: flex;
+    align-items: center;
+    
+    background-color: white;
+    color: var(--primary-color);
+    padding: 15px 20px;
+    font-size: 18px;
+    border-radius: 50px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border:1px solid var(--todoo-color);
+}
+
+
+.save-btn:hover, .add-question-btn:hover, .publish-btn:hover {
+    background-color: var(--primary-color);
+    color:white;
+}
+
+.save-btn i, .add-question-btn i, .publish-btn i {
+    font-size: 22px;
+    margin-right: 10px;
+    color:var(--todoo-color);
+}
+
+
+.question-container{
+    
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width:80%;
+    height:300px;
+    margin: 100px auto;
+    background-color: white;
+    border:1px solid var(--primary-color);
+    border-radius: 20px;
+    color:black;
+
+    
+}
+
+.question{
+    font-size: 30px;
+
+}
+
+.answer-container{
+    
+    flex-grow: 1; /* to make it grow and fill the remaining space */
+    display: flex;
+    padding: 10px;
+    width: 100%;
+    
+    gap: 50px;
+    align-items: center;
+}
+
+
+.answers{
+    position: relative; /* Make sure the checkmark stays within the box */
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 30px;
+    background-color: white;
+    height:100%;
+    width:100%;
+    padding: 20px; /* Prevent content from being too tight */
+    color:white
+}
+
+.answers:nth-child(1){
+    background-color: #fc5050	;
+}
+
+.answers:nth-child(2){
+    background-color: #FFAEC9;
+}
+
+.answers:nth-child(3){
+    background-color: #D1A3FF;
+}
+.answers:nth-child(4){
+    background-color: #B4E471;
+}
+
+.answers i {
+    position:absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 40px;
+    cursor: pointer;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+/* Style for checked state */
+.answers i.checked {
+    color: rgb(17, 209, 0);
+}
+
+
+
+/*================= ARROW PREV/NEXT ===============*/
+
+.question-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.question-navigation button {
+    background: var(--todoo-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.question-navigation button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.question-navigation button:hover:not(:disabled) {
+    background: var(--todoo-color);
+}
+
+/*====================================INPUTS===============================*/
+#quiz-title {
+    width: 100%;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    border: none;
+    background: transparent;
+    outline: none;
+    color: white;
+    padding: 10px;
+}
+
+#question-input {
+    
+    width: 100%;
+    padding: 15px;
+    font-size: 22px;
+    text-align: center;
+    border-radius: 10px;
+    border: none; /* Removes the border */
+    background: transparent; /* Makes it blend into the container */
+    outline: none; /* Prevents a border appearing when clicked */
+    color: black; /* Ensures text is visible */
+   
+   
+}
+
+.answer-input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 18px;
+    text-align: center;
+    color:white;
+}
