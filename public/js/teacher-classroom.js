@@ -179,20 +179,31 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-//==================== ASSIGNMENT TABLE/DELLETE=====================
-document.addEventListener("DOMContentLoaded", function () {
-  // Handle Delete Button Clicks
-  document.querySelectorAll(".delete-button").forEach(button => {
-      button.addEventListener("click", function () {
-          const row = this.closest("tr");
-          if (confirm("Are you sure you want to delete this assignment?")) {
-              row.remove(); // Remove the row from the table
-          }
-      });
-  });
+//==================== ASSIGNMENT TABLE/Edit=====================
+document.querySelectorAll(".edit-button").forEach(button => {
+    button.addEventListener("click", function () {
+        const id = this.dataset.id;
+        const title = this.dataset.title;
+        const due = this.dataset.date;
+        const desc = this.dataset.desc;
 
- 
+        // Open modal
+        document.getElementById("addAssignmentModal").style.display = "flex";
+
+        // Fill the form
+        document.getElementById("assignmentTitle").value = title;
+        document.getElementById("assignmentDue").value = due;
+        document.getElementById("assignmentDesc").value = desc;
+
+        // Set form action to the update route
+        const form = document.getElementById("assignmentForm");
+        form.action = `/assignments/${id}`; // or use a Laravel route helper if passing via JS
+
+        // Set method to PUT
+        document.getElementById("assignmentMethod").value = "PUT";
+    });
 });
+
 
 
 
@@ -225,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Handle form submission
   form.addEventListener("submit", function (event) {
-      event.preventDefault();
+      
 
       // Get form values
       const title = document.getElementById("assignmentTitle").value;

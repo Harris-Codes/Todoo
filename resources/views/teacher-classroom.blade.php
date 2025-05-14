@@ -58,209 +58,87 @@
 
 
             <table class="assignment-table">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Due</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-desc="Draw the national flag of Malaysia with accurate colors and proportions.">
-                        <td>Lukis Bendera Malaysia</td>
-                        <td>Feb 5, 2025</td>
-                        <td>
-                            <div class="action-buttons">
-                              <button class="view-button"><i class='bx bx-detail' ></i></button>
-                              <button class="delete-button"><i class='bx bx-trash' ></i></button>
-                          </div>
-                        </td>
-                    </tr>
-
-                    <tr data-desc="Write an essay about your best vacation.">
-                        <td>Karangan</td>
-                        <td>Feb 12, 2025</td>
-                        <td>
+                @foreach ($classroom->assignments as $assignment)
+                <tr>
+                    <td>{{ $assignment->title }}</td>
+                    <td>{{ \Carbon\Carbon::parse($assignment->due_date)->format('M d, Y') }}</td>
+                    <td>
                         <div class="action-buttons">
-                        <button class="view-button"><i class='bx bx-detail' ></i></button>
-                              <button class="delete-button"><i class='bx bx-trash' ></i></button>
-                          </div>
-                        </td>
-                    </tr>
+                            <!--Edit Button-->
+                            <button class="edit-button" 
+                                    data-id="{{ $assignment->id }}"
+                                    data-title="{{ $assignment->title }}"
+                                    data-date="{{ $assignment->due_date }}"
+                                    data-desc="{{ $assignment->description }}">
+                                <i class='bx bx-edit'></i>
+                            </button>
+                            <!--View Button-->
+                            <button class="view-button"><i class='bx bx-detail'></i></button>
+                            <!--Delete Button-->
+                            <form method="POST" action="{{ route('assignments.destroy', $assignment->id) }}" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button class="delete-button"><i class='bx bx-trash'></i></button>
+                            </form>
 
-                    <tr data-desc="Answer the grammar exercises in the textbook.">
-                        <td>Tatabahasa</td>
-                        <td>Feb 20, 2025</td>
-                        <td>
-                        <div class="action-buttons">
-                        <button class="view-button"><i class='bx bx-detail' ></i></button>
-                              <button class="delete-button"><i class='bx bx-trash' ></i></button>
-                          </div>
-                        </td>
-                    </tr>
-
-                    <tr data-desc="Draw and color your state flag.">
-                        <td>Lukis Bendera Negeri</td>
-                        <td>Feb 20, 2025</td>
-                        <td>
-                        <div class="action-buttons">
-                        <button class="view-button"><i class='bx bx-detail' ></i></button>
-                              <button class="delete-button"><i class='bx bx-trash' ></i></button>
-                          </div>
-                        </td>
-                    </tr>
-                </tbody>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
             </table>
           </div>
-
-
       </div>
       
-
-
-
 
         <!-------------------------- POST SECTION ------------------>
         <div class = "post-section">
           <!--------------------- CREATE POST ---------------------->
           <div class="create-post-container">
-              <div class="post-input" id="postInputContainer">
-              <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile Picture" class="profile-pic">
-                  <input type="text" id="postInput" placeholder="Announce something to your class" onclick="expandPost()">
-              </div>
-
-              <div class="post-expanded" id="postExpanded" style="display: none;">
-                  <textarea id="postTextArea" placeholder="Announce something to your class"></textarea>
-                  
-                  <div class="post-actions">
-                    <a href="{{ url('create-quiz') }}" class="quiz-button">
-                      <i class='bx bx-task'></i> Create Quiz
-                    </a>
-                      <div class="post-btn-group">
-                          <button class="cancel-button" onclick="cancelPost()">Cancel</button>
-                          <button class="post-button" onclick="submitPost()">Post</button>
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-          <!--post 1 content from teachers-->
-          <div class ="discussion-container">
-            
-            <!------------------- User Info ---------------->
-            <div class = "user-info">
-                <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile Picture" class="profile-pic">
-
-                <div class = "user-details">
-                    <span class ="user-name">Fatimah Rosli</span>
-                    <br>
-                    <span class ="post-time"> 28/1/2025 </span>
-                </div>
-            </div>
-
-            <!----------------------- Post Content ---------------------------------->
-            <div class ="post-content">
-                <h3> Kuiz 1 </h3>
-                <p> Salam Sejahtera murid-murid, berikut adalah kuiz 1. Boleh tekan dan jawab. Good luck!</p>
-
-                <!------------------------- Clickable Quiz Box --------------->
-                <a href="{{ url('quiz') }}" class="quiz-box">
-                    <div class="quiz-icon">
-                        <i class='bx bx-task'></i>
+                <form action="{{ route('posts.store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="classroom_id" value="{{ $classroom->id }}">
+                    
+                    <div class="post-input" onclick="expandPost()">
+                        <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" class="profile-pic" alt="Profile Picture">
+                        <input type="text" id="postInput" placeholder="Announce something to your class">
                     </div>
-                    <div class="quiz-text">
-                        <h4>Quiz 1</h4>
-                        <p>Click to start</p>
+
+                    <div class="post-expanded" id="postExpanded" style="display: none;">
+                        <textarea name="content" required placeholder="Announce something to your class"></textarea>
+                        <div class="post-actions">
+                            <div class="post-btn-group">
+                                <button type="button" class="cancel-button" onclick="cancelPost()">Cancel</button>
+                                <button type="submit" class="post-button">Post</button>
+                            </div>
+                        </div>
                     </div>
-                </a>
+                </form>
             </div>
 
-            <!-- Reply Section -->
-            <div class="reply-section">
-                <button class="reply-btn" id="replyBtn">
-                    <i class='bx bx-message'></i> Reply
-                </button>
-
-                <!-- Hidden Reply Input -->
-                <div class="reply-input-container" id="replyInputContainer">
-                    <input type="text" id="replyInput" placeholder="Reply..." />
-                    <button id="sendReplyBtn"><i class='bx bx-send'></i></button>
-                </div>
-            </div>
-
-
-            <!-- Comment Input (Initially Hidden) -->
-            <div class="reply-input-container" id="replyInputContainer" style="display: none;">
-                <input type="text" id="replyInput" class="reply-input" placeholder="Reply...">
-                <button class="send-reply-btn" id="sendReplyBtn">
-                  <i class="bx bx-send"></i>
-                </button>
-              </div>
-
-              <!-- Comments List -->
-              <div class="comment-list" id="commentList">
-                <!-- User Replies Will Appear Here -->
-              </div>
-
-          </div>
-          <!--post 2 content from teachers-->
-          <div class ="discussion-container">
-            
-            <!----Post Content -->
-              <div class = "user-info">
-                <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile Picture" class="profile-pic">
-
-                <div class = "user-details">
-                    <span class ="user-name">Fatimah Rosli</span>
-                    <br>
-                    <span class ="post-time"> 28/1/2025 </span>
-                </div>
-              </div>
-
-                
-                <div class ="post-content">
-                  <h3> Cuti sambutan Tahun Baru Cina </h3>
-                  <p> Harap maklum tiada kelas pada 29/1/2025 kerana cuti tahun baru cina. Terima Kasih. </p>
-
+            @foreach ($classroom->posts->sortByDesc('created_at') as $post)
+            <div class="discussion-container">
+                <!-- User Info -->
+                <div class="user-info">
+                    <img src="{{ asset('storage/' . $post->user->profile_picture) }}" alt="Profile Picture" class="profile-pic">
+                    <div class="user-details">
+                        <span class="user-name">{{ $post->user->name }}</span><br>
+                        <span class="post-time">{{ $post->created_at->format('d/m/Y') }}</span>
+                    </div>
                 </div>
 
-                <!-- reply section -->
+                <!-- Post Content -->
+                <div class="post-content">
+                    <p>{{ $post->content }}</p>
+                </div>
+
+                <!-- Reply Section -->
                 <div class="reply-section">
                     <button class="reply-btn">
                         <i class='bx bx-message'></i> Reply
                     </button>
                 </div>
-
-          </div>
-          <!--post 3 content from teachers-->
-          <div class ="discussion-container">
-            
-            <!----Post Content -->
-              <div class = "user-info">
-                <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile Picture" class="profile-pic">
-                <div class = "user-details">
-                    <span class ="user-name">Fatimah Rosli</span>
-                    <br>
-                    <span class ="post-time"> 28/1/2025 </span>
-                </div>
-              </div>
-
-                
-                <div class ="post-content">
-                  <h3> Cuti sambutan Tahun Baru Cina </h3>
-                  <p> Harap maklum tiada kelas pada 29/1/2025 kerana cuti tahun baru cina. Terima Kasih. </p>
-
-                </div>
-
-                <!-- reply section -->
-                <div class="reply-section">
-                    <button class="reply-btn">
-                        <i class='bx bx-message'></i> Reply
-                    </button>
-                </div>
-
-          </div>
-        </div>
+            </div>
+@endforeach
 
 
 
@@ -290,33 +168,21 @@
 
           <!-- File Table -->
           <table class="file-table">
-              <thead>
-                  <tr>
-                      <th>Name</th>
-                      <th>Modified</th>
-                      <th>Modified By</th>
-                      <th>Actions</th>
-                  </tr>
-              </thead>
-              <tbody id="fileTableBody">
-                  <tr id="noFilesRow">
-                      <td colspan="4">No files uploaded yet...</td>
-                  </tr>
-              </tbody>
-          </table>
+          @if ($classroom->files)
+                @foreach ($classroom->files as $file)
+                    <tr>
+                        <td>{{ $file->file_name }}</td>
+                        <td>{{ $file->created_at->diffForHumans() }}</td>
+                        <td>{{ $file->uploader->name ?? 'Unknown' }}</td>
+                        <td>
+                            <a href="{{ asset('storage/' . $file->file_path) }}" target="_blank">View</a>
+                        </td>
+                    </tr>
+                @endforeach
+            @else
+                <tr><td colspan="4">No files found.</td></tr>
+            @endif
 
-            <!-- Folder Content (Hidden Initially) -->
-          <div id="folderContents" style="display: none;">
-            <button onclick="goBack()">⬅ Back</button>
-            <h3>Inside <span id="currentFolderName"></span></h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>File Name</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="folderFiles"></tbody>
             </table>
           </div>
       </div>
@@ -422,64 +288,66 @@
             <span class="close-btn" id="closeAddAssignment">&times;</span>
             <h2>NEW ASSIGNMENT</h2>
 
-            <form id="assignmentForm">
+            <form id="assignmentForm" method="POST" enctype="multipart/form-data">
+                 @csrf
+                <input type="hidden" id="assignmentMethod" name="_method" value="POST">
+                <input type="hidden" name="classroom_id" value="{{ $classroom->id }}">
+
                 <!-- Assignment Title -->
                 <label for="assignmentTitle">Title</label>
-                <input type="text" id="assignmentTitle" required>
+                <input type="text" id="assignmentTitle" name="title" required>
 
                 <!-- Due Date -->
                 <label for="assignmentDue">Due Date</label>
-                <input type="date" id="assignmentDue" required>
+                <input type="date" id="assignmentDue" name="due_date" required>
 
                 <!-- Description -->
                 <label for="assignmentDesc">Description</label>
-                <textarea id="assignmentDesc" required></textarea>
+                <textarea id="assignmentDesc" name="description" required></textarea>
 
                 <!-- Upload Section -->
                 <div class="upload-section">
-                      <!-- Flex Container for Button & File Name -->
-                      <div class="file-upload-container">
-                          <!-- Hidden File Input -->
-                          <input type="file" id="fileInput" style="display: none;" />
+                    <div class="file-upload-container">
+                        <!-- Hidden File Input -->
+                        <input type="file" name="file" id="fileInput" style="display: none;" />
 
-                          <!-- Custom Upload Button -->
-                          <button id="uploadButton">
-                              <svg
-                                  aria-hidden="true"
-                                  stroke="currentColor"
-                                  stroke-width="2"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                              >
-                                  <path
-                                      stroke-width="2"
-                                      stroke="#ffffff"
-                                      d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
-                                      stroke-linejoin="round"
-                                      stroke-linecap="round"
-                                  ></path>
-                                  <path
-                                      stroke-linejoin="round"
-                                      stroke-linecap="round"
-                                      stroke-width="2"
-                                      stroke="#ffffff"
-                                      d="M17 15V18M17 21V18M17 18H14M17 18H20"
-                                  ></path>
-                              </svg>
-                              ADD FILE
-                          </button>
+                        <!-- Custom Upload Button -->
+                        <button type="button" id="uploadButton">
+                            <svg
+                                aria-hidden="true"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    stroke-width="2"
+                                    stroke="#ffffff"
+                                    d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                                    stroke-linejoin="round"
+                                    stroke-linecap="round"
+                                ></path>
+                                <path
+                                    stroke-linejoin="round"
+                                    stroke-linecap="round"
+                                    stroke-width="2"
+                                    stroke="#ffffff"
+                                    d="M17 15V18M17 21V18M17 18H14M17 18H20"
+                                ></path>
+                            </svg>
+                            ADD FILE
+                        </button>
 
-                      <!-- Display Selected File Name -->
-                      <span id="fileNameDisplay" class="file-name">No file chosen</span>
-
-                  </div>
-              </div>
-
+                        <!-- Display Selected File Name -->
+                        <span id="fileNameDisplay" class="file-name">No file chosen</span>
+                    </div>
+                </div>
 
                 <!-- Submit Button -->
                 <button type="submit" class="submit-button">Add Assignment</button>
             </form>
+
         </div>
     </div>
 
@@ -531,17 +399,19 @@
               <button class="cancel-folder-btn" onclick="closeFolderModal()">Cancel</button>
           </div>
 
+        </div>
     </div>
-</div>
 
-<!-- Hidden File Upload Input -->
-<input type="file" id="fileInput" style="display: none;">
+    <!-- Hidden File Upload Input -->
+    <input type="file" id="fileInput" style="display: none;">
     
 </section>
 
-</body>
 <!-- JavaScript file -->
 <script src="{{ asset('js/teacher-classroom.js') }}"></script>
+
+</body>
+
 
 
 </html>

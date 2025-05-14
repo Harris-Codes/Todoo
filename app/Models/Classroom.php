@@ -19,4 +19,26 @@ class Classroom extends Model
         return $this->belongsTo(User::class, 'teacher_id');
     }
 
+    public function posts(){
+
+        return $this->hasMany(Post::class);
+        
+    }
+
+    public function assignments(){
+        return $this->hasMany(Assignment::class);
+    }
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
+
+
+    public function students(){
+        return $this ->belongsToMany(User::class,'classroom_user');
+    }
+
+
+
 }

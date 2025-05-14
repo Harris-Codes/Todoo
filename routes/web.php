@@ -72,6 +72,9 @@ Route::get('/create-quiz', function () {
 //=================================Controllers====================================
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\TeacherClassroomController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\AssignmentController;
 
 //Login and Logout
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -87,7 +90,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/teacher', [ClassroomController::class, 'index'])->name('teacher.dashboard');
     Route::post('/classroom/create', [ClassroomController::class, 'store'])->name('classroom.store');
     Route::delete('/classroom/{id}', [ClassroomController::class, 'destroy'])->name('classroom.destroy');
-
+    
 });
+
 Route::get('/classroom/{id}', [ClassroomController::class, 'show'])->name('classroom.show');
 
+Route::get('/teacher/classroom/{id}', [TeacherClassroomController::class, 'show'])->name('teacher.classroom');
+//Post
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
+//Assignment
+Route::post('/assignments', [AssignmentController::class, 'store'])->name('assignments.store');
+
+//Assignment-delete
+Route::delete('/assignments/{assignment}', [AssignmentController::class, 'destroy'])->name('assignments.destroy');
+
+//Assignment-edit
+Route::put('/assignments/{assignment}', [AssignmentController::class, 'update'])->name('assignments.update');
