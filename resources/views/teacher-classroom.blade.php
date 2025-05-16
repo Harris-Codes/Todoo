@@ -288,8 +288,8 @@
             <span class="close-btn" id="closeAddAssignment">&times;</span>
             <h2>NEW ASSIGNMENT</h2>
 
-            <form id="assignmentForm" method="POST" enctype="multipart/form-data">
-                 @csrf
+            <form id="assignmentForm" method="POST" action="{{ route('assignments.store') }}" enctype="multipart/form-data">
+                @csrf
                 <input type="hidden" id="assignmentMethod" name="_method" value="POST">
                 <input type="hidden" name="classroom_id" value="{{ $classroom->id }}">
 

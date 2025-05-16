@@ -219,7 +219,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Open modal
   openBtn.addEventListener("click", function () {
-      modal.style.display = "flex";
+    modal.style.display = "flex";
+
+    // Reset form fields
+    form.reset();
+
+    // Set to CREATE route
+    form.action = "/assignments"; // Or use a Blade route if rendering in-line
+
+    // Reset method to POST
+    document.getElementById("assignmentMethod").value = "POST";
   });
 
   // Close modal when clicking the close button
