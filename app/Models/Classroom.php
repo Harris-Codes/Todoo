@@ -35,10 +35,15 @@ class Classroom extends Model
     }
 
 
-    public function students(){
-        return $this ->belongsToMany(User::class,'classroom_user');
+    public function students()
+    {
+        return $this->belongsToMany(User::class)
+                    ->using(ClassroomUser::class) // <- This line tells Laravel to use your pivot model
+                    ->withPivot('role')           // optional: include extra pivot columns
+                    ->withTimestamps();
     }
+    
 
-
+    
 
 }

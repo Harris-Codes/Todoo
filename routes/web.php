@@ -75,7 +75,7 @@ use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\TeacherClassroomController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AssignmentController;
-
+//------------------------------------Login Page------------------------------
 //Login and Logout
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -85,7 +85,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/register', [AuthController::class, 'showRegisterForm']);
 Route::post('/register', [AuthController::class, 'register']);
 
-//Classroom
+//-----------------------------------Classroom----------------------------------
 Route::middleware('auth')->group(function () {
     Route::get('/teacher', [ClassroomController::class, 'index'])->name('teacher.dashboard');
     Route::post('/classroom/create', [ClassroomController::class, 'store'])->name('classroom.store');
@@ -107,3 +107,8 @@ Route::delete('/assignments/{assignment}', [AssignmentController::class, 'destro
 
 //Assignment-edit
 Route::put('/assignments/{assignment}', [AssignmentController::class, 'update'])->name('assignments.update');
+
+//Adding Student into the classroom (Student Tab)
+Route::post('/classrooms/{classroom}/students', [TeacherClassroomController::class, 'addStudent'])->name('classroom.addStudent');
+//Delete Student from the classroom (Student Tab)
+Route::delete('/classrooms/{classroom}/students/{student}', [TeacherClassroomController::class, 'removeStudent'])->name('classroom.removeStudent');

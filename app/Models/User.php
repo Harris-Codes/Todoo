@@ -48,9 +48,21 @@ class User extends Authenticatable
         ];
     }
 
-    public function classrooms()
+    // For Teachers: Classrooms they created.
+    public function classesCreated()
     {
         return $this->hasMany(Classroom::class, 'teacher_id');
     }
+
+
+    // For students: classroom they joined
+    public function classrooms()
+    {
+        return $this->belongsToMany(Classroom::class, 'classroom_user')
+                    ->using(\App\Models\ClassroomUser::class) // only if you use a custom pivot model
+                    ->withPivot('role')
+                    ->withTimestamps();
+    }
+
 
 }

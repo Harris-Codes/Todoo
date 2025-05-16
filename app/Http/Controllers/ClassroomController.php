@@ -9,7 +9,7 @@ class ClassroomController
 {
     public function index()
     {
-        $classes = auth()->user()->classrooms; // only classes by logged-in teacher
+        $classes = auth()->user()->classesCreated; // only classes by logged-in teacher
         return view('teacher', compact('classes'));
     }
     

@@ -370,33 +370,7 @@ document.addEventListener("DOMContentLoaded", function () {
         studentEmailInput.value = ""; // Clear input field after closing
     };
 
-    // Add a new student
-    window.addStudent = function (event) {
-        event.preventDefault(); // Prevent default form submission
 
-        let studentEmail = studentEmailInput.value.trim();
-
-        if (studentEmail !== "") {
-            let newRow = document.createElement("tr");
-            newRow.innerHTML = `
-                <td>
-                    <div class="student-info">
-                        <img src="/images/student-boy.png" class="student-pic">
-                        <span class="student-name">${studentEmail.split('@')[0]}</span> <!-- Extract name -->
-                    </div>
-                </td>
-                <td>${studentEmail}</td>
-                <td>
-                    <button class="delete-student"><i class='bx bx-trash'></i> Remove</button>
-                </td>
-            `;
-
-            studentTableBody.appendChild(newRow);
-            closeStudentModal(); // Close modal after adding student
-        } else {
-            alert("Please enter a valid email!");
-        }
-    };
 
     // Remove student from list
     studentTableBody.addEventListener("click", function (event) {

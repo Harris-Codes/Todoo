@@ -250,35 +250,38 @@
     <!------ STUDENT TAB------->
 
     <div id="students" class="tab-content">
-    <button class="add-student-btn" onclick="openStudentModal()">
-          <i class='bx bxs-user-plus'></i> Add Student
-      </button>
-      <h3>Students List</h3>
-      <table class="student-table">
-        <!-- Add Student Button -->
-      
-          <thead>
-              <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Remove</th>
-              </tr>
-          </thead>
-          <tbody id="studentList">
-              <tr>
-                  <td>John Doe</td>
-                  <td>john@email.com</td>
-                  <td><button class="delete-student"><i class='bx bx-trash'></i></button></td>
-              </tr>
-              <tr>
-                  <td>Jane Smith</td>
-                  <td>jane@email.com</td>
-                  <td><button class="delete-student"><i class='bx bx-trash'></i></button></td>
-              </tr>
-          </tbody>
-      </table>
+        <button class="add-student-btn" onclick="openStudentModal()">
+            <i class='bx bxs-user-plus'></i> Add Student
+        </button>
 
-      
+        <h3>Students List</h3>
+            <table class="student-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($classroom->students as $student)
+                        <tr>
+                            <td>photo</td>
+                            <td>{{ $student->name }}</td>
+                            <td>{{ $student->email }}</td>
+                            <td>
+                            <form method="POST" action="{{ route('classroom.removeStudent', [$classroom->id, $student->id]) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="delete-student"><i class='bx bx-trash'></i></button>
+                            </form>
+
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+            </table>
   </div>
 
 
@@ -357,10 +360,9 @@
         <span class="close-btn" onclick="closeStudentModal()">&times;</span>
         <h2>Add New Student</h2>
 
-        <form id="addStudentForm">
-            <label for="studentEmail">Email</label>
-            <input type="email" id="studentEmail" required>
-
+        <form id="addStudentForm" method ="POST" action="{{ route('classroom.addStudent',$classroom->id) }}">
+            @csrf
+            <input type="email" name="email" required placeholder ="Student's Email">
             <button type="submit" class="submit-button">Add Student</button>
         </form>
     </div>
