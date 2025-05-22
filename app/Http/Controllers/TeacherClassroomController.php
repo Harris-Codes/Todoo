@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Classroom;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+use App\Models\File;
 
 class TeacherClassroomController
 {
@@ -22,6 +24,8 @@ class TeacherClassroomController
         return view('teacher-classroom', compact('classroom'));
     }
 
+
+    //Adding student to the classroom
     public function addStudent(Request $request, $classroomId){
         
         //make sure to validate the email

@@ -11,20 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasColumn('users', 'profile_picture')) {
-            Schema::table('users', function (Blueprint $table) {
-                $table->string('profile_picture')->nullable();
-            });
-        }
-    }
+        Schema::table('assignments', function (Blueprint $table) {
+            
+            $table->foreignId('user_id')->after('classroom_id')->constrained()->onDelete('cascade');
 
+        });
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('assignments', function (Blueprint $table) {
             //
         });
     }

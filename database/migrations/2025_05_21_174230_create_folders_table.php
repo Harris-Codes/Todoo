@@ -9,24 +9,25 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('assignments', function (Blueprint $table) {
+        Schema::create('folders', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description')->nullable();
-            $table->date('due_date')->nullable();
+            $table->string('name');
+            $table->string('color')->default('#4da6ff');
             $table->foreignId('classroom_id')->constrained()->onDelete('cascade');
+            $table->foreignId('folder_id')->nullable()->constrained()->onDelete('set null');
+
             $table->timestamps();
         });
+        
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('assignments');
+        Schema::dropIfExists('folders');
     }
 };

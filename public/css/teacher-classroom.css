@@ -949,7 +949,7 @@ button svg {
 }
 
 
-/*============= FILE PAGE ===============*/
+/*============= FILE TAb ===============*/
 /* Table Styling */
 .file-table {
   width: 100%;
@@ -969,6 +969,50 @@ button svg {
   font-size: 24px;
   font-weight: bold;
 }
+
+.file-upload-form {
+  margin: 20px 0;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.file-upload-form input[type="file"] {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  font-family: inherit;
+}
+
+.upload-btn {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #ffc21b;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+  gap: 8px;
+}
+
+.upload-btn:hover {
+  background-color: #e0a800;
+}
+
+
+.file-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap; /* allows wrapping on small screens */
+}
+
 
 .add-folder-btn {
   padding: 10px 15px;
@@ -1300,7 +1344,8 @@ form textarea {
 /* ========================== FILE TAB(ADDITIONAL FOR CREATING FOLDER)=================
 /* Modal Styling */
 .modal {
-  display: none; /* Ensures modal is hidden at the start */
+  display: flex; /* <-- make sure this is not "none" when active */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -1311,11 +1356,18 @@ form textarea {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  transition: all 0.3s ease;
 }
+
 
 
 /* Modal Content */
 .modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   background: white;
   padding: 20px;
   border-radius: 10px;
@@ -1323,6 +1375,19 @@ form textarea {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   width: 350px;
 }
+
+#folderName{
+  margin-top: 10px;
+}
+
+#createFolderButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;  /* This centers the content horizontally */
+  margin-top: 15px;          /* Optional: spacing from input */
+  align-self: center;        /* Ensures the button itself is centered in the flex container */
+}
+
 
 .modal .title{
   font-size:30px;

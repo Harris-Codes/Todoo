@@ -75,6 +75,8 @@ use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\TeacherClassroomController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\FolderController;
+use App\Http\Controllers\FileController;
 //------------------------------------Login Page------------------------------
 //Login and Logout
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -112,3 +114,21 @@ Route::put('/assignments/{assignment}', [AssignmentController::class, 'update'])
 Route::post('/classrooms/{classroom}/students', [TeacherClassroomController::class, 'addStudent'])->name('classroom.addStudent');
 //Delete Student from the classroom (Student Tab)
 Route::delete('/classrooms/{classroom}/students/{student}', [TeacherClassroomController::class, 'removeStudent'])->name('classroom.removeStudent');
+
+// ============================ FILE ROUTES ============================ //
+Route::prefix('classroom/{classroom}')->middleware('auth')->group(function () {
+    Route::post('/folders', [FolderController::class, 'store'])->name('folders.store');
+    Route::get('/folders/list', [FolderController::class, 'list'])->name('folders.list');
+    Route::get('/folders/{folder}/files', [FolderController::class, 'getFiles'])->name('folders.files');
+
+    Route::post('/files', [FileController::class, 'uploadToRoot'])->name('files.upload.root');
+    Route::get('/files/root', [FileController::class, 'listRootFiles'])->name('files.root');
+    Route::delete('/files/{file}', [FileController::class, 'destroy'])->name('files.delete');
+    Route::post('/folders/{folder}/files', [FileController::class, 'uploadToFolder'])->name('files.upload.folder');
+
+});
+
+
+Route::post('/classroom/{classroom}/folders/{folder}/files', [FileController::class, 'uploadToFolder'])
+    ->middleware('auth')
+    ->name('files.upload.folder');

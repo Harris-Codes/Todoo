@@ -5,6 +5,8 @@ const body = document.querySelector('body'),
   modeSwitch = body.querySelector(".toggle-switch"),
   modeText = body.querySelector(".mode-text");
 
+
+
 // Toggle sidebar visibility
 toggle.addEventListener("click", () => {
   sidebar.classList.toggle("close");
@@ -381,271 +383,271 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-//========================== CREATING FOLDER IN FILE TABS =============================
-document.addEventListener("DOMContentLoaded", function () {
-    const folderContainer = document.getElementById("folderContainer");
-    const addFolderBtn = document.querySelector(".add-folder-btn");
-    const fileInput = document.getElementById("fileInput");
-
-    // Function to add a new folder
-    addFolderBtn.addEventListener("click", function () {
-        folderModal.style.display = "flex"; // 
-
-        if (folderName) {
-            let newFolder = document.createElement("div");
-            newFolder.classList.add("folder");
-            newFolder.innerHTML = `
-                <i class="bx bx-folder"></i>
-                <span>${folderName}</span>
-                <button class="delete-folder">X</button>
-            `;
-
-            folderContainer.appendChild(newFolder);
-
-            // Add event listener to open folder
-            newFolder.addEventListener("click", function (event) {
-                if (!event.target.classList.contains("delete-folder")) {
-                    openFolder(folderName, newFolder);
-                }
-            });
-
-            // Add event listener to delete folder
-            newFolder.querySelector(".delete-folder").addEventListener("click", function (event) {
-                event.stopPropagation();
-                newFolder.remove();
-            });
-        }
-    });
-
-    // Function to open folder and add files
-    function openFolder(folderName, folderElement) {
-        let fileAction = confirm(`Open ${folderName}? Click "OK" to upload files.`);
-        if (fileAction) {
-            fileInput.click();
-            fileInput.onchange = function () {
-                const file = fileInput.files[0];
-                if (file) {
-                    let fileDiv = document.createElement("div");
-                    fileDiv.classList.add("file");
-                    fileDiv.innerHTML = `
-                        <span>${file.name}</span>
-                        <button class="delete-file">X</button>
-                    `;
-                    folderElement.appendChild(fileDiv);
-
-                    // Add delete file functionality
-                    fileDiv.querySelector(".delete-file").addEventListener("click", function () {
-                        fileDiv.remove();
-                    });
-                }
-            };
-        }
-    }
-});
+//=====================Files TAB=====================================================
 
 
-// =============================== file management =============================
-document.addEventListener("DOMContentLoaded", function () {
-    const folderModal = document.getElementById("folderModal");
-    const createFolderBtn = document.getElementById("createFolderBtn");
+function showMainFileTable() {
+    currentFolderId = null;
+    currentFolderName = null;
+    document.getElementById("folderTitle").innerText = "Files";
+    document.getElementById("backToMainTable").style.display = "none";
+
     const fileTableBody = document.getElementById("fileTableBody");
-    const fileInput = document.getElementById("fileInput");
-    let selectedColor = "#4da6ff"; // Default folder color
+    fileTableBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
 
-    // Open Folder Modal
-    document.getElementById("openFolderModal").addEventListener("click", function () {
-        folderModal.style.display = "flex";
-    });
+    let folders = [];
 
-    // Close Folder Modal
-    window.closeFolderModal = function () {
-        folderModal.style.display = "none";
-        document.getElementById("folderName").value = ""; // Clear input
-    };
+    console.log("🚀 Fetching folders...");
 
-    // Handle Folder Color Selection
-    document.querySelectorAll(".color-choice").forEach(choice => {
-        choice.addEventListener("click", function () {
-            selectedColor = this.getAttribute("data-color");
-            document.querySelectorAll(".color-choice").forEach(c => c.classList.remove("selected"));
-            this.classList.add("selected");
+    fetch(`/classroom/${classroomId}/folders/list`)
+        .then(res => {
+            console.log("📦 Folder response status:", res.status);
+            return res.json();
+        })
+        .then(folderList => {
+            console.log("📂 Folders:", folderList);
+            folders = folderList;
+        })
+        .catch(err => {
+            console.error("❌ Error fetching folders:", err);
+        })
+        .finally(() => {
+            console.log("📥 Now fetching root files...");
+
+            fetch(`/classroom/${classroomId}/files/root`)
+                .then(res => {
+                    console.log("📄 File response status:", res.status);
+                    return res.json();
+                })
+                .then(files => {
+                    console.log("📄 Files:", files);
+                    fileTableBody.innerHTML = "";
+
+                    if (folders.length === 0 && files.length === 0) {
+                        fileTableBody.innerHTML = "<tr><td colspan='4'>No folders or files found.</td></tr>";
+                        return;
+                    }
+
+                    folders.forEach(folder => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td><i class='bx bx-folder'></i> ${folder.name}</td>
+                            <td>-</td><td>-</td>
+                            <td>
+                                <button onclick="viewFolder(${folder.id}, '${folder.name}')">View</button>
+                            </td>`;
+                        fileTableBody.appendChild(row);
+                    });
+
+                    files.forEach(file => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td><i class='bx bx-file'></i> ${file.file_name}</td>
+                            <td>${file.modified_at}</td>
+                            <td>${file.modified_by}</td>
+                            <td> 
+                                <div style="display: flex; gap: 10px;">
+                                    <a href="/storage/${file.file_path}" target="_blank" class="view-button">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    </a>
+                                    <button type="button" class="delete-button" data-file-id="${file.id}">
+                                    <i class='bx bx-trash'></i>
+                                    </button>
+                                </div>
+                        </td>`;
+                        fileTableBody.appendChild(row);
+                    });
+                })
+                .catch(err => {
+                    console.error("❌ Error fetching root files:", err);
+                    fileTableBody.innerHTML = "<tr><td colspan='4'>Failed to load files.</td></tr>";
+                });
         });
-    });
-
-    // Create Folder
-    createFolderBtn.addEventListener("click", function () {
-        const folderName = document.getElementById("folderName").value.trim();
-        if (folderName === "") {
-            alert("Please enter a folder name.");
-            return;
-        }
-
-        // Hide "No files uploaded" message
-        document.getElementById("noFilesRow").style.display = "none";
-
-        // Create folder row
-        const newRow = document.createElement("tr");
-        newRow.innerHTML = `
-        <td>
-            <i class='bx bx-folder' style='color: ${selectedColor};'></i> ${folderName}
-        </td>
-        <td>-</td>
-        <td>-</td>
-        <td>
-            <button class="view-folder-btn" onclick="viewFolder('${folderName}')">
-                <i class='bx bx-folder-open'></i> View
-            </button>
-            <button class="delete-btn" onclick="deleteRow(this)">
-                <i class='bx bx-trash'></i> Delete
-            </button>
-        </td>
-    
-        `;
-
-        // Append to table
-        fileTableBody.appendChild(newRow);
-
-        // Close modal after creating folder
-        closeFolderModal();
-    });
-
-    const newRow = document.createElement("tr");
-    newRow.innerHTML = `
-        <td>
-            <i class='bx bx-folder' style='color: ${selectedColor};'></i> ${folderName}
-        </td>
-        <td>-</td>
-        <td>-</td>
-        <td>
-            <button class="view-folder-btn" onclick="viewFolder('${folderName}')">
-                <i class='bx bx-folder-open'></i> View
-            </button>
-            <button class="delete-btn" onclick="deleteRow(this)">
-                <i class='bx bx-trash'></i> Delete
-            </button>
-        </td>
-    `;
-
-
-    // Delete Row Function
-    window.deleteRow = function (button) {
-        button.closest("tr").remove();
-
-        // Show "No files uploaded" message if table is empty
-        if (fileTableBody.children.length === 1) {
-            document.getElementById("noFilesRow").style.display = "table-row";
-        }
-    };
-});
-
-
-//======================== VIEW BUTTON IN FOLDER =======================
-window.viewFolder = function (folderName) {
-    const fileTable = document.getElementById("fileTableBody");
-    const folderTitle = document.getElementById("folderTitle");
-    const backButton = document.getElementById("backToMainTable");
-
-    // Show "Back" button and update title
-    folderTitle.innerText = `📂 ${folderName}`;
-    backButton.style.display = "block";
-
-    // Clear the file table
-    fileTable.innerHTML = "";
-
-    // Example files inside the folder (replace with backend data later)
-    const files = [
-        { name: "Lesson_Plan.pdf", modified: "Feb 12, 2025", modifiedBy: "Teacher" },
-        { name: "Homework.docx", modified: "Feb 10, 2025", modifiedBy: "Teacher" },
-    ];
-
-    // Populate table with files inside the folder
-    files.forEach(file => {
-        let row = document.createElement("tr");
-        row.innerHTML = `
-            <td><i class='bx bx-file'></i> ${file.name}</td>
-            <td>${file.modified}</td>
-            <td>${file.modifiedBy}</td>
-            <td>
-                <button class="delete-btn" onclick="deleteRow(this)">
-                    <i class='bx bx-trash'></i> Delete
-                </button>
-            </td>
-        `;
-        fileTable.appendChild(row);
-    });
-};
+}
 
 
 
-// ============================== STORE THE INPUT FROM CREATE FOLDER ====================
-window.showMainFileTable = function () {
-    const fileTable = document.getElementById("fileTableBody");
-    const folderTitle = document.getElementById("folderTitle");
-    const backButton = document.getElementById("backToMainTable");
+function viewFolder(folderId, folderName) {
+    currentFolderId = folderId;
+    currentFolderName = folderName;
+    console.log("📁 Setting currentFolderId:", folderId);
 
-    // Hide "Back" button and reset title
-    folderTitle.innerText = "Files";
-    backButton.style.display = "none";
+    document.getElementById("folderTitle").innerText = `📂 ${folderName}`;
+    document.getElementById("backToMainTable").style.display = "inline-block";
 
-    // Load folders from localStorage
-    let folders = JSON.parse(localStorage.getItem("folders")) || [];
+    const fileTableBody = document.getElementById("fileTableBody");
+    fileTableBody.innerHTML = "";
 
-    console.log("Folders loaded:", folders); // Debugging log
+    fetch(`/classroom/${classroomId}/folders/${folderId}/files`)
+        .then(res => res.json())
+        .then(files => {
+            if (!files.length) {
+                fileTableBody.innerHTML = "<tr><td colspan='4'>No files in this folder.</td></tr>";
+                return;
+            }
 
-    fileTable.innerHTML = "";
-
-    if (folders.length === 0) {
-        fileTable.innerHTML = `<tr id="noFilesRow"><td colspan="4">No files uploaded yet...</td></tr>`;
-    } else {
-        folders.forEach(folder => {
-            let row = document.createElement("tr");
-            row.innerHTML = `
-                <td><i class='bx bx-folder' style='color: ${folder.color};'></i> ${folder.name}</td>
-                <td>-</td>
-                <td>-</td>
-                <td>
-                    <button class="view-folder-btn" onclick="viewFolder('${folder.name}')">
-                        <i class='bx bx-folder-open'></i> View
-                    </button>
-                    <button class="delete-btn" onclick="deleteFolder('${folder.name}', this)">
-                        <i class='bx bx-trash'></i> Delete
-                    </button>
-                </td>
-            `;
-            fileTable.appendChild(row);
+            files.forEach(file => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td><i class='bx bx-file'></i> ${file.file_name}</td>
+                    <td>${file.modified_at}</td>
+                    <td>${file.modified_by}</td>
+                    <td>
+                        <div style="display: flex; gap: 10px;">
+                            <a href="/storage/${file.file_path}" target="_blank" class="view-button">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                            <button type="button" class="delete-button" data-file-id="${file.id}">
+                            <i class='bx bx-trash'></i>
+                            </button>
+                        </div>
+                    </td>`;
+                fileTableBody.appendChild(row);
+            });
+            
         });
-    }
-};
+}
 
-document.addEventListener("DOMContentLoaded", function () {
-    showMainFileTable(); // Load stored folders when page loads
-});
-console.log("Stored folders:", JSON.parse(localStorage.getItem("folders")));
+function createFolder() {
+    const name = document.getElementById("folderName").value.trim();
+    const classroomId = document.getElementById("classroomMeta").dataset.classroomId;
+
+    if (!name) return alert("Enter a folder name");
+
+    fetch(`/classroom/${classroomId}/folders`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ name })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            closeFolderModal();
+            showMainFileTable();
+        } else {
+            alert("Folder creation failed.");
+        }
+    })
+    .catch(err => {
+        console.error("Folder creation error:", err);
+        alert("Something went wrong.");
+    });
+}
+
+
+function openFolderModal() {
+    document.getElementById("folderModal").style.display = "flex";
+}
+
+function closeFolderModal() {
+    document.getElementById("folderModal").style.display = "none";
+    document.getElementById("folderName").value = "";
+}
+
+function triggerUpload() {
+    const input = document.getElementById("uploadInput");
+    input.value = "";
+    input.click();
+
+    input.onchange = function () {
+        if (!input.files.length) return;
+
+        const formData = new FormData();
+        formData.append("file", input.files[0]);
+
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+
+        // ✅ Define the URL properly before using it
+        const url = currentFolderId
+            ? `/classroom/${classroomId}/folders/${currentFolderId}/files`
+            : `/classroom/${classroomId}/files`;
+
+        console.log("📤 Uploading to URL:", url);
+
+        fetch(url, {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-CSRF-TOKEN": token
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                if (currentFolderId) {
+                    viewFolder(currentFolderId, currentFolderName);
+                } else {
+                    showMainFileTable();
+                }
+            }
+        });
+    };
+}
 
 
 
 
-createFolderBtn.addEventListener("click", function () {
-    const folderName = document.getElementById("folderName").value.trim();
-    if (folderName === "") {
-        alert("Please enter a folder name.");
-        return;
-    }
 
-    // Get folders from localStorage
-    let folders = JSON.parse(localStorage.getItem("folders")) || [];
 
-    // Add the new folder to the array
-    folders.push({ name: folderName, color: selectedColor });
 
-    // Save updated folders list to localStorage
-    localStorage.setItem("folders", JSON.stringify(folders));
 
-    console.log("Folders after saving:", JSON.parse(localStorage.getItem("folders"))); // Debugging log
 
-    // Refresh file table
+window.addEventListener("DOMContentLoaded", function () {
+    // Automatically open the "posts" tab (or "files", if preferred)
+    const defaultTab = document.querySelector('.tab-link');
+    if (defaultTab) defaultTab.click(); 
+  });
+  
+
+
+let classroomId = null;
+let currentFolderId = null;
+let currentFolderName = null;
+
+document.addEventListener("DOMContentLoaded", () => {
+    classroomId = document.getElementById("classroomMeta").dataset.classroomId;
+    console.log("✅ DOM loaded, classroomId:", classroomId);
     showMainFileTable();
-
-    // Close modal
-    closeFolderModal();
 });
+
+//=================== DELETE FILE CONFIRMATION ==================
+document.addEventListener("click", function (event) {
+    const button = event.target.closest(".delete-button");
+    if (!button) return;
+
+    event.preventDefault(); // 🛑 Important: prevent default navigation or form behavior
+
+    const fileId = button.dataset.fileId;
+    const token = document.querySelector('meta[name="csrf-token"]').content;
+
+    if (!confirm("Are you sure you want to delete this file?")) return;
+
+    fetch(`/classroom/${classroomId}/files/${fileId}`, {
+        method: "DELETE",
+        headers: {
+            "X-CSRF-TOKEN": token,
+            "Accept": "application/json"
+        }
+    })
+    .then(res => {
+        if (!res.ok) throw new Error("Failed to delete.");
+        return res.json();
+    })
+    .then(data => {
+        if (data.success) {
+            if (currentFolderId) {
+                viewFolder(currentFolderId, currentFolderName);
+            } else {
+                showMainFileTable();
+            }
+        }
+    })
+    .catch(err => {
+        console.error("❌ Error deleting file:", err);
+        alert("Failed to delete file.");
+    });
+});
+
