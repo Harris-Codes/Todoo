@@ -62,10 +62,6 @@ Route::get('/teacher-classroom', function () {
     return view('teacher-classroom');
 });
 
-// Create Quiz page
-Route::get('/create-quiz', function () {
-    return view('create-quiz');
-});
 
 
 
@@ -77,6 +73,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\QuizController;
 //------------------------------------Login Page------------------------------
 //Login and Logout
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -132,3 +129,10 @@ Route::prefix('classroom/{classroom}')->middleware('auth')->group(function () {
 Route::post('/classroom/{classroom}/folders/{folder}/files', [FileController::class, 'uploadToFolder'])
     ->middleware('auth')
     ->name('files.upload.folder');
+
+
+
+//Quiz
+Route::get('/classroom/{classroom_id}/create-quiz', [QuizController::class, 'showCreateQuiz'])->name('quiz.create');
+Route::post('/quiz', [QuizController::class, 'store'])->name('quizzes.store');
+Route::get('/quiz/{id}', [QuizController::class, 'show'])->name('quiz.show');

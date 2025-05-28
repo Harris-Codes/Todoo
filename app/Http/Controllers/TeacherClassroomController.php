@@ -18,13 +18,21 @@ class TeacherClassroomController
             'posts.user', 
             'files',
             'students',
-            'teacher'
+            'teacher',
+            'posts.quiz.questions' 
         ])->findOrFail($id);
+
+        foreach ($classroom->posts as $post) {
+            if ($post->quiz && $post->quiz->relationLoaded('questions')) {
+                $post->quiz->calculated_points = $post->quiz->questions->sum('points');
+                $post->quiz->calculated_time = $post->quiz->questions->sum('time');
+            }
+        }
 
         return view('teacher-classroom', compact('classroom'));
     }
 
-
+    
     //Adding student to the classroom
     public function addStudent(Request $request, $classroomId){
         

@@ -338,7 +338,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Function to create a quiz (redirect or show modal)
   createQuizButton.addEventListener("click", function () {
       alert("Redirecting to create quiz page...");
-      // window.location.href = "/create-quiz"; // Uncomment this line if you have a quiz creation page
+      window.location.href = "/create-quiz"; 
   });
 
   // Hide expanded post box if clicked outside

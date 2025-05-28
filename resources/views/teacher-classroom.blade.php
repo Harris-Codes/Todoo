@@ -93,7 +93,7 @@
             </div>
                                 
 
-                                    <!-------------------------- POST SECTION ------------------>
+            <!-------------------------- POST SECTION ------------------>
             <div class = "post-section">
                 <!--------------------- CREATE POST ---------------------->
                 <div class="create-post-container">
@@ -103,15 +103,16 @@
                             
                             <div class="post-input" onclick="expandPost()">
                                 <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" class="profile-pic" alt="Profile Picture">
-                                <input type="text" id="postInput" placeholder="Announce something to your class">
+                                <input type="text" id="postInput" placeholder="Announce something to your class" readonly>
                             </div>
 
                             <div class="post-expanded" id="postExpanded" style="display: none;">
-                                <textarea name="content" required placeholder="Announce something to your class"></textarea>
+                                <textarea name="content" required ></textarea>
                                 <div class="post-actions">
                                     <div class="post-btn-group">
                                         <button type="button" class="cancel-button" onclick="cancelPost()">Cancel</button>
                                         <button type="submit" class="post-button">Post</button>
+                                        <a href="{{ route('quiz.create', $classroom->id) }}" class="quiz-button"> Create Quiz</a>
                                     </div>
                                 </div>
                             </div>
@@ -119,29 +120,47 @@
                     </div>
 
                     @foreach ($classroom->posts->sortByDesc('created_at') as $post)
-                    <div class="discussion-container">
-                        <!-- User Info -->
-                        <div class="user-info">
-                            <img src="{{ asset('storage/' . $post->user->profile_picture) }}" alt="Profile Picture" class="profile-pic">
-                            <div class="user-details">
-                                <span class="user-name">{{ $post->user->name }}</span><br>
-                                <span class="post-time">{{ $post->created_at->format('d/m/Y') }}</span>
+                        <div class="discussion-container">
+                            <!-- User Info -->
+                            <div class="user-info">
+                                <img src="{{ asset('storage/' . $post->user->profile_picture) }}" alt="Profile Picture" class="profile-pic">
+                                <div class="user-details">
+                                    <span class="user-name">{{ $post->user->name }}</span><br>
+                                    <span class="post-time">{{ $post->created_at->format('d/m/Y') }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Post Content -->
+                            <div class="post-content">
+                                @if ($post->quiz)
+                                    <a href="{{ route('quiz.show', $post->quiz->id) }}" class="quiz-preview-box">
+                                        <div class="quiz-card">
+                                            <i class="fa-regular fa-lightbulb"></i>
+                                            <div class="quiz-info">
+                                                <strong>{{ $post->quiz->title }}</strong><br>
+                                                <span>{{ $post->quiz->total_points ?? 0 }} pts · {{ $post->quiz->timer_seconds ?? 0 }} sec</span>
+
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                @else
+                                    <p>{{ $post->content }}</p> <!-- fallback for normal post -->
+                                @endif
+                            </div>
+
+
+
+
+                            <!-- Reply Section -->
+                            <div class="reply-section">
+                                <button class="reply-btn">
+                                    <i class='bx bx-message'></i> Reply
+                                </button>
                             </div>
                         </div>
-
-                        <!-- Post Content -->
-                        <div class="post-content">
-                            <p>{{ $post->content }}</p>
-                        </div>
-
-                        <!-- Reply Section -->
-                        <div class="reply-section">
-                            <button class="reply-btn">
-                                <i class='bx bx-message'></i> Reply
-                            </button>
-                        </div>
-                    </div>
                     @endforeach
+
                 </div>
         </div>
     </div>

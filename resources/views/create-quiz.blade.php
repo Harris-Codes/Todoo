@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Classroom</title>
    
     <!-- CSS -->
@@ -74,6 +76,11 @@
                 <input type="text" id="question-input" placeholder="Input your question here..">
             </div>
 
+            <div class="slide-note-container">
+                <label for="slide-note">Slide Note (Optional):</label>
+                <textarea id="slide-note" placeholder="Enter slide note for this question..."></textarea>
+            </div>
+
             <div class="answer-container">
                 <div class="answers">
                     <i class='bx bx-checkbox' onclick="toggleCheck(this)"></i>
@@ -109,8 +116,9 @@
     
 
 
-   
-
+    <div id="classroomMeta" data-classroom-id="{{ $classroom->id }}"></div>
+    
+    <script src="{{ asset('js/create-quiz.js') }}"></script>
 </body>
-<script src="{{ asset('js/create-quiz.js') }}"></script>
+
 </html>
