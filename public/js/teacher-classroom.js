@@ -616,6 +616,8 @@ document.addEventListener("DOMContentLoaded", () => {
 //=================== DELETE FILE CONFIRMATION ==================
 document.addEventListener("click", function (event) {
     const button = event.target.closest(".delete-button");
+    if (!button || !button.dataset.fileId) return;
+
     if (!button) return;
 
     event.preventDefault(); // 🛑 Important: prevent default navigation or form behavior

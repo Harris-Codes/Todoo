@@ -95,10 +95,13 @@ Route::middleware('auth')->group(function () {
 Route::get('/classroom/{id}', [ClassroomController::class, 'show'])->name('classroom.show');
 
 Route::get('/teacher/classroom/{id}', [TeacherClassroomController::class, 'show'])->name('teacher.classroom');
-//Post
-Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
-//Assignment
+// ============================ POST ============================ //
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+
+
+// ============================ ASSIGNMENT ============================ //
 Route::post('/assignments', [AssignmentController::class, 'store'])->name('assignments.store');
 
 //Assignment-delete
@@ -124,15 +127,15 @@ Route::prefix('classroom/{classroom}')->middleware('auth')->group(function () {
     Route::post('/folders/{folder}/files', [FileController::class, 'uploadToFolder'])->name('files.upload.folder');
 
 });
-
-
 Route::post('/classroom/{classroom}/folders/{folder}/files', [FileController::class, 'uploadToFolder'])
     ->middleware('auth')
     ->name('files.upload.folder');
 
 
 
-//Quiz
+// ============================ QUIZ ============================ //
 Route::get('/classroom/{classroom_id}/create-quiz', [QuizController::class, 'showCreateQuiz'])->name('quiz.create');
 Route::post('/quiz', [QuizController::class, 'store'])->name('quizzes.store');
-Route::get('/quiz/{id}', [QuizController::class, 'show'])->name('quiz.show');
+Route::get('/classroom/{classroom_id}/quiz/{quiz_id}/edit', [QuizController::class, 'edit'])->name('quiz.edit');
+//update or replace existing quizz
+Route::put('/quiz/{quiz}', [QuizController::class, 'update'])->name('quiz.update');

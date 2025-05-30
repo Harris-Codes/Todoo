@@ -13,6 +13,8 @@ class Question extends Model
         'quiz_id', 
         'question_text', 
         'slide_note',
+        'points',        
+        'time', 
     ];
 
     public function quiz()

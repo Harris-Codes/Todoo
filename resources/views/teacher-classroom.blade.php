@@ -131,26 +131,48 @@
                             </div>
 
                             <!-- Post Content -->
-                            <div class="post-content">
+                        
+                            <div class="post-content" style="position: relative;">
                                 @if ($post->quiz)
-                                    <a href="{{ route('quiz.show', $post->quiz->id) }}" class="quiz-preview-box">
+                                    <a href="{{ route('quiz.edit', [$classroom->id, $post->quiz->id]) }}" class="quiz-preview-box">
                                         <div class="quiz-card">
-                                            <i class="fa-regular fa-lightbulb"></i>
+                                            <!-- Edit Icon -->
+                                            <i class='bx bx-edit-alt edit-quiz-icon'title = 'Edit Quiz'></i>
+                                            <i class="fa-regular fa-lightbulb bulb-icon"></i>
                                             <div class="quiz-info">
                                                 <strong>{{ $post->quiz->title }}</strong><br>
-                                                <span>{{ $post->quiz->total_points ?? 0 }} pts · {{ $post->quiz->timer_seconds ?? 0 }} sec</span>
-
-
+                                                @php
+                                                    $totalSeconds = $post->quiz->timer_seconds ?? 0;
+                                                    $minutes = floor($totalSeconds / 60);
+                                                    $seconds = $totalSeconds % 60;
+                                                @endphp
+                                                <span>{{ $post->quiz->total_points ?? 0 }} pts · 
+                                                    @if ($minutes > 0)
+                                                        {{ $minutes }} min
+                                                    @endif
+                                                    @if ($seconds > 0)
+                                                        {{ $seconds }} sec
+                                                    @endif
+                                                </span>
                                             </div>
                                         </div>
                                     </a>
                                 @else
                                     <p>{{ $post->content }}</p> <!-- fallback for normal post -->
                                 @endif
+
+                                <!-- Delete Button -->
+                                <form action="{{ route('posts.destroy', $post->id) }}" method="POST" style="position: absolute; top: 10px; right: 10px;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="delete-post-button" title="Delete Post" onclick="return confirm('Are you sure you want to delete this post?')">
+                                        <i class='bx bx-trash'></i>
+                                    </button>
+                                </form>
+                                
                             </div>
 
-
-
+                           
 
                             <!-- Reply Section -->
                             <div class="reply-section">

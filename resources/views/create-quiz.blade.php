@@ -116,9 +116,14 @@
     
 
 
-    <div id="classroomMeta" data-classroom-id="{{ $classroom->id }}"></div>
-    
-    <script src="{{ asset('js/create-quiz.js') }}"></script>
+<div id="classroomMeta" data-classroom-id="{{ $classroom->id }}"></div>
+<div id="quizMeta"
+         data-edit-mode="{{ isset($quiz) ? 'true' : 'false' }}"
+         data-quiz-id="{{ $quiz->id ?? '' }}"
+         data-questions='@json($transformedQuestions ?? [])'>
+</div>
+<script src="{{ asset('js/create-quiz.js') }}"></script>
+
 </body>
 
 </html>

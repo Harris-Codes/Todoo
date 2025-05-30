@@ -9,6 +9,7 @@ use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Post;
 use App\Models\Classroom;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class QuizController extends Controller
@@ -16,23 +17,22 @@ class QuizController extends Controller
     public function showCreateQuiz($classroom_id)
     {
         $classroom = Classroom::findOrFail($classroom_id);
+
+        
+
+        if ($classroom->teacher_id !== auth()->id()) {
+            abort(403, 'Unauthorized');
+        }
+
         return view('create-quiz', compact('classroom'));
     }
 
 
-
     public function store(Request $request)
     {
-        // Convert JSON to array
         $data = $request->json()->all();
-
-        // Merge into request so validator can access
         $request->merge($data);
 
-        // Optional debug to confirm it's working
-        Log::info('Incoming Quiz Data:', $data);
-
-        // Validate input
         $request->validate([
             'classroom_id' => 'required|exists:classrooms,id',
             'title' => 'required|string|max:255',
@@ -40,47 +40,144 @@ class QuizController extends Controller
             'total_points' => 'nullable|integer',
             'questions' => 'required|array',
             'questions.*.text' => 'required|string',
+            'questions.*.slide_note' => 'nullable|string',
+            'questions.*.points' => 'nullable|integer',
+            'questions.*.time' => 'nullable|integer',
             'questions.*.answers' => 'required|array|min:1',
             'questions.*.answers.*.text' => 'required|string',
             'questions.*.answers.*.is_correct' => 'boolean',
-            'questions.*.slide_note' => 'nullable|string',
         ]);
 
-        // Create the quiz
-        $quiz = Quiz::create([
-            'classroom_id' => $data['classroom_id'],
-            'user_id' => auth()->id(),
-            'title' => $data['title'],
-            'timer_seconds' => $data['timer_seconds'],
-            'total_points' => $data['total_points']
-        ]);
+        DB::beginTransaction();
 
-        // Loop through questions
-        foreach ($data['questions'] as $q) {
-            $question = $quiz->questions()->create([
-                'question_text' => $q['text'],
-                'slide_note' => $q['slide_note'] ?? null,
-                'points' => $q['points'] ?? 0,
-                'time' => $q['time'] ?? 0
+        try {
+            $quiz = Quiz::create([
+                'classroom_id' => $request->classroom_id,
+                'user_id' => auth()->id(),
+                'title' => $request->title,
+                'timer_seconds' => $request->timer_seconds,
+                'total_points' => $request->total_points,
             ]);
 
-            foreach ($q['answers'] as $a) {
+            foreach ($request->questions as $qData) {
+                $question = $quiz->questions()->create([
+                    'question_text' => $qData['text'],
+                    'slide_note' => $qData['slide_note'] ?? null,
+                    'points' => $qData['points'] ?? 0,
+                    'time' => $qData['time'] ?? 0,
+                ]);
+
+                foreach ($qData['answers'] as $aData) {
+                    $question->answers()->create([
+                        'answer_text' => $aData['text'],
+                        'is_correct' => $aData['is_correct'] ?? false,
+                    ]);
+                }
+            }
+
+            Post::create([
+                'classroom_id' => $quiz->classroom_id,
+                'user_id' => auth()->id(),
+                'content' => '📘 New Quiz: ' . $quiz->title,
+                'quiz_id' => $quiz->id,
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Quiz created successfully',
+                'quiz_id' => $quiz->id
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Quiz creation failed', ['error' => $e->getMessage()]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Server error while creating quiz.'
+            ], 500);
+        }
+    }
+
+    public function update(Request $request, Quiz $quiz)
+    {
+        $data = $request->json()->all();
+        $request->merge($data); // For validation
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'timer_seconds' => 'nullable|integer',
+            'total_points' => 'nullable|integer',
+            'questions' => 'required|array',
+            'questions.*.text' => 'required|string',
+            'questions.*.slide_note' => 'nullable|string',
+            'questions.*.points' => 'nullable|integer',
+            'questions.*.time' => 'nullable|integer',
+            'questions.*.answers' => 'required|array|min:1',
+            'questions.*.answers.*.text' => 'required|string',
+            'questions.*.answers.*.is_correct' => 'boolean',
+        ]);
+
+        $quiz->update([
+            'title' => $request->title,
+            'timer_seconds' => $request->timer_seconds,
+            'total_points' => $request->total_points,
+        ]);
+
+        // Clear old questions/answers
+        foreach ($quiz->questions as $question) {
+            $question->answers()->delete();
+            $question->delete();
+        }
+
+        // Re-create new questions and answers
+        foreach ($request->questions as $qData) {
+            $question = $quiz->questions()->create([
+                'question_text' => $qData['text'],
+                'slide_note' => $qData['slide_note'] ?? null,
+                'points' => $qData['points'] ?? 0,
+                'time' => $qData['time'] ?? 0,
+            ]);
+
+            foreach ($qData['answers'] as $aData) {
                 $question->answers()->create([
-                    'answer_text' => $a['text'],
-                    'is_correct' => $a['is_correct'] ?? false
+                    'answer_text' => $aData['text'],
+                    'is_correct' => $aData['is_correct'] ?? false,
                 ]);
             }
         }
 
-        // Optional: create post
-        Post::create([
-            'classroom_id' => $quiz->classroom_id,
-            'user_id' => auth()->id(),
-            'content' => '📘 New Quiz: ' . $quiz->title,
+        return response()->json([
+            'success' => true,
+            'message' => 'Quiz updated successfully',
             'quiz_id' => $quiz->id
         ]);
-
-        return response()->json(['success' => true, 'quiz_id' => $quiz->id]);
     }
 
+
+    public function edit($classroom_id, $quiz_id)
+    {
+        $classroom = Classroom::findOrFail($classroom_id);
+       
+        
+        if ($classroom->teacher_id !== auth()->id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        $quiz = Quiz::with('questions.answers')->findOrFail($quiz_id);
+
+        $transformedQuestions = $quiz->questions->map(function ($q) {
+            return [
+                'title' => $q->question_text,
+                'slideNote' => $q->slide_note,
+                'points' => $q->points,
+                'time' => $q->time,
+                'answers' => $q->answers->pluck('answer_text')->toArray(),
+                'correctAnswers' => $q->answers->pluck('is_correct')->toArray()
+            ];
+        })->values();
+
+        return view('create-quiz', compact('classroom', 'quiz', 'transformedQuestions'));
+    }
 }
