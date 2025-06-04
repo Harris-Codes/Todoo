@@ -13,7 +13,20 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class QuizController extends Controller
-{
+{   
+    public function show($classroomId, $quizId)
+    {
+        $classroom = Classroom::findOrFail($classroomId);
+        $quiz = Quiz::with('questions.answers')->findOrFail($quizId);
+
+        // Optional: Check if student is part of the classroom
+        if (!$classroom->students()->where('user_id', auth()->id())->exists()) {
+            abort(403, 'You are not part of this classroom');
+        }
+
+        return view('quiz.attempt', compact('classroom', 'quiz'));
+    }
+
     public function showCreateQuiz($classroom_id)
     {
         $classroom = Classroom::findOrFail($classroom_id);

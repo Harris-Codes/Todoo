@@ -22,10 +22,6 @@ Route::get('/teacher/dashboard', function () {
     return view('teacher'); // Loads teacher.blade.php
 })->name('teacher.dashboard')->middleware('auth');
 
-Route::get('/student/dashboard', function () {
-    return view('homepage'); // Loads homepage.blade.php
-})->name('student.dashboard')->middleware('auth');
-
 
 // Forgot Password Page
 Route::get('/forgot-password', function () {
@@ -134,8 +130,21 @@ Route::post('/classroom/{classroom}/folders/{folder}/files', [FileController::cl
 
 
 // ============================ QUIZ ============================ //
+Route::get('/classroom/{classroom}/quiz/{quiz}', [QuizController::class, 'show'])->name('quiz.show');
 Route::get('/classroom/{classroom_id}/create-quiz', [QuizController::class, 'showCreateQuiz'])->name('quiz.create');
 Route::post('/quiz', [QuizController::class, 'store'])->name('quizzes.store');
 Route::get('/classroom/{classroom_id}/quiz/{quiz_id}/edit', [QuizController::class, 'edit'])->name('quiz.edit');
 //update or replace existing quizz
 Route::put('/quiz/{quiz}', [QuizController::class, 'update'])->name('quiz.update');
+
+
+
+//==================== STUDENT ===========================
+//STUDENT HOMEPAGE
+Route::get('/student/homepage', [ClassroomController::class, 'studentHomepage'])->name('student.homepage')->middleware('auth');
+//JOIN CLASSROOM
+Route::post('/student/join-classroom', [ClassroomController::class, 'join'])->name('classroom.join');
+//LEAVE CLASSROOM
+Route::delete('/student/classroom/{classroom}', [ClassroomController::class, 'leave'])->name('classroom.leave')->middleware('auth');
+//SHOW CLASSROOM
+Route::get('/student/classroom/{id}', [ClassroomController::class, 'studentClassroom'])->name('student.classroom')->middleware('auth');

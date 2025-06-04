@@ -6,6 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Classroom;
+use App\Models\ClassroomUser;
+
 
 class User extends Authenticatable
 {
@@ -54,6 +57,13 @@ class User extends Authenticatable
         return $this->hasMany(Classroom::class, 'teacher_id');
     }
 
+    public function getProfilePictureUrlAttribute()
+    {
+        return $this->profile_picture 
+            ? asset('storage/' . $this->profile_picture)
+            : asset('images/default-profile.png'); // fallback image
+    }
+
 
     // For students: classroom they joined
     public function classrooms()
@@ -63,6 +73,22 @@ class User extends Authenticatable
                     ->withPivot('role')
                     ->withTimestamps();
     }
+
+    public function joinedClassrooms()
+    {
+        return $this->belongsToMany(Classroom::class)
+                    ->using(ClassroomUser::class)
+                    ->withPivot('role')
+                    ->withTimestamps();
+    }
+
+    public function classesJoined()
+    {
+        return $this->belongsToMany(Classroom::class, 'classroom_user', 'user_id', 'classroom_id')
+                    ->withTimestamps();
+    }
+
+
 
 
 }

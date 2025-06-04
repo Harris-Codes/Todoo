@@ -21,3 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
   
+  // Handle joining classroom via 6-digit code
+document.querySelector('.otp-Form').addEventListener('submit', function (e) {
+    const inputs = document.querySelectorAll('.otp-input');
+    let code = '';
+    inputs.forEach(input => code += input.value.toUpperCase());
+    document.getElementById('fullCode').value = code;
+});

@@ -32,7 +32,7 @@
             </a>
           </li>
           <li class="nav-link">
-          <a href="{{ url (path: 'homepage')}}">
+          <a href="{{ route('student.homepage') }}">
                 <i class='bx bx-book-content icon' ></i>
               <span class="text nav-text">My Classes</span>
             </a>
@@ -50,7 +50,5 @@
             </button>
         </li>
     </form>
-
-
     </div>
 </nav>

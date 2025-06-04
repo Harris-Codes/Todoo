@@ -34,7 +34,7 @@ class AuthController extends Controller
             if (Auth::user()->role === 'Teacher') {
                 return redirect()->route('teacher.dashboard');
             } elseif (Auth::user()->role === 'Student') {
-                return redirect()->route('student.dashboard');
+                return redirect()->route('student.homepage');
             } else {
                 return redirect('/dashboard'); // fallback
             }
@@ -98,5 +98,7 @@ class AuthController extends Controller
         return redirect('/login')->with('success', 'Account created successfully. Please log in.');
         
     }
+
+    
 
 }

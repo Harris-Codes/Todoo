@@ -49,8 +49,69 @@ class ClassroomController
         // Optional: Eager load relationships if needed (e.g., posts)
         return view('teacher-classroom', compact('classroom'));
     }
+    //=========================== STUDENT ===============================
+
+    public function studentClassroom($id)
+    {
+        $classroom = Classroom::with([
+            'teacher',
+            'posts.user', // Assuming each post has a user (teacher)
+            'assignments',
+            'files.uploader' // Optional: if you have this relationship set
+        ])->findOrFail($id);
     
+        // Optional: Check if student is enrolled
+        if (!$classroom->students()->where('user_id', auth()->id())->exists()) {
+            abort(403, 'Unauthorized access');
+        }
     
+        return view('classroom', compact('classroom'));
+    }
     
+
+    public function studentHomepage()
+    {
+        $joinedClasses = auth()->user()->classesJoined;
+        return view('homepage', compact('joinedClasses'));
+    }
+
+    public function join(Request $request)
+    {
+        $request->validate([
+            'code' => 'required|string|size:6'
+        ]);
+
+        $classroom = Classroom::where('code', $request->code)->first();
+
+        if (!$classroom) {
+            return back()->withErrors(['code' => 'Invalid classroom code']);
+        }
+
+        // Avoid duplicate join
+        $alreadyJoined = $classroom->students()->where('user_id', auth()->id())->exists();
+        if ($alreadyJoined) {
+            return back()->with('info', 'You already joined this classroom.');
+        }
+
+        // Attach student
+        $classroom->students()->attach(auth()->id());
+
+        return redirect()->route('student.homepage')->with('success', 'You have joined the classroom!');
+    }
+
+    //LEAVE CLASSROOM
+    public function leave(Classroom $classroom)
+    {
+        $user = auth()->user();
+
+        // Detach student
+        $classroom->students()->detach($user->id);
+
+        return redirect()->route('student.homepage')->with('success', 'You have left the classroom.');
+    }
+
+   
+
+
     
 }

@@ -402,17 +402,18 @@ body.dark .home .text {
 }
 
 .delete-button {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.50rem;
-    padding: 0.5rem;
-    width: 10%; /* Adjust width for the smaller Delete button */
-    border: none;
-    color: white;
-    border-radius: 0.5rem;
-    background-color: #ff4d4d; /* Use a red color for the Delete button */
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.50rem;
+  padding: 0.5rem;
+  width: 40px;
+  height:40px;
+  border: none;
+  color: white;
+  border-radius: 0.5rem;
+  background-color: #ff4d4d; /* Use a red color for the Delete button */
 }
 
 .icon{
