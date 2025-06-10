@@ -435,25 +435,50 @@ body.dark .home .text {
     margin-top: 20px;
 }
 
-/* Reply Section */
-.reply-section {
-    margin-top: 50px;
-    border-top: 1px solid #333;
-    padding-top: 10px;
-    width: 100%; /* Ensure full width */
-    display: flex; /* Aligns child elements properly */
-}
+
 
 .reply-btn {
-    background: transparent;
-    border: none;
-    color: var(--primary-color);
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  font-size: 14px;
+  padding: 10px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  color: #1e88e5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
+
+.comment-list {
+  padding:10px;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comment {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.comment-user-pic {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.comment-details {
+  background: #f1f3f4;
+  border-radius: 20px;
+  padding: 6px 12px;
+}
+
+.comment-author {
+  font-weight: 600;
+  display: block;
+  font-size: 14px;
+}
+
 
 .reply-btn:hover {
     color:var(--todoo-color);
@@ -494,36 +519,71 @@ body.dark .home .text {
   color: #0056b3;
 }
 
+.reply-section.no-comments {
+  margin-top: 10px;
+}
+
+.reply-button-wrapper.with-comments {
+  margin-top: 15px;
+}
+
 /* ================================Comments List ===============================*/
+
+
 .comment-list {
   margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-left: 10px;
 }
 
 .comment {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  margin-top: 10px;
+  max-width: 100%;
 }
 
-.comment .profile-pic {
-  width: 30px;
-  height: 30px;
+.comment img {
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
-.comment .comment-text {
-  background: #f1f1f1;
-  padding: 8px 12px;
-  border-radius: 10px;
-  max-width: 80%;
-  font-size: 14px;
+.comment-details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
+
+.comment-author {
+  font-weight: bold;
+  font-size: 14px;
+  color: #111;
+  margin-bottom: 4px;
+}
+
+.comment-text {
+  background: #f1f3f4;
+  
+  border-radius: 16px;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+  word-wrap: break-word;
+  display: block;
+  max-width: 100%;
+}
+
+
 
 /* Student Name */
 .comment .comment-details {
   display: flex;
   flex-direction: column;
+  width: 100%; /* so child .comment-text can stretch */
 }
 
 .comment .student-name {

@@ -23,4 +23,9 @@ class Post extends Model
         return $this->belongsTo(Quiz::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 }

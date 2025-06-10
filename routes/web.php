@@ -70,6 +70,7 @@ use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\CommentController;
 //------------------------------------Login Page------------------------------
 //Login and Logout
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -148,3 +149,5 @@ Route::post('/student/join-classroom', [ClassroomController::class, 'join'])->na
 Route::delete('/student/classroom/{classroom}', [ClassroomController::class, 'leave'])->name('classroom.leave')->middleware('auth');
 //SHOW CLASSROOM
 Route::get('/student/classroom/{id}', [ClassroomController::class, 'studentClassroom'])->name('student.classroom')->middleware('auth');
+//REPLY COMMENT
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');

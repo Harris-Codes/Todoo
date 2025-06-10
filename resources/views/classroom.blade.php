@@ -81,18 +81,34 @@
               @endif
             </div>
 
-            <!-- Reply Section -->
-            <div class="reply-section">
-              <button class="reply-btn">
-                <i class='bx bx-message'></i> Reply
-              </button>
-              <div class="reply-input-container" style="display: none;">
-                <input type="text" class="reply-input" placeholder="Reply...">
-                <button class="send-reply-btn"><i class="bx bx-send"></i></button>
-              </div>
+           <!-- Divider line (optional for structure) -->
+          
+           <div class="reply-section">
+              <!-- Comment List First -->
               <div class="comment-list">
-                {{-- Future comments here --}}
+                  @foreach ($post->comments as $comment)
+                      <div class="comment">
+                          <img src="{{ $comment->user->profile_picture ? asset('storage/' . $comment->user->profile_picture) : asset('images/default-user.png') }}" class="profile-pic">
+                          <div class="comment-details">
+                              <span class="comment-author">{{ $comment->user->name }}</span>
+                              <span class="comment-text">{{ $comment->comment_text }}</span>
+                          </div>
+                      </div>
+                  @endforeach
               </div>
+
+              <!-- Reply Input Field (Hidden Initially) -->
+              <form method="POST" action="{{ route('comments.store') }}" class="reply-input-container" style="display: none;">
+                  @csrf
+                  <input type="hidden" name="post_id" value="{{ $post->id }}">
+                  <input type="text" name="comment_text" class="reply-input" placeholder="Add a class comment..." required>
+                  <button type="submit" class="send-reply-btn"><i class="bx bx-send"></i></button>
+              </form>
+
+              <!-- Reply Button Comes Last -->
+              <button class="reply-btn">
+                  <i class='bx bx-message'></i> <strong>REPLY</strong>
+              </button>
             </div>
           </div>
         @endforeach
