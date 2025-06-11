@@ -16,6 +16,7 @@ class TeacherClassroomController
         $classroom = Classroom::with([
             'assignments',
             'posts.user', 
+            'posts.comments.user',
             'files',
             'students',
             'teacher',

@@ -73,47 +73,33 @@ function openTab(event, tabName) {
 
 
 // ================ REPLY BUTTON ========================
+// ================ REPLY HANDLING FOR TEACHER ========================
 document.addEventListener("DOMContentLoaded", function () {
-  const replyBtn = document.querySelector(".reply-btn");
-  const replyInputContainer = document.getElementById("replyInputContainer");
-  const sendReplyBtn = document.getElementById("sendReplyBtn");
-  const replyInput = document.getElementById("replyInput");
-  const commentList = document.getElementById("commentList");
-  const studentImage = "/images/student-boy.png"; // Direct file path
+    document.querySelectorAll('.reply-section').forEach(section => {
+        const replyBtn = section.querySelector('.reply-btn');
+        const replyInputContainer = section.querySelector('.reply-input-container');
 
+        // Show input when "Reply" is clicked
+        replyBtn.addEventListener('click', function () {
+            replyInputContainer.style.display = 'flex';
+            replyBtn.style.display = 'none';
 
+            // Autofocus input
+            const input = replyInputContainer.querySelector('input');
+            if (input) input.focus();
+        });
 
-  // Show Reply Input When "Reply" Button Clicked
-  replyBtn.addEventListener("click", function () {
-      replyInputContainer.style.display = "flex";
-      replyBtn.style.display = "none"; // Hide Reply Button
-  });
-
-  // Submit Reply
-  sendReplyBtn.addEventListener("click", function () {
-      let replyText = replyInput.value.trim();
-      if (replyText !== "") {
-          // Create a New Comment Element
-          let comment = document.createElement("div");
-          comment.classList.add("comment");
-
-           comment.innerHTML = `
-           <img src="${studentImage}" alt="Profile Picture" class="profile-pic">
-                <div class="comment-details">
-                    <span class="student-name">Muhd Harris</span>
-                    
-                    <div class="comment-text">${replyText}</div>
-                </div>
-            `;
-
-          // Append Comment to Comment List
-          commentList.appendChild(comment);
-
-          // Clear Input Field
-          replyInput.value = "";
-      }
-  });
+        // Hide input when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!section.contains(e.target)) {
+                replyInputContainer.style.display = 'none';
+                replyBtn.style.display = 'flex';
+            }
+        });
+    });
 });
+
+  
 
 //================ =======================TAB FOR GRADING========================================
 document.addEventListener("DOMContentLoaded", function () {
@@ -586,14 +572,6 @@ function triggerUpload() {
         });
     };
 }
-
-
-
-
-
-
-
-
 
 window.addEventListener("DOMContentLoaded", function () {
     // Automatically open the "posts" tab (or "files", if preferred)

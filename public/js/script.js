@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll('.reply-section').forEach(section => {
     const replyBtn = section.querySelector('.reply-btn');
     const replyInputContainer = section.querySelector('.reply-input-container');
-
+    
     if (replyBtn && replyInputContainer) {
       replyBtn.addEventListener('click', function () {
         replyBtn.style.display = 'none';
@@ -88,4 +88,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+// ================ CLOSE REPLY TOGGLE ========================
+document.addEventListener('click', function (event) {
+  document.querySelectorAll('.reply-section').forEach(section => {
+    const replyBtn = section.querySelector('.reply-btn');
+    const replyInputContainer = section.querySelector('.reply-input-container');
+
+    if (replyInputContainer && replyInputContainer.style.display === 'flex') {
+      // If the click was outside the section
+      if (!section.contains(event.target)) {
+        replyInputContainer.style.display = 'none';
+        replyBtn.style.display = 'flex';
+      }
+    }
+  });
+});
+
 

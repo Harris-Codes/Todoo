@@ -55,10 +55,15 @@ class ClassroomController
     {
         $classroom = Classroom::with([
             'teacher',
-            'posts.user', // Assuming each post has a user (teacher)
             'assignments',
-            'files.uploader' // Optional: if you have this relationship set
+            'files.uploader',
+            'posts' => function ($query) {
+                $query->latest(); // same as orderBy('created_at', 'desc')
+            },
+            'posts.user', // you can still eager load user inside each post
+            'posts.comments.user' // if you want to also eager load comment authors
         ])->findOrFail($id);
+        
     
         // Optional: Check if student is enrolled
         if (!$classroom->students()->where('user_id', auth()->id())->exists()) {

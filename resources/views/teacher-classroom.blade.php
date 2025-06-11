@@ -169,16 +169,38 @@
                                         <i class='bx bx-trash'></i>
                                     </button>
                                 </form>
-                                
                             </div>
 
-                           
+                            <!-- ✨ Divider ABOVE comments -->
+                            <hr style="margin: 15px 0; border: none; border-top: 1px solid #ccc;">
+
+                           <!-- Comment List -->
+                            <div class="comment-list">
+                                @foreach ($post->comments as $comment)
+                                    <div class="comment">
+                                        <img src="{{ $comment->user->profile_picture ? asset('storage/' . $comment->user->profile_picture) : asset('images/default-user.png') }}" class="profile-pic">
+                                        <div class="comment-details">
+                                            <span class="comment-author">{{ $comment->user->name }}</span>
+                                            <span class="comment-text">{{ $comment->comment_text }}</span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
 
                             <!-- Reply Section -->
                             <div class="reply-section">
-                                <button class="reply-btn">
-                                    <i class='bx bx-message'></i> Reply
-                                </button>
+                            <button class="reply-btn"><i class="bx bx-message"></i> Reply</button>
+                            <form action="{{ route('comments.store') }}" method="POST" class="reply-form">
+                                @csrf
+                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                <div class="reply-input-container" style="display: none;">
+                                    <input type="text" class="reply-input" name="comment_text" placeholder="Add a class comment..." required>
+                                    <button type="submit" class="send-reply-btn">
+                                        <i class="fa-solid fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </form>
                             </div>
                         </div>
                     @endforeach

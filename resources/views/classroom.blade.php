@@ -81,35 +81,45 @@
               @endif
             </div>
 
-           <!-- Divider line (optional for structure) -->
-          
-           <div class="reply-section">
-              <!-- Comment List First -->
-              <div class="comment-list">
-                  @foreach ($post->comments as $comment)
-                      <div class="comment">
-                          <img src="{{ $comment->user->profile_picture ? asset('storage/' . $comment->user->profile_picture) : asset('images/default-user.png') }}" class="profile-pic">
-                          <div class="comment-details">
-                              <span class="comment-author">{{ $comment->user->name }}</span>
-                              <span class="comment-text">{{ $comment->comment_text }}</span>
+              <!-- Divider ABOVE comments -->
+              @if ($post->comments->count())
+                  <hr style="margin: 15px 0; border: none; border-top: 1px solid #ccc;">
+              @endif
+
+              <!-- Comment List -->
+              @if ($post->comments->count())
+                  <div class="comment-list">
+                      @foreach ($post->comments as $comment)
+                          <div class="comment">
+                              <img src="{{ $comment->user->profile_picture ? asset('storage/' . $comment->user->profile_picture) : asset('images/default-user.png') }}" class="profile-pic">
+                              <div class="comment-details">
+                                  <span class="comment-author">{{ $comment->user->name }}</span>
+                                  <span class="comment-text">{{ $comment->comment_text }}</span>
+                              </div>
                           </div>
-                      </div>
-                  @endforeach
+                      @endforeach
+                  </div>
+              @endif
+
+              <!-- Dynamic Divider if No Comments -->
+              @if (! $post->comments->count())
+                  <hr style="margin: 15px 0; border: none; border-top: 1px solid #ccc;">
+              @endif
+
+              <!-- Reply Button -->
+              <div class="reply-section">
+                  <button class="reply-btn">
+                      <i class='bx bx-message'></i> <strong>REPLY</strong>
+                  </button>
+
+                  <!-- Reply Input Field (Hidden Initially) -->
+                  <form method="POST" action="{{ route('comments.store') }}" class="reply-input-container" style="display: none;">
+                      @csrf
+                      <input type="hidden" name="post_id" value="{{ $post->id }}">
+                      <input type="text" name="comment_text" class="reply-input" placeholder="Add a class comment..." required>
+                      <button type="submit" class="send-reply-btn"><i class="fa-solid fa-paper-plane"></i></i></button>
+                  </form>
               </div>
-
-              <!-- Reply Input Field (Hidden Initially) -->
-              <form method="POST" action="{{ route('comments.store') }}" class="reply-input-container" style="display: none;">
-                  @csrf
-                  <input type="hidden" name="post_id" value="{{ $post->id }}">
-                  <input type="text" name="comment_text" class="reply-input" placeholder="Add a class comment..." required>
-                  <button type="submit" class="send-reply-btn"><i class="bx bx-send"></i></button>
-              </form>
-
-              <!-- Reply Button Comes Last -->
-              <button class="reply-btn">
-                  <i class='bx bx-message'></i> <strong>REPLY</strong>
-              </button>
-            </div>
           </div>
         @endforeach
       </div>
