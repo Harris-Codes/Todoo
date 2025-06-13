@@ -57,13 +57,13 @@ class ClassroomController
             'teacher',
             'assignments',
             'files.uploader',
+            'folders.files.uploader', // ✅ Load folders AND their files
             'posts' => function ($query) {
-                $query->latest(); // same as orderBy('created_at', 'desc')
+                $query->latest(); // Order posts by newest first
             },
-            'posts.user', // you can still eager load user inside each post
-            'posts.comments.user' // if you want to also eager load comment authors
+            'posts.user',
+            'posts.comments.user'
         ])->findOrFail($id);
-        
     
         // Optional: Check if student is enrolled
         if (!$classroom->students()->where('user_id', auth()->id())->exists()) {

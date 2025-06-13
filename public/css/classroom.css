@@ -733,9 +733,12 @@ body.dark .home .text {
   color: white;
 }
 
-.status.completed {
-  background: #11a716;
-  color: white;
+.status.submitted {
+  background-color: #1fc50d; /* pastel green */
+  color: #ffffff; /* dark green text */
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
 }
 
 .post-section {
@@ -770,8 +773,11 @@ body.dark .home .text {
 
 /* Card (Modal Content) */
 .card {
-  width: 800px;  /* Adjust width */
-  height: 500px; /* Adjust height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* push bottom items down */
+  width: 800px;
+  height: 500px;
   border-width: 1px;
   border-radius: 1rem;
   background-color: white;
@@ -781,12 +787,15 @@ body.dark .home .text {
   position: relative;
 }
 
+
 /* Modal Header */
 .header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
+
 
 .icon-modal {
   flex-shrink: 0;
@@ -805,35 +814,42 @@ body.dark .home .text {
 }
 
 .title {
-  font-size:40px;
+  font-size: 32px;
   font-weight: 600;
   color: var(--todoo-color);
-  flex-grow: 1;
   text-align: left;
+  flex: 1;
 }
+
 
 /* Close Button */
 .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
   font-size: 24px;
   font-weight: bold;
   cursor: pointer;
   color: #e74c3c;
-  float: right;
+  background: none;
+  border: none;
 }
 
+
 .description-container {
-  width: 100%;
-  max-width: 100%; /* Prevents overflow */
-  min-height: 50px; /* Default height */
-  padding: 10px;
-  background-color: rgba(240, 240, 240, 1); /* Light gray background */
+  background-color: #f1f1f1;
   border-radius: 8px;
-  overflow-wrap: break-word; /* Prevents text overflow */
-  word-wrap: break-word;
+  padding: 15px;
+  margin-top: 10px;
+  margin-bottom: 20px;
   text-align: justify;
-  max-height: 200px; /* Set a reasonable max height */
-  overflow-y: auto; /* Enables vertical scrolling */
+  color: #333;
+  font-size: 16px;
+  line-height: 1.4;
+  max-height: 150px;
+  overflow-y: auto;
 }
+
 
 /* Message */
 .message {
@@ -847,8 +863,12 @@ body.dark .home .text {
 /* Upload Section */
 .upload-section {
   text-align: center;
-  margin-top: 50px;
+  margin-top: 30px;
+  flex-grow: 1;
+  padding-bottom: 20px;
 }
+
+
 
 /* Flex Container to Align Button and File Name */
 .file-upload-container {
@@ -870,6 +890,13 @@ body.dark .home .text {
   padding: 15px 0;
   margin-top: 50px;
 }
+
+.submit-btn-container {
+  margin-top: auto; /* pushes it to the bottom */
+  padding-top: 20px;
+}
+
+
 
 /* Submit Button */
 .submit-btn {
@@ -941,44 +968,116 @@ button svg {
   height: 1.25rem;
 }
 
+/* =================== FILES TAB (Student View) =================== */
 
-/*============= FILE PAGE ===============*/
-
-.file-header {
+/* File Section Header */
+.folder-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  background: #f8f9fa;
-  padding: 10px 15px;
-  border-radius: 5px;
-  font-weight: bold;
+  align-items: center;
+  padding: 10px 10px;
+  margin-top: 20px;
+  border-bottom: 2px solid #ccc;
+}
+
+.folder-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Table Layout */
+.file-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: white;
+}
+
+.file-table tr {
   border-bottom: 1px solid #ddd;
 }
 
-.file-column {
-  flex: 1;
+.file-table td {
+  vertical-align: middle;
+  padding: 12px 10px;
+}
+
+.file-table td a {
+  display: inline; /* Make sure links are not block-stacking */
+}
+
+/* Folder Row Styling */
+.folder-row td {
   display: flex;
   align-items: center;
-  
+  gap: 10px;
+}
+
+.folder-link {
+  font-weight: 600;
+  color: #333;
   cursor: pointer;
 }
 
-.file-column i {
-  font-size: 18px;
-  color: #555;
-}
-
-.sort-icon {
-  font-size: 12px;
-  color: #888;
-}
-
-.add-column {
-  color: #007bff;
-  cursor: pointer;
-}
-
-.add-column:hover {
+.folder-link:hover {
+  color: var(--todoo-color);
   text-decoration: underline;
 }
 
+/* File Row Styling */
+.file-row td {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* File Action Button (View only for students) */
+.file-action-view {
+  background: #4da6ff;
+  color: white;
+  font-weight: bold;
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.file-action-view:hover {
+  background: #1e77cf;
+}
+
+
+.file-action-view i {
+  font-size: 16px;
+}
+
+/* Back Button */
+#backToMainTable {
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  color: #007bff;
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+#backToMainTable:hover {
+  text-decoration: underline;
+  color: var(--todoo-color);
+}
+
+/* Empty State */
+.file-table .empty-row td {
+  text-align: center;
+  font-style: italic;
+  color: #888;
+  padding: 15px;
+}

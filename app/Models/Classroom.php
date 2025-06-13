@@ -34,6 +34,12 @@ class Classroom extends Model
         return $this->hasMany(File::class);
     }
 
+    public function folders()
+    {
+        return $this->hasMany(Folder::class);
+    }
+
+
 
     public function students()
     {

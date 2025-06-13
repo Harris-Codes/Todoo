@@ -71,6 +71,7 @@ use App\Http\Controllers\FolderController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\SubmissionController;
 //------------------------------------Login Page------------------------------
 //Login and Logout
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -151,3 +152,7 @@ Route::delete('/student/classroom/{classroom}', [ClassroomController::class, 'le
 Route::get('/student/classroom/{id}', [ClassroomController::class, 'studentClassroom'])->name('student.classroom')->middleware('auth');
 //REPLY COMMENT
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
+//SUBMIT ASSIGNMENT
+Route::post('/submit-assignment', [SubmissionController::class, 'store'])->name('assignment.submit');
+//Download Files
+Route::get('/download/{file}', [FileController::class, 'download'])->name('file.download');

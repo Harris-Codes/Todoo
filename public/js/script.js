@@ -6,7 +6,7 @@ const body = document.querySelector('body'),
   modeText = body.querySelector(".mode-text");
 
 // ====================== SIDEBAR TOGGLE ======================
-toggle.addEventListener("click", () => {
+toggle?.addEventListener("click", () => {
   sidebar.classList.toggle("close");
 });
 
@@ -18,11 +18,16 @@ function confirmLogout(event) {
   }
 }
 
-// ====================== ASSIGNMENT MODAL ======================
+// ====================== DOM READY ======================
 document.addEventListener("DOMContentLoaded", function () {
+
+  // ====================== ASSIGNMENT MODAL ======================
   const modal = document.getElementById("assignmentModal");
   const modalTitle = document.getElementById("modalTitle");
   const modalDescription = document.getElementById("modalDescription");
+  const modalAssignmentId = document.getElementById("modalAssignmentId");
+  const fileInput = document.getElementById("fileInput");
+  const fileNameDisplay = document.getElementById("fileNameDisplay");
   const closeBtn = document.querySelector(".close-btn");
 
   if (modal) {
@@ -32,11 +37,15 @@ document.addEventListener("DOMContentLoaded", function () {
       row.addEventListener("click", function () {
         modalTitle.innerText = this.dataset.title;
         modalDescription.innerText = this.dataset.desc;
+        modalAssignmentId.value = this.dataset.id;
         modal.style.display = "flex";
+
+        if (fileInput) fileInput.value = '';
+        if (fileNameDisplay) fileNameDisplay.innerText = "No file chosen";
       });
     });
 
-    closeBtn.addEventListener("click", function () {
+    closeBtn?.addEventListener("click", function () {
       modal.style.display = "none";
     });
 
@@ -46,38 +55,36 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-});
 
-// ====================== FILE UPLOAD BUTTON ======================
-document.getElementById("uploadButton")?.addEventListener("click", function () {
-  document.getElementById("fileInput").click();
-});
-
-document.getElementById("fileInput")?.addEventListener("change", function () {
-  const fileName = this.files.length > 0 ? this.files[0].name : "No file chosen";
-  document.getElementById("fileNameDisplay").innerText = fileName;
-});
-
-// ====================== TABS SWITCHING ======================
-function openTab(event, tabName) {
-  document.querySelectorAll(".tab-content").forEach(tab => {
-    tab.classList.remove("active");
+  // ====================== FILE UPLOAD DISPLAY ======================
+  document.getElementById("uploadButton")?.addEventListener("click", function () {
+    document.getElementById("fileInput").click();
   });
 
-  document.querySelectorAll(".tab-link").forEach(button => {
-    button.classList.remove("active");
+  document.getElementById("fileInput")?.addEventListener("change", function () {
+    const fileName = this.files.length > 0 ? this.files[0].name : "No file chosen";
+    document.getElementById("fileNameDisplay").innerText = fileName;
   });
 
-  document.getElementById(tabName).classList.add("active");
-  event.currentTarget.classList.add("active");
-}
+  // ====================== TABS SWITCHING ======================
+  window.openTab = function (event, tabName) {
+    document.querySelectorAll(".tab-content").forEach(tab => {
+      tab.classList.remove("active");
+    });
 
-// ================ REPLY TOGGLE ========================
-document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".tab-link").forEach(button => {
+      button.classList.remove("active");
+    });
+
+    document.getElementById(tabName).classList.add("active");
+    event.currentTarget.classList.add("active");
+  };
+
+  // ====================== REPLY TOGGLE ======================
   document.querySelectorAll('.reply-section').forEach(section => {
     const replyBtn = section.querySelector('.reply-btn');
     const replyInputContainer = section.querySelector('.reply-input-container');
-    
+
     if (replyBtn && replyInputContainer) {
       replyBtn.addEventListener('click', function () {
         replyBtn.style.display = 'none';
@@ -87,22 +94,128 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
-});
 
-// ================ CLOSE REPLY TOGGLE ========================
-document.addEventListener('click', function (event) {
-  document.querySelectorAll('.reply-section').forEach(section => {
-    const replyBtn = section.querySelector('.reply-btn');
-    const replyInputContainer = section.querySelector('.reply-input-container');
+  // ====================== CLOSE REPLY IF CLICK OUTSIDE ======================
+  document.addEventListener('click', function (event) {
+    document.querySelectorAll('.reply-section').forEach(section => {
+      const replyBtn = section.querySelector('.reply-btn');
+      const replyInputContainer = section.querySelector('.reply-input-container');
 
-    if (replyInputContainer && replyInputContainer.style.display === 'flex') {
-      // If the click was outside the section
-      if (!section.contains(event.target)) {
-        replyInputContainer.style.display = 'none';
-        replyBtn.style.display = 'flex';
+      if (replyInputContainer && replyInputContainer.style.display === 'flex') {
+        if (!section.contains(event.target)) {
+          replyInputContainer.style.display = 'none';
+          replyBtn.style.display = 'flex';
+        }
       }
-    }
+    });
   });
+
+  // ====================== STUDENT FILE VIEW ======================
+  const fileTableBody = document.getElementById("fileTableBody");
+  const folderTitle = document.getElementById("folderTitle");
+  const backToMainTable = document.getElementById("backToMainTable");
+  const classroomId = document.getElementById("classroomMeta")?.dataset.classroomId;
+
+  let currentFolderId = null;
+  let currentFolderName = null;
+
+  function showMainFileTable() {
+    currentFolderId = null;
+    currentFolderName = null;
+    folderTitle.innerText = "Files";
+    backToMainTable.style.display = "none";
+    fileTableBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
+
+    let folders = [];
+
+    fetch(`/classroom/${classroomId}/folders/list`)
+      .then(res => res.json())
+      .then(data => {
+        folders = data;
+
+        fetch(`/classroom/${classroomId}/files/root`)
+          .then(res => res.json())
+          .then(files => {
+            fileTableBody.innerHTML = "";
+
+            if (folders.length === 0 && files.length === 0) {
+              fileTableBody.innerHTML = "<tr><td colspan='4'>No folders or files found.</td></tr>";
+              return;
+            }
+
+            folders.forEach(folder => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+                <td><i class='bx bx-folder'></i> ${folder.name}</td>
+                <td>-</td>
+                <td>-</td>
+                <td>
+                  <button onclick="viewFolder(${folder.id}, '${folder.name}')" class="file-action-view">
+                    VIEW FOLDER
+                  </button>
+                </td>`;
+              fileTableBody.appendChild(row);
+            });
+            
+
+            files.forEach(file => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+                <td><i class='bx bx-file'></i> ${file.file_name}</td>
+                <td>${file.modified_at}</td>
+                <td>${file.modified_by}</td>
+                <td>
+                  <div style="display: flex; gap: 10px;">
+                    <a href="/storage/${file.file_path}" target="_blank" class="file-action-view" title="View File">
+                      <i class="fa-solid fa-eye"></i>
+                    </a>
+                  </div>
+                </td>`;
+              fileTableBody.appendChild(row);
+            });
+            
+          });
+      });
+  }
+
+  function viewFolder(folderId, folderName) {
+    currentFolderId = folderId;
+    currentFolderName = folderName;
+    folderTitle.innerText = `📂 ${folderName}`;
+    backToMainTable.style.display = "inline-block";
+    fileTableBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
+
+    fetch(`/classroom/${classroomId}/folders/${folderId}/files`)
+      .then(res => res.json())
+      .then(files => {
+        fileTableBody.innerHTML = "";
+
+        if (files.length === 0) {
+          fileTableBody.innerHTML = "<tr><td colspan='4'>No files in this folder.</td></tr>";
+          return;
+        }
+
+        files.forEach(file => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td><i class='bx bx-file'></i> ${file.file_name}</td>
+            <td>${file.modified_at}</td>
+            <td>${file.modified_by}</td>
+            <td>
+              <div style="display: flex; gap: 10px;">
+                <a href="/storage/${file.file_path}" target="_blank" class="file-action-view" title="View File">
+                  <i class="fa-solid fa-eye"></i>
+                </a>
+              </div>
+            </td>`;
+          fileTableBody.appendChild(row);
+        });
+      });
+  }
+
+  // Expose for global use
+  window.showMainFileTable = showMainFileTable;
+  window.viewFolder = viewFolder;
+
+  showMainFileTable();
 });
-
-

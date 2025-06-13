@@ -54,12 +54,6 @@ class FileController extends Controller
         return response()->json(['success' => true]);
     }
 
-
-
-    
-    
-
-
     // List all files in classroom root (no folder)
     public function listRootFiles($classroomId)
     {
@@ -92,5 +86,7 @@ class FileController extends Controller
     
         return response()->json(['success' => true]);
     }
+
+    
     
 }

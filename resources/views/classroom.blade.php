@@ -8,6 +8,8 @@
   <!-- CSS -->
   <link rel="stylesheet" href="{{ asset('css/classroom.css') }}">
   <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 <body>
 
@@ -43,15 +45,28 @@
           </thead>
           <tbody>
             @foreach ($classroom->assignments as $assignment)
-              <tr class="clickable-row" data-title="{{ $assignment->title }}" data-desc="{{ $assignment->description }}">
+              @php
+                $submission = $assignment->submissions->where('student_id', auth()->id())->first();
+              @endphp
+              <tr class="clickable-row"
+                  data-id="{{ $assignment->id }}"
+                  data-title="{{ $assignment->title }}"
+                  data-desc="{{ $assignment->description }}">
                 <td>{{ $assignment->title }}</td>
                 <td>{{ \Carbon\Carbon::parse($assignment->due_date)->format('M d, Y') }}</td>
-                <td><span class="status pending">Pending</span></td>
+                <td>
+                  @if ($submission)
+                    <span class="status submitted">Submitted</span>
+                  @else
+                    <span class="status pending">Pending</span>
+                  @endif
+                </td>
               </tr>
             @endforeach
           </tbody>
         </table>
       </div>
+
 
       <!-- POSTS SECTION -->
       <div class="post-section">
@@ -127,32 +142,85 @@
     </div>
   </div>
 
-  <!-- ==================== FILES TAB ==================== -->
-  <div id="files" class="tab-content">
-    <div class="file-header">
-      <div class="file-column"><i class="bx bx-file"></i> Name</div>
-      <div class="file-column">Modified</div>
-      <div class="file-column">Modified By</div>
+<!-- ==================== FILES TAB (STUDENT) ==================== -->
+<div id="files" class="tab-content">
+  <button id="backToMainTable" onclick="showMainFileTable()" style="display: none;">
+      <i class='bx bx-arrow-back'></i> Back
+  </button>
+
+  <div class="folder-header">
+      <h2 id="folderTitle">Files</h2>
+      <!-- No upload or folder button for students -->
+  </div>
+
+  <table class="file-table">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Modified</th>
+          <th>Modified By</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="fileTableBody">
+          <tr><td colspan="4">Loading...</td></tr>
+      </tbody>
+  </table>
+</div>
+
+
+</section>
+
+<!-- Assignment Modal -->
+<div class="modal" id="assignmentModal">
+  <div class="card">
+   
+
+    <div class="header">
+      <p class="title" id="modalTitle">Assignment Title</p>
+      <span class="close-btn">&times;</span>
     </div>
 
-    <div class="file-list">
-      @forelse ($classroom->files as $file)
-        <div class="file-row">
-          <div class="file-column">
-            <i class="bx bx-file"></i> 
-            <a href="{{ asset('storage/' . $file->filepath) }}" target="_blank">{{ $file->filename }}</a>
-          </div>
-          <div class="file-column">{{ $file->updated_at->format('M d, Y') }}</div>
-          <div class="file-column">{{ $file->uploader->name ?? 'Unknown' }}</div>
-        </div>
-      @empty
-        <p>No files uploaded yet...</p>
-      @endforelse
+    <div class="description-container">
+      <p class="message" id="modalDescription">Assignment description goes here.</p>
     </div>
+
+    <!-- Upload Form -->
+    <form action="{{ route('assignment.submit') }}" method="POST" enctype="multipart/form-data">
+      @csrf
+      <input type="hidden" name="assignment_id" id="modalAssignmentId">
+
+      <div class="upload-section">
+        <div class="file-upload-container">
+          <!-- Hidden File Input -->
+          <input type="file" id="fileInput" name="submission_file" style="display: none;" required>
+
+          <!-- Custom Upload Button -->
+          <button type="button" id="uploadButton">
+            <i class="fa fa-upload"></i> ADD FILE
+          </button>
+
+          <p id="fileNameDisplay" class="file-name">No file chosen</p>
+        </div>
+      </div>
+
+      <div class="submit-btn-container">
+        <button type="submit" class="submit-btn">Submit Assignment</button>
+      </div>
+    </form>
   </div>
-</section>
+</div>
 
 <!-- JS -->
 <script src="{{ asset('js/script.js') }}"></script>
+<div id="classroomMeta" data-classroom-id="{{ $classroom->id }}"></div>
+<div id="fileData"
+     data-folders='@json($classroom->folders)'
+     data-files='@json($classroom->files)'>
+</div>
+
+
+
+
 </body>
 </html>
