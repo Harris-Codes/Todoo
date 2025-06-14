@@ -741,6 +741,16 @@ body.dark .home .text {
   font-weight: bold;
 }
 
+
+.status.graded {
+  background-color: rgb(7, 121, 214);
+  font-weight: bold;
+  color: #fff; /* dark green text */
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
 .post-section {
   width: 100%;
 }

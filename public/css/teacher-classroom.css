@@ -919,6 +919,21 @@ body.dark .home .text {
     padding: 10px 15px;  /* Adjust spacing */
 }
 
+.selected-grade {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+}
+
+.student-pic {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+
+
 .undo-btn {
     border: none;
     background-color: red;  /* Yellow */

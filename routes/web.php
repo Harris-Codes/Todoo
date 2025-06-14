@@ -112,6 +112,12 @@ Route::put('/assignments/{assignment}', [AssignmentController::class, 'update'])
 Route::post('/classrooms/{classroom}/students', [TeacherClassroomController::class, 'addStudent'])->name('classroom.addStudent');
 //Delete Student from the classroom (Student Tab)
 Route::delete('/classrooms/{classroom}/students/{student}', [TeacherClassroomController::class, 'removeStudent'])->name('classroom.removeStudent');
+//Submissions
+Route::get('/assignments/{id}/submissions', [SubmissionController::class, 'getByAssignment']);
+//Grade
+Route::post('/submissions/{id}/grade', [SubmissionController::class, 'grade'])->name('submissions.grade');
+//Reset Grade
+Route::post('/submissions/{id}/grade/reset', [SubmissionController::class, 'resetGrade'])->name('submissions.grade.reset');
 
 // ============================ FILE ROUTES ============================ //
 Route::prefix('classroom/{classroom}')->middleware('auth')->group(function () {

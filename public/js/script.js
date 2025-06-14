@@ -39,11 +39,57 @@ document.addEventListener("DOMContentLoaded", function () {
         modalDescription.innerText = this.dataset.desc;
         modalAssignmentId.value = this.dataset.id;
         modal.style.display = "flex";
-
+    
         if (fileInput) fileInput.value = '';
         if (fileNameDisplay) fileNameDisplay.innerText = "No file chosen";
+    
+        const grade = this.dataset.grade;
+        const submissionWrapper = document.getElementById("submissionWrapper");
+    
+        // Restore original form HTML if not graded
+        if (!grade && submissionWrapper) {
+          submissionWrapper.innerHTML = `
+            <form action="{{ route('assignment.submit') }}" method="POST" enctype="multipart/form-data">
+              
+              <input type="hidden" name="assignment_id" id="modalAssignmentId">
+    
+              <div class="upload-section">
+                <div class="file-upload-container">
+                  <input type="file" id="fileInput" name="submission_file" style="display: none;" required>
+                  <button type="button" id="uploadButton">
+                    <i class="fa fa-upload"></i> ADD FILE
+                  </button>
+                  <p id="fileNameDisplay" class="file-name">No file chosen</p>
+                </div>
+              </div>
+    
+              <div class="submit-btn-container">
+                <button type="submit" class="submit-btn">Submit Assignment</button>
+              </div>
+            </form>
+          `;
+    
+          // Re-bind file upload trigger (since we replaced the element)
+          document.getElementById("uploadButton")?.addEventListener("click", function () {
+            document.getElementById("fileInput").click();
+          });
+    
+          document.getElementById("fileInput")?.addEventListener("change", function () {
+            const fileName = this.files.length > 0 ? this.files[0].name : "No file chosen";
+            document.getElementById("fileNameDisplay").innerText = fileName;
+          });
+    
+        } else if (grade && submissionWrapper) {
+          submissionWrapper.innerHTML = `
+            <p style="color: red; font-weight: bold;">
+              You have already been graded <strong>(Grade: ${grade})</strong>. Resubmission is not allowed.
+            </p>`;
+        }
       });
     });
+    
+    
+    
 
     closeBtn?.addEventListener("click", function () {
       modal.style.display = "none";

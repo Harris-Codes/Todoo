@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Submission;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 class SubmissionController extends Controller
 {
     public function store(Request $request)
@@ -22,6 +23,12 @@ class SubmissionController extends Controller
         $existing = Submission::where('assignment_id', $assignmentId)
                     ->where('student_id', $studentId)
                     ->first();
+
+        
+        // ❌ Prevent resubmission if already graded
+        if ($existing && $existing->grade !== null) {
+            return back()->with('error', 'You cannot resubmit after your assignment has been graded.');
+        }
 
         // Store new file
         $path = $request->file('submission_file')->store('submissions', 'public');
@@ -44,5 +51,47 @@ class SubmissionController extends Controller
         );
 
         return back()->with('success', 'Assignment submitted successfully!');
+    }
+
+    public function getByAssignment($id)
+    {
+        $submissions = Submission::where('assignment_id', $id)
+            ->with('student') // Assuming 'student' is the relation to User
+            ->get()
+            ->map(function ($submission) {
+                return [
+                    'id' => $submission->id,
+                    'student_name' => $submission->student->name,
+                    'file_path' => $submission->file_path,
+                    'original_filename' => basename($submission->file_path),
+                    'grade' => $submission->grade, 
+                    'profile_picture' => $submission->student->profile_picture,
+                    ];
+            });
+
+        return response()->json($submissions);
+    }
+
+    public function grade(Request $request, $id)
+    {
+        $request->validate([
+            'grade' => 'required|in:A,B,C,D'
+        ]);
+
+        $submission = Submission::findOrFail($id);
+        $submission->grade = $request->grade;
+        $submission->save();
+
+        return response()->json(['success' => true]);
+    }
+
+
+    public function resetGrade($id)
+    {
+        $submission = Submission::findOrFail($id);
+        $submission->grade = null;
+        $submission->save();
+
+        return response()->json(['success' => true]);
     }
 }

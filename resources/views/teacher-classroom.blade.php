@@ -75,8 +75,14 @@
                                                 data-desc="{{ $assignment->description }}">
                                             <i class='bx bx-edit'></i>
                                         </button>
-                                        <!--View Button-->
-                                        <button class="view-button"><i class='bx bx-detail'></i></button>
+                                   
+                                        <!-- View Button -->
+                                        <button class="view-button" 
+                                            data-assignment-id="{{ $assignment->id }}" 
+                                            data-assignment-title="{{ $assignment->title }}">
+                                            <i class='bx bx-detail'></i>
+                                        </button>
+
                                         <!--Delete Button-->
                                         <form method="POST" action="{{ route('assignments.destroy', $assignment->id) }}" style="display:inline;">
                                             @csrf
@@ -222,49 +228,7 @@
                     <th>Grade</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td class="student-info-cell">
-                        <div class="student-info">
-                            <img src="\images\student-boy.png" class="student-pic">
-                            <span class="student-name">John Doe</span>
-                        </div>
-                    </td>
-                    <td>Homework1.pdf</td>
-                    <td><a href="homework1.pdf" class="download-button">⬇</a></td>
-                    
-                    <td class="grade-buttons">
-                        <div class="grade-container">
-                            <button class="grade grade-A">A</button>
-                            <button class="grade grade-B">B</button>
-                            <button class="grade grade-C">C</button>
-                            <button class="grade grade-D">D</button>
-                        </div>
-                        <span class="graded-text" style="display: none; font-weight: bold; color: green;">Graded</span>
-                        <button class="undo-btn" style="display: none;">Undo</button>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td class="student-info-cell">
-                        <div class="student-info">
-                            <img src="\images\student-boy.png" class="student-pic">
-                            <span class="student-name">Jane Smith</span>
-                        </div>
-                    </td>
-                    <td>Essay.docx</td>
-                    <td><a href="essay.docx" class="download-button">⬇</a></td>
-                    <td class="grade-buttons">
-                        <div class="grade-container">
-                            <button class="grade grade-A">A</button>
-                            <button class="grade grade-B">B</button>
-                            <button class="grade grade-C">C</button>
-                            <button class="grade grade-D">D</button>
-                        </div>
-                        <span class="graded-text" style="display: none; font-weight: bold; color: green;">Graded</span>
-                        <button class="undo-btn" style="display: none;">Undo</button>
-                    </td>
-                </tr>
+            <tbody id="grading-table-body">
             </tbody>
         </table>
     </div>

@@ -48,19 +48,23 @@
               @php
                 $submission = $assignment->submissions->where('student_id', auth()->id())->first();
               @endphp
-              <tr class="clickable-row"
+             <tr class="clickable-row"
                   data-id="{{ $assignment->id }}"
                   data-title="{{ $assignment->title }}"
-                  data-desc="{{ $assignment->description }}">
-                <td>{{ $assignment->title }}</td>
-                <td>{{ \Carbon\Carbon::parse($assignment->due_date)->format('M d, Y') }}</td>
-                <td>
-                  @if ($submission)
-                    <span class="status submitted">Submitted</span>
-                  @else
-                    <span class="status pending">Pending</span>
-                  @endif
-                </td>
+                  data-desc="{{ $assignment->description }}"
+                  data-grade="{{ $submission?->grade }}">
+                  <td>{{ $assignment->title }}</td>
+                  <td>{{ \Carbon\Carbon::parse($assignment->due_date)->format('M d, Y') }}</td>
+                  <td>
+                    @if ($submission && $submission->grade)
+                      <span class="status graded">Graded</span>
+                    @elseif ($submission)
+                      <span class="status submitted">Submitted</span>
+                    @else
+                      <span class="status pending">Pending</span>
+                    @endif
+                  </td>
+
               </tr>
             @endforeach
           </tbody>
@@ -186,33 +190,40 @@
     </div>
 
     <!-- Upload Form -->
-    <form action="{{ route('assignment.submit') }}" method="POST" enctype="multipart/form-data">
-      @csrf
-      <input type="hidden" name="assignment_id" id="modalAssignmentId">
+    <div id="submissionWrapper">
+      <form action="{{ route('assignment.submit') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="hidden" name="assignment_id" id="modalAssignmentId">
 
-      <div class="upload-section">
-        <div class="file-upload-container">
-          <!-- Hidden File Input -->
-          <input type="file" id="fileInput" name="submission_file" style="display: none;" required>
+        <div class="upload-section">
+          <div class="file-upload-container">
+            <!-- Hidden File Input -->
+            <input type="file" id="fileInput" name="submission_file" style="display: none;" required>
 
-          <!-- Custom Upload Button -->
-          <button type="button" id="uploadButton">
-            <i class="fa fa-upload"></i> ADD FILE
-          </button>
+            <!-- Custom Upload Button -->
+            <button type="button" id="uploadButton">
+              <i class="fa fa-upload"></i> ADD FILE
+            </button>
 
-          <p id="fileNameDisplay" class="file-name">No file chosen</p>
+            <p id="fileNameDisplay" class="file-name">No file chosen</p>
+          </div>
         </div>
-      </div>
 
-      <div class="submit-btn-container">
-        <button type="submit" class="submit-btn">Submit Assignment</button>
-      </div>
-    </form>
+        <div class="submit-btn-container">
+          <button type="submit" class="submit-btn">Submit Assignment</button>
+        </div>
+      </form>
+
+    </div>
+
   </div>
 </div>
 
 <!-- JS -->
 <script src="{{ asset('js/script.js') }}"></script>
+<script>
+    const csrfToken = '{{ csrf_token() }}';
+</script>
 <div id="classroomMeta" data-classroom-id="{{ $classroom->id }}"></div>
 <div id="fileData"
      data-folders='@json($classroom->folders)'

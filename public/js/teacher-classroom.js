@@ -103,69 +103,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //================ =======================TAB FOR GRADING========================================
 document.addEventListener("DOMContentLoaded", function () {
-    const gradingTab = document.getElementById("grading");
-    const gradingTitle = document.getElementById("grading-title");
-
     document.querySelectorAll(".view-button").forEach(button => {
-        button.addEventListener("click", function (event) {
-            event.preventDefault(); // Prevent default link behavior
-
-            // Get the assignment title from the <td>
-            const assignmentRow = this.closest("tr");
-            const assignmentTitle = assignmentRow.querySelector("td:first-child").textContent;
-
-            // Update the grading tab title with the assignment name
-            gradingTitle.textContent = ` ${assignmentTitle}`;
-
-            // Show the grading tab and hide others
-            document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
-            gradingTab.classList.add("active");
-
-            // Remove active class from all tab links
-            document.querySelectorAll(".tab-link").forEach(tab => tab.classList.remove("active"));
+        button.addEventListener("click", function () {
+            const assignmentId = this.dataset.assignmentId;
+            const assignmentTitle = this.dataset.assignmentTitle;
+            viewSubmissions(assignmentId, assignmentTitle);
         });
     });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".grade-buttons .grade").forEach(button => {
-        button.addEventListener("click", function () {
-            const parentTd = this.closest(".grade-buttons");
-            const gradedText = parentTd.querySelector(".graded-text");
-            const undoBtn = parentTd.querySelector(".undo-btn");
-            const allGrades = parentTd.querySelectorAll(".grade");
 
-            // Hide all grade buttons
-            allGrades.forEach(btn => btn.style.display = "none");
-
-            // Show "Graded" text and "Undo" button
-            gradedText.style.display = "inline-block";
-            undoBtn.style.display = "inline-block";
-
-            // Store selected grade
-            parentTd.dataset.selectedGrade = this.textContent;
-        });
-    });
-
-    document.querySelectorAll(".undo-btn").forEach(button => {
-        button.addEventListener("click", function () {
-            const parentTd = this.closest(".grade-buttons");
-            const gradedText = parentTd.querySelector(".graded-text");
-            const undoBtn = parentTd.querySelector(".undo-btn");
-            const allGrades = parentTd.querySelectorAll(".grade");
-
-            // Show all grade buttons again
-            allGrades.forEach(btn => btn.style.display = "flex");
-
-            // Hide "Graded" text and "Undo" button
-            gradedText.style.display = "none";
-            undoBtn.style.display = "none";
-
-            // Remove stored grade
-            delete parentTd.dataset.selectedGrade;
-        });
-    });
-});
 
 //==================== ASSIGNMENT TABLE/Edit=====================
 document.querySelectorAll(".edit-button").forEach(button => {
@@ -573,6 +520,8 @@ function triggerUpload() {
     };
 }
 
+
+
 window.addEventListener("DOMContentLoaded", function () {
     // Automatically open the "posts" tab (or "files", if preferred)
     const defaultTab = document.querySelector('.tab-link');
@@ -590,6 +539,159 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("✅ DOM loaded, classroomId:", classroomId);
     showMainFileTable();
 });
+
+function viewSubmissions(assignmentId, assignmentTitle) {
+    // Switch to grading tab
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    document.getElementById('grading').classList.add('active');
+
+    // Set title
+    document.getElementById('grading-title').innerText = `Grading: ${assignmentTitle}`;
+
+    // Make AJAX call
+    fetch(`/assignments/${assignmentId}/submissions`)
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.querySelector('#grading tbody');
+            tbody.innerHTML = ''; // clear existing
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4">No submissions yet.</td></tr>`;
+                return;
+            }
+
+            data.forEach(sub => {
+                const row = document.createElement('tr');
+                row.dataset.submissionId = sub.id;
+            
+                row.innerHTML = `
+                    <td class="student-info-cell">
+                        <div class="student-info">
+                            <img src="${sub.profile_picture ? '/storage/' + sub.profile_picture : '/images/default-user.png'}" class="student-pic">
+                            <span class="student-name">${sub.student_name}</span>
+                        </div>
+                    </td>
+                    <td>${sub.original_filename}</td>
+                    <td><a href="/storage/${sub.file_path}" class="download-button" download>⬇</a></td>
+                    <td class="grade-buttons">
+                        <div class="grade-container">
+                            <button class="grade grade-A">A</button>
+                            <button class="grade grade-B">B</button>
+                            <button class="grade grade-C">C</button>
+                            <button class="grade grade-D">D</button>
+                        </div>
+                        <span class="graded-text" style="display: none;">Graded</span>
+                        <button class="undo-btn" style="display: none;">Undo</button>
+                    </td>
+                `;
+            
+                // Append to table first
+                tbody.appendChild(row);
+            
+                // ✅ Auto-show grade if exists
+                if (sub.grade) {
+                    const gradeButtons = row.querySelectorAll('.grade');
+                    const gradedText = row.querySelector('.graded-text');
+                    const undoBtn = row.querySelector('.undo-btn');
+            
+                    // Hide all grade buttons
+                    gradeButtons.forEach(btn => {
+                        if (btn.textContent === sub.grade) {
+                            // Optional: highlight or mark selected one
+                            btn.classList.add('selected-grade');
+                        } else {
+                            btn.style.display = 'none';
+                        }
+                    });
+            
+                    // Show graded message
+                    gradedText.textContent = `Graded: ${sub.grade}`;
+                    gradedText.style.display = 'inline-block';
+                    undoBtn.style.display = 'inline-block';
+                }
+            });
+
+            bindGradeEvents();
+        })
+        .catch(err => {
+            console.error("Failed to fetch submissions:", err);
+        });
+}
+
+
+
+
+function bindGradeEvents() {
+    document.querySelectorAll(".grade-buttons .grade").forEach(button => {
+        button.onclick = function () {
+            const parentTd = this.closest(".grade-buttons");
+            const gradedText = parentTd.querySelector(".graded-text");
+            const undoBtn = parentTd.querySelector(".undo-btn");
+            const allGrades = parentTd.querySelectorAll(".grade");
+
+            const grade = this.textContent;
+            const submissionId = this.closest("tr").dataset.submissionId;
+
+            fetch(`/submissions/${submissionId}/grade`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({ grade })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    allGrades.forEach(btn => btn.style.display = "none");
+                    gradedText.textContent = `Graded: ${grade}`;
+                    gradedText.style.display = "inline-block";
+                    undoBtn.style.display = "inline-block";
+                } else {
+                    alert("Failed to grade submission.");
+                }
+            })
+            .catch(err => {
+                console.error("❌ Error grading:", err);
+                alert("Something went wrong.");
+            });
+        };
+    });
+
+    
+
+    document.querySelectorAll(".undo-btn").forEach(button => {
+        button.onclick = function () {
+            const parentTd = this.closest(".grade-buttons");
+            const gradedText = parentTd.querySelector(".graded-text");
+            const undoBtn = parentTd.querySelector(".undo-btn");
+            const allGrades = parentTd.querySelectorAll(".grade");
+            const submissionId = this.closest("tr").dataset.submissionId;
+
+            fetch(`/submissions/${submissionId}/grade/reset`, {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    allGrades.forEach(btn => btn.style.display = "inline-block");
+                    gradedText.style.display = "none";
+                    undoBtn.style.display = "none";
+                } else {
+                    alert("Failed to reset grade.");
+                }
+            })
+            .catch(err => {
+                console.error("❌ Error resetting grade:", err);
+                alert("Something went wrong.");
+            });
+        };
+    });
+}
+
 
 //=================== DELETE FILE CONFIRMATION ==================
 document.addEventListener("click", function (event) {
