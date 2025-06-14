@@ -254,6 +254,14 @@
 
 
         <table class="file-table">
+            <thead>
+                <tr>
+                <th>Name</th>
+                <th>Modified</th>
+                <th>Modified By</th>
+                <th>Action</th> 
+                </tr>
+            </thead>
             <tbody id="fileTableBody">
                 <tr><td colspan="4">Loading...</td></tr>
             </tbody>

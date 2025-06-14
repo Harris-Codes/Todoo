@@ -367,7 +367,9 @@ function showMainFileTable() {
                             <td><i class='bx bx-folder'></i> ${folder.name}</td>
                             <td>-</td><td>-</td>
                             <td>
-                                <button onclick="viewFolder(${folder.id}, '${folder.name}')">View</button>
+                                <button onclick="viewFolder(${folder.id}, '${folder.name}')" class="view-folder-btn">
+                                    VIEW
+                                </button>
                             </td>`;
                         fileTableBody.appendChild(row);
                     });
@@ -380,8 +382,8 @@ function showMainFileTable() {
                             <td>${file.modified_by}</td>
                             <td> 
                                 <div style="display: flex; gap: 10px;">
-                                    <a href="/storage/${file.file_path}" target="_blank" class="view-button">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    <a href="/storage/${file.file_path}" target="_blank" class="download-button">
+                                    <i class='bx bxs-download'></i>
                                     </a>
                                     <button type="button" class="delete-button" data-file-id="${file.id}">
                                     <i class='bx bx-trash'></i>
@@ -428,7 +430,7 @@ function viewFolder(folderId, folderName) {
                     <td>
                         <div style="display: flex; gap: 10px;">
                             <a href="/storage/${file.file_path}" target="_blank" class="view-button">
-                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            <i class='bx bxs-download'></i>
                             </a>
                             <button type="button" class="delete-button" data-file-id="${file.id}">
                             <i class='bx bx-trash'></i>
