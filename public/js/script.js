@@ -45,14 +45,15 @@ document.addEventListener("DOMContentLoaded", function () {
     
         const grade = this.dataset.grade;
         const submissionWrapper = document.getElementById("submissionWrapper");
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     
         // Restore original form HTML if not graded
-        if (!grade && submissionWrapper) {
+        if (!grade) {
           submissionWrapper.innerHTML = `
-            <form action="{{ route('assignment.submit') }}" method="POST" enctype="multipart/form-data">
-              
-              <input type="hidden" name="assignment_id" id="modalAssignmentId">
-    
+            <form action="/submit-assignment" method="POST" enctype="multipart/form-data">
+              <input type="hidden" name="_token" value="${csrfToken}">
+              <input type="hidden" name="assignment_id" value="${this.dataset.id}">
+        
               <div class="upload-section">
                 <div class="file-upload-container">
                   <input type="file" id="fileInput" name="submission_file" style="display: none;" required>
@@ -62,29 +63,31 @@ document.addEventListener("DOMContentLoaded", function () {
                   <p id="fileNameDisplay" class="file-name">No file chosen</p>
                 </div>
               </div>
-    
+        
               <div class="submit-btn-container">
                 <button type="submit" class="submit-btn">Submit Assignment</button>
               </div>
             </form>
           `;
-    
-          // Re-bind file upload trigger (since we replaced the element)
+        
+          // rebind file triggers
           document.getElementById("uploadButton")?.addEventListener("click", function () {
             document.getElementById("fileInput").click();
           });
-    
+        
           document.getElementById("fileInput")?.addEventListener("change", function () {
             const fileName = this.files.length > 0 ? this.files[0].name : "No file chosen";
             document.getElementById("fileNameDisplay").innerText = fileName;
           });
-    
-        } else if (grade && submissionWrapper) {
+        
+        } else {
           submissionWrapper.innerHTML = `
             <p style="color: red; font-weight: bold;">
               You have already been graded <strong>(Grade: ${grade})</strong>. Resubmission is not allowed.
-            </p>`;
+            </p>
+          `;
         }
+        
       });
     });
     
@@ -213,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <td>
                   <div style="display: flex; gap: 10px;">
                     <a href="/storage/${file.file_path}" target="_blank" class="file-action-view" title="View File">
-                      <i class="fa-solid fa-eye"></i>
+                    <i class='bx bxs-download'></i>
                     </a>
                   </div>
                 </td>`;
@@ -250,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <td>
               <div style="display: flex; gap: 10px;">
                 <a href="/storage/${file.file_path}" target="_blank" class="file-action-view" title="View File">
-                  <i class="fa-solid fa-eye"></i>
+                  <i class='bx bxs-download'></i>
                 </a>
               </div>
             </td>`;

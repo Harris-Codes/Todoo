@@ -31,7 +31,9 @@ class SubmissionController extends Controller
         }
 
         // Store new file
-        $path = $request->file('submission_file')->store('submissions', 'public');
+        $uploadedFile = $request->file('submission_file');
+        $originalName = $uploadedFile->getClientOriginalName();
+        $path = $uploadedFile->store('submissions', 'public');
 
         // Delete old file if submission exists
         if ($existing && $existing->file_path && Storage::disk('public')->exists($existing->file_path)) {
@@ -46,6 +48,7 @@ class SubmissionController extends Controller
             ],
             [
                 'file_path' => $path,
+                'original_filename' => $originalName,
                 'submitted_at' => now()
             ]
         );

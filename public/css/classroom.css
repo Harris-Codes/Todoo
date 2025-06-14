@@ -17,6 +17,9 @@
   --toggle-color: #DDD;
   --text-color: #707070;
   --todoo-color:#ffc21b;
+  --submitted: rgb(10, 190, 10);
+  --graded: rgb(7, 121, 214);
+  --delete:  #ff4d4d;
 
   /* ====== Transition ====== */
   --tran-03: all 0.2s ease;
@@ -781,11 +784,9 @@ body.dark .home .text {
   align-items: center;
 }
 
-/* Card (Modal Content) */
 .card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* push bottom items down */
   width: 800px;
   height: 500px;
   border-width: 1px;
@@ -870,15 +871,15 @@ body.dark .home .text {
   color: rgb(0, 0, 0);
 }
 
-/* Upload Section */
 .upload-section {
-  text-align: center;
-  margin-top: 30px;
-  flex-grow: 1;
-  padding-bottom: 20px;
+  margin-top: auto;
+  margin-bottom: 20px; /* 👈 Pushes file input slightly up */
 }
-
-
+#submissionWrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; 
+}
 
 /* Flex Container to Align Button and File Name */
 .file-upload-container {
@@ -900,18 +901,24 @@ body.dark .home .text {
   padding: 15px 0;
   margin-top: 50px;
 }
-
 .submit-btn-container {
-  margin-top: auto; /* pushes it to the bottom */
-  padding-top: 20px;
+  margin-top: auto; /* push it to the bottom */
 }
 
+.submit-btn-container {
+  position: absolute;
+  bottom: 20px; /* spacing from bottom */
+  left: 0;
+  width: 100%;
+  padding: 0 1.5rem; /* same as card padding */
+  background: white; /* matches the modal background */
+}
 
 
 /* Submit Button */
 .submit-btn {
   font-size: 20px;
-  background-color: green;
+  background-color: rgb(10, 190, 10);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -922,7 +929,8 @@ body.dark .home .text {
 }
 
 .submit-btn:hover {
-  background-color: #217dbb;
+  background-color:green;
+;
 }
 
 /* Clickable Rows */
@@ -1044,7 +1052,7 @@ button svg {
 
 /* File Action Button (View only for students) */
 .file-action-view {
-  background: #4da6ff;
+  background-color:var(--graded);
   color: white;
   font-weight: bold;
   padding: 6px 10px;

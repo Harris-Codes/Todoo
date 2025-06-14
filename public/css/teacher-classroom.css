@@ -17,7 +17,9 @@
   --toggle-color: #DDD;
   --text-color: #707070;
   --todoo-color:#ffc21b;
-  --add-color:rgb(24, 192, 2);
+  --submitted: rgb(10, 190, 10);
+  --graded: rgb(7, 121, 214);
+  --delete:  #ff4d4d;
 
   /* ====== Transition ====== */
   --tran-03: all 0.2s ease;
