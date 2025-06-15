@@ -88,17 +88,23 @@
 
             <!-- Post Content -->
             <div class="post-content">
-              <p>{{ $post->content }}</p>
+                <p>{{ $post->content }}</p>
 
-              @if ($post->quiz)
-                <a href="{{ route('quiz.show', [$classroom->id, $post->quiz->id]) }}" class="quiz-box">
-                  <div class="quiz-icon"><i class='bx bx-task'></i></div>
-                  <div class="quiz-text">
-                    <h4>{{ $post->quiz->title }}</h4>
-                    <p>Click to start</p>
-                  </div>
-                </a>
-              @endif
+                @if ($post->quiz)
+                    @php
+                        $attempts = $post->quiz->attempts ?? collect();  // fallback to empty collection
+                        $attempted = $attempts->where('user_id', auth()->id())->count() > 0;
+                    @endphp
+                    
+                    <a href="{{ $attempted ? '#' : route('quiz.show', [$classroom->id, $post->quiz->id]) }}"
+                      class="quiz-box {{ $attempted ? 'disabled-quiz' : '' }}">
+                        <div class="quiz-icon"><i class='bx bx-task'></i></div>
+                        <div class="quiz-text">
+                            <h4>{{ $post->quiz->title }}</h4>
+                            <p>{{ $attempted ? 'Already Attempted' : 'Click to start' }}</p>
+                        </div>
+                    </a>
+                @endif
             </div>
 
               <!-- Divider ABOVE comments -->
@@ -228,6 +234,7 @@
 <script>
     window.assignmentSubmitUrl = "{{ route('assignment.submit') }}";
 </script>
+
 
 <div id="classroomMeta" data-classroom-id="{{ $classroom->id }}"></div>
 <div id="fileData"

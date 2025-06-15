@@ -51,5 +51,10 @@ class Quiz extends Model
         return $this->questions->sum('timer_seconds'); // Sum actual 'timer_seconds' field
     }
 
+    public function attempts()
+    {
+        return $this->hasMany(QuizAttempt::class);
+    }
+
 
 }

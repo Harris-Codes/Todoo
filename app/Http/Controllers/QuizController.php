@@ -11,6 +11,7 @@ use App\Models\Post;
 use App\Models\Classroom;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\QuizAttempt;
 
 class QuizController extends Controller
 {   
@@ -18,15 +19,43 @@ class QuizController extends Controller
     {
         $classroom = Classroom::findOrFail($classroomId);
         $quiz = Quiz::with('questions.answers')->findOrFail($quizId);
-
-        // Optional: Check if student is part of the classroom
+    
+        // 🔒 Block if student is not in the class
         if (!$classroom->students()->where('user_id', auth()->id())->exists()) {
             abort(403, 'You are not part of this classroom');
         }
-
-        return view('quiz.attempt', compact('classroom', 'quiz'));
+    
+        // 🔒 Block if already attempted
+        $alreadyAttempted = QuizAttempt::where('quiz_id', $quiz->id)
+                                       ->where('user_id', auth()->id())
+                                       ->exists();
+    
+        if ($alreadyAttempted) {
+            return redirect()->route('student.classroom', $classroomId)
+                             ->with('error', 'You have already attempted this quiz.');
+        }
+    
+        // 🧠 Prepare quiz data
+        $quizData = [
+            'title' => $quiz->title,
+            'questions' => $quiz->questions->map(function ($question) {
+                return [
+                    'text' => $question->question_text,
+                    'options' => $question->answers->pluck('answer_text')->toArray(),
+                    'correct' => $question->answers->search(fn($a) => $a->is_correct),
+                    'points' => $question->points ?? 0,
+                    'time' => $question->time ?? 30,
+                ];
+            }),
+        ];
+    
+        return view('quiz', [
+            'classroom' => $classroom,
+            'quizData' => $quizData,
+            'quiz' => $quiz,
+        ]);
+        
     }
-
     public function showCreateQuiz($classroom_id)
     {
         $classroom = Classroom::findOrFail($classroom_id);
@@ -192,5 +221,31 @@ class QuizController extends Controller
         })->values();
 
         return view('create-quiz', compact('classroom', 'quiz', 'transformedQuestions'));
+    }
+
+    public function submitAttempt(Request $request, $quizId)
+    {
+        $request->validate([
+            'score' => 'required|integer',
+        ]);
+
+        $quiz = Quiz::findOrFail($quizId);
+
+        // Optional: Prevent duplicate submission
+        $existing = QuizAttempt::where('quiz_id', $quiz->id)
+                    ->where('user_id', auth()->id())
+                    ->first();
+
+        if ($existing) {
+            return response()->json(['message' => 'You have already attempted this quiz.'], 409);
+        }
+
+        QuizAttempt::create([
+            'quiz_id' => $quiz->id,
+            'user_id' => auth()->id(),
+            'score' => $request->score,
+        ]);
+
+        return response()->json(['message' => 'Quiz submitted successfully.']);
     }
 }

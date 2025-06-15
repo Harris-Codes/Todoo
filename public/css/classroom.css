@@ -770,7 +770,8 @@ body.dark .home .text {
 /* =================================== Modal Background======================================== */
 
 .modal {
-  display: none; /* Hide modal by default */
+  display: none; 
+  visibility: hidden;
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -1110,4 +1111,11 @@ button svg {
   font-style: italic;
   color: #888;
   padding: 15px;
+}
+
+
+.disabled-quiz {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed;
 }

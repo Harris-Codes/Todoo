@@ -16,6 +16,9 @@
   --toggle-color: #DDD;
   --text-color: #707070;
   --todoo-color:#ffc21b;
+  --submitted: rgb(10, 190, 10);
+  --graded: rgb(7, 121, 214);
+  --delete:  #ff4d4d;
 
   /* ====== Transition ====== */
   --tran-03: all 0.2s ease;
@@ -40,6 +43,19 @@
     color:white;
     font-size: 40px;
 }
+
+.quiz-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 12px 20px;
+    border-left: 5px solid #ffc107;
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 90%;
+    text-align: center;
+    font-weight: bold;
+}
+
 
 .creation-main{
     flex-grow: 1; /* Allows it to take remaining space */
@@ -80,6 +96,62 @@
 
 }
 
+.question-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: var(--primary-color);
+    padding: 15px 25px;
+    gap: 10px;
+    font-size: 18px;
+    border-radius: 50px;
+    font-weight: bold;
+    border: 2px solid var(--todoo-color);
+    cursor: default;
+    max-width: fit-content;
+    margin: 20px auto;
+}
+
+.question-meta i {
+    color: var(--todoo-color); /* or use 'yellow' or '#ffc21b' directly */
+    font-size: 20px;
+}
+
+
+
+.timer-section {
+    width: 100%;
+    margin: 20px auto 30px auto;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.timer-info {
+    margin-bottom: 8px;
+}
+
+.timer-bar-container {
+    width: 100%;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.timer-bar {
+    height: 100%;
+    background-color: var(--todoo-color);
+    width: 100%;
+    transition: width 1s linear;
+}
+
+
+
+
+
 .answer-container{
     
     flex-grow: 1; /* to make it grow and fill the remaining space */
@@ -116,7 +188,7 @@
 .answer-btn:nth-child(1) { background-color: #50c5fc; }  /* Red */
 .answer-btn:nth-child(2) { background-color: #FFAEC9; }  /* Pink */
 .answer-btn:nth-child(3) { background-color: #D1A3FF; }  /* Purple */
-.answer-btn:nth-child(4) { background-color: #e4d871; }  /* Green */
+.answer-btn:nth-child(4) { background-color: #e9f378; }  /* Green */
 
 /* Hover effect */
 .answer-btn:hover {
@@ -220,4 +292,20 @@
 }
 
 
+#goBackButton{
+    margin-top:10px;
+    background-color: var(--graded);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
 
+#goBackButton:hover {
+    background-color: #357ac9; /* darker blue on hover */
+}

@@ -57,7 +57,8 @@ class ClassroomController
             'teacher',
             'assignments',
             'files.uploader',
-            'folders.files.uploader', // ✅ Load folders AND their files
+            'folders.files.uploader', 
+            'posts.quiz.attempts',
             'posts' => function ($query) {
                 $query->latest(); // Order posts by newest first
             },

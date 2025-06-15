@@ -162,3 +162,6 @@ Route::post('/comments', [CommentController::class, 'store'])->name('comments.st
 Route::post('/submit-assignment', [SubmissionController::class, 'store'])->name('assignment.submit');
 //Download Files
 Route::get('/download/{file}', [FileController::class, 'download'])->name('file.download');
+//Attempt Quiz
+Route::post('/quiz/{quiz}/submit', [QuizController::class, 'submitAttempt'])->name('quiz.submit');
+
