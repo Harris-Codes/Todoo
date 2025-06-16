@@ -7,7 +7,7 @@
     <title>Quiz Overview</title>
     
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/classroom.css') }}"> {{-- Uses same styling as other pages --}}
+    <link rel="stylesheet" href="{{ asset('css/teacher.css') }}"> {{-- Uses same styling as other pages --}}
     <link rel="stylesheet" href="{{ asset('css/quiz-overview.css') }}"> {{-- Additional quiz-specific styles --}}
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -17,7 +17,7 @@
    
     @include('partials.sidebar-teacher')
 
-    <div class="class-page"> 
+    <div class="home"> 
         <div class = "banner">
             <div class = "banner-text">
             <h1>Quiz Management</h1>

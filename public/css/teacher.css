@@ -55,6 +55,7 @@ body.dark {
   background: var(--sidebar-color);
   transition: var(--tran-05);
   z-index: 100;
+  border: 1px solid #e2dfdf;
 }
 
 .sidebar.close {
@@ -332,17 +333,17 @@ body.dark .home .text {
 
 
 .card-container {
-  background-image: url('/images/school_bg5.jpg');
+  background-image: url('/images/class_bg7.jpg');
   background-size: 70%;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: repeat;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(300px, 1fr)); /* Responsive grid with minimum card width */
-    gap: 50px 20px; /* Consistent spacing between cards */
-    padding: 50px; /* Add padding around the grid */
-    background-color: #fff;
-    height:100%;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: repeat;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(300px, 1fr)); /* Responsive grid with minimum card width */
+  gap: 50px 20px; /* Consistent spacing between cards */
+  padding: 50px; /* Add padding around the grid */
+  background-color: #fff;
+  height:100%;
 }
 
 /* Cards remain the same */

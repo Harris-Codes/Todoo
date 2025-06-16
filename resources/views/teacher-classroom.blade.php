@@ -20,7 +20,7 @@
 @include('partials.sidebar-teacher')
 
 <!---------------------------------- MAIN CONTENT -------------------------------------------------->
-<section class="class-page"> 
+<section class="class-page">
 
     <div class="class-banner">
         <div class="banner-text">
@@ -239,34 +239,36 @@
             <i class='bx bx-arrow-back'></i> Back
         </button>
 
-        <div class="folder-header">
-            <h2 id="folderTitle">Files</h2>
-            <div class="file-buttons"> <!-- Added class here -->
-                <button onclick="openFolderModal()" class="add-folder-btn">
-                <i class="bx bx-folder-plus"></i> Add Folder
-                </button>
-                <input type="file" id="uploadInput" style="display: none;" />
-                <button onclick="triggerUpload(null)">
-                <i class='bx bx-upload'></i> Upload File
-                </button>
-            </div>
+        <div class="file-wrapper">
+                <div class="file-header">
+                    <h2 id="folderTitle">Files</h2>
+                    <div class="file-buttons"> <!-- Added class here -->
+                        <button onclick="openFolderModal()" class="add-folder-btn">
+                        <i class="bx bx-folder-plus"></i> Add Folder
+                        </button>
+                        <input type="file" id="uploadInput" style="display: none;" />
+                        <button onclick="triggerUpload(null)">
+                        <i class='bx bx-upload'></i> Upload File
+                        </button>
+                    </div>
+                </div>
+
+                <table class="file-table">
+                    <thead>
+                        <tr>
+                        <th>Name</th>
+                        <th>Modified</th>
+                        <th>Modified By</th>
+                        <th>Action</th> 
+                        </tr>
+                    </thead>
+                    <tbody id="fileTableBody">
+                        <tr><td colspan="4">Loading...</td></tr>
+                    </tbody>
+                </table>
         </div>
-
-
-        <table class="file-table">
-            <thead>
-                <tr>
-                <th>Name</th>
-                <th>Modified</th>
-                <th>Modified By</th>
-                <th>Action</th> 
-                </tr>
-            </thead>
-            <tbody id="fileTableBody">
-                <tr><td colspan="4">Loading...</td></tr>
-            </tbody>
-        </table>
     </div>
+           
 
     <!-- FOLDER MODAL -->
     <div id="folderModal" class="modal">
@@ -282,39 +284,47 @@
     
     <!------ STUDENT TAB------->
     <div id="students" class="tab-content">
-        <button class="add-student-btn" onclick="openStudentModal()">
-            <i class='bx bxs-user-plus'></i> Add Student
-        </button>
-
-        <h3>Students List</h3>
-            <table class="student-table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Remove</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($classroom->students as $student)
-                    <tr>
-                        <td>photo</td>
-                        <td>{{ $student->name }}</td>
-                        <td>{{ $student->email }}</td>
-                        <td>
+    <div class="student-wrapper">
+        <h3 class="student-title">Students List</h3>
+        
+        <div class="add-student-wrapper">
+            <button class="add-student-btn" onclick="openStudentModal()">
+                <i class='bx bxs-user-plus'></i> Add Student
+            </button>
+        </div>
+        <table class="student-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($classroom->students as $student)
+                <tr>
+                    <td>
+                        <img src="{{ $student->profile_picture ? asset('storage/' . $student->profile_picture) : asset('images/default-user.png') }}" class="student-pic" alt="Profile Picture">
+                    </td>
+                    <td>{{ $student->name }}</td>
+                    <td>{{ $student->email }}</td>
+                    <td>
                         <form method="POST" action="{{ route('classroom.removeStudent', [$classroom->id, $student->id]) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="delete-student"><i class='bx bx-trash'></i></button>
                         </form>
-
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
+</div>
+
+
+
 
 
     <!------------------------------ MODAL FOR ASSIGNMENT CREATION ---------------------------------------->

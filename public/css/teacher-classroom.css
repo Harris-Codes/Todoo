@@ -35,14 +35,7 @@
   color: #fff;
 }
 
-body.dark {
-  --body-color: #18191a;
-  --sidebar-color: #242526;
-  --primary-color: #3a3b3c;
-  --primary-color-light: #3a3b3c;
-  --toggle-color: #fff;
-  --text-color: #ccc;
-}
+
 
 /* ===== Sidebar ===== */
 .sidebar {
@@ -55,6 +48,7 @@ body.dark {
   background: var(--sidebar-color);
   transition: var(--tran-05);
   z-index: 100;
+  border: 1px solid #e2dfdf;
 }
 
 .sidebar.close {
@@ -216,10 +210,6 @@ body.dark .sidebar header .toggle {
   color: var(--sidebar-color);
 }
 
-body.dark .sidebar li a:hover .icon,
-body.dark .sidebar li a:hover .text {
-  color: var(--text-color);
-}
 
 .sidebar .menu-bar {
   height: calc(100% - 55px);
@@ -233,33 +223,6 @@ body.dark .sidebar li a:hover .text {
   display: none;
 }
 
-.sidebar .menu-bar .mode {
-  border-radius: 6px;
-  background-color: var(--primary-color-light);
-  position: relative;
-  transition: var(--tran-05);
-}
-
-.menu-bar .mode .sun-moon {
-  height: 50px;
-  width: 60px;
-}
-
-.mode .sun-moon i {
-  position: absolute;
-}
-
-.mode .sun-moon i.sun {
-  opacity: 0;
-}
-
-body.dark .mode .sun-moon i.sun {
-  opacity: 1;
-}
-
-body.dark .mode .sun-moon i.moon {
-  opacity: 0;
-}
 
 .menu-bar .bottom-content .toggle-switch {
   position: absolute;
@@ -273,66 +236,21 @@ body.dark .mode .sun-moon i.moon {
   cursor: pointer;
 }
 
-.toggle-switch .switch {
-  position: relative;
-  height: 22px;
-  width: 40px;
-  border-radius: 25px;
-  background-color: var(--toggle-color);
-  transition: var(--tran-05);
-}
-
-.switch::before {
-  content: '';
-  position: absolute;
-  height: 15px;
-  width: 15px;
-  border-radius: 50%;
-  top: 50%;
-  left: 5px;
-  transform: translateY(-50%);
-  background-color: var(--sidebar-color);
-  transition: var(--tran-04);
-}
-
-body.dark .switch::before {
-  left: 20px;
-}
-
-.home {
-    position: absolute;
-    top: 0;
-    left: 250px; /* Space for the sidebar when open */
-    height: 100vh;
-    width: calc(100% - 250px); /* Adjust width for the sidebar */
-    background-color: var(--body-color);
-    transition: var(--tran-05);
-  }
-
-.home .text {
-    font-size: 50px;
-    font-weight: bold;
-    color: #ffc21b;
-    padding: 12px 60px;
-}
-
-
-body.dark .home .text {
-  color: var(--text-color);
-}
 
 /*ni buat main content stick and responsive */
 .class-page{
-    position: absolute;
-    top: 0;
-    left: 250px; /* Space for the sidebar when open */
-    height:auto;
-    
-    width: calc(100% - 250px); /* Adjust width for the sidebar */
-    background-color: var(--body-color);
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    overflow-y: visible; /* Allow the section to expand */
-    
+  background-image: url('/images/class_bg7.jpg');
+  background-size: 70%;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: repeat;
+  position: absolute;
+  top: 0;
+  left: 250px; /* Space for the sidebar when open */
+  height:auto;
+  width: calc(100% - 250px); /* Adjust width for the sidebar */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-y: visible; /* Allow the section to expand */
 }
 
 /*ni calculation for responsive dia*/
@@ -628,12 +546,10 @@ body.dark .home .text {
   display: flex;
   justify-content: start; /* Aligns tabs to the left */
   border-bottom: 2px solid var(--inactive-color);
-  width: 100%;
-  background-color: white;
 }
 
 .tab-link {
-  background: none;
+  background: white;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
@@ -648,6 +564,16 @@ body.dark .home .text {
   color: black;
   border-bottom: 3px solid var(--todoo-color);
 }
+
+#posts.tab-content,
+#files.tab-content,
+#students.tab-content,
+#grading.tab-content {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+
 
 
 .tab-content {
@@ -847,21 +773,62 @@ body.dark .home .text {
 
 .student-table {
   width: 100%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   padding: 1rem;
   border-collapse: separate;
-  
-  
 }
 
-#students{
-  height:100%;
+.student-wrapper {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 30px;
 }
 
-#students h3{
-  color: #e91e63;
-  font-size: 30px;
+/* Optional: match spacing for header */
+.student-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.student-wrapper h3 {
+  font-size:54px;
+  color: var(--todoo-color);
+  font-weight: bold;
+}
+
+.add-student-btn {
+  background-color: rgb(24, 192, 2);
+  color: white;
+  font-weight: bold;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+
+  display: inline-block;
+  margin-left: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.add-student-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+
+/* Student Picture */
+.student-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--todoo-color);
 }
 
 
@@ -1017,13 +984,32 @@ button svg {
   background-color: white;
 }
 
-.folder-header {
-  display: flex;
-  justify-content: space-between; /* Pushes elements to opposite sides */
-  align-items: center; /* Aligns items vertically */
-  padding: 10px 0px; /* Add spacing */
-  border-bottom: 2px solid #ddd; /* Optional: to separate from table */
+.file-wrapper {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-top: 20px;
 }
+
+.file-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.file-header #folderTitle {
+  font-size: 54px;
+  color:var(--todoo-color);
+  font-weight: bold;
+}
+
+.file-buttons {
+  display: flex;
+  gap: 10px;
+}
+
 
 #folderTitle {
   font-size: 24px;
@@ -1389,17 +1375,8 @@ form textarea {
 
 /* =================== STUDENT TAB =======================*/
 
-.add-student-btn{
-  background-color: rgb(24, 192, 2);
-  margin-top:20px;
-  float:inline-end;
-  
-  
-}
 
-#students h3{
-  margin-top:30px;
-}
+
 
 .delete-student{
   background-color: red;

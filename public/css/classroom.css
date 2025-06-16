@@ -55,6 +55,7 @@ body.dark {
   background: var(--sidebar-color);
   transition: var(--tran-05);
   z-index: 100;
+  border: 1px solid #e2dfdf;
 }
 
 .sidebar.close {
@@ -321,18 +322,20 @@ body.dark .home .text {
   color: var(--text-color);
 }
 
-/*ni buat main content stick and responsive */
 .class-page{
-    position: absolute;
-    top: 0;
-    left: 250px; /* Space for the sidebar when open */
-    height:auto;
-    
-    width: calc(100% - 250px); /* Adjust width for the sidebar */
-    background-color: #FFF;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    overflow-y: visible; /* Allow the section to expand */
-    
+  background-image: url('/images/class_bg7.jpg');
+  background-size: 70%;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: repeat;
+  position: absolute;
+  top: 0;
+  left: 250px; 
+  height:auto;
+  width: calc(100% - 250px); 
+  overflow-x: hidden; 
+  overflow-y: visible; 
+
 }
 
 /*ni calculation for responsive dia*/
@@ -641,12 +644,10 @@ body.dark .home .text {
   display: flex;
   justify-content: start; /* Aligns tabs to the left */
   border-bottom: 2px solid var(--inactive-color);
-  width: 100%;
-  background-color: white;
 }
 
 .tab-link {
-  background: none;
+  background: white;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
@@ -662,12 +663,20 @@ body.dark .home .text {
   border-bottom: 3px solid var(--todoo-color);
 }
 
+#posts.tab-content,
+#files.tab-content,
+#students.tab-content,
+#grading.tab-content {
+  background: transparent !important;
+  box-shadow: none !important;
+}
 
 .tab-content {
-    display: none; /* Hide sections by default */
-    
-    background: #fff;
-    border-radius: 10px;
+
+  display: none; /* Hide sections by default */
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
 }
 
 /* Show the active tab */
@@ -1015,6 +1024,32 @@ button svg {
   font-size: 20px;
   font-weight: 600;
   color: #333;
+}
+
+.file-wrapper {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-top: 20px;
+}
+
+.file-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.file-header #folderTitle {
+  font-size: 54px;
+  color:var(--todoo-color);
+  font-weight: bold;
+}
+
+.file-buttons {
+  display: flex;
+  gap: 10px;
 }
 
 /* Table Layout */

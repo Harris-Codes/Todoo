@@ -155,28 +155,38 @@
 
 <!-- ==================== FILES TAB (STUDENT) ==================== -->
 <div id="files" class="tab-content">
-  <button id="backToMainTable" onclick="showMainFileTable()" style="display: none;">
-      <i class='bx bx-arrow-back'></i> Back
-  </button>
+    <button id="backToMainTable" onclick="showMainFileTable()" style="display: none;">
+        <i class='bx bx-arrow-back'></i> Back
+    </button>
 
-  <div class="folder-header">
-      <h2 id="folderTitle">Files</h2>
-      <!-- No upload or folder button for students -->
-  </div>
+    <div class="file-wrapper">
+            <div class="file-header">
+                <h2 id="folderTitle">Files</h2>
+                <div class="file-buttons"> <!-- Added class here -->
+                    <button onclick="openFolderModal()" class="add-folder-btn">
+                    <i class="bx bx-folder-plus"></i> Add Folder
+                    </button>
+                    <input type="file" id="uploadInput" style="display: none;" />
+                    <button onclick="triggerUpload(null)">
+                    <i class='bx bx-upload'></i> Upload File
+                    </button>
+                </div>
+            </div>
 
-  <table class="file-table">
-            <thead>
-                <tr>
-                <th>Name</th>
-                <th>Modified</th>
-                <th>Modified By</th>
-                <th>Action</th> 
-                </tr>
-            </thead>
-            <tbody id="fileTableBody">
-                <tr><td colspan="4">Loading...</td></tr>
-            </tbody>
-        </table>
+            <table class="file-table">
+                <thead>
+                    <tr>
+                    <th>Name</th>
+                    <th>Modified</th>
+                    <th>Modified By</th>
+                    <th>Action</th> 
+                    </tr>
+                </thead>
+                <tbody id="fileTableBody">
+                    <tr><td colspan="4">Loading...</td></tr>
+                </tbody>
+            </table>
+    </div>
 </div>
 
 
