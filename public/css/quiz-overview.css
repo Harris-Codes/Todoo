@@ -18,6 +18,21 @@
     --tran-05: all 0.3s ease;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
+
+  .class-page {
+    background-image: url('/images/school_bg2.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: repeat;
+    
+  }
+  
+  
 .banner{
     background-color: var(--graded);
     color: white;
@@ -40,8 +55,8 @@
     padding: 30px;
     background: #fff;
     border-radius: 12px;
-
     margin: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .quiz-overview-container h2 {
@@ -80,8 +95,6 @@
     outline: none;
 }
 
-
-/* Table styling */
 .quiz-table {
     width: 100%;
     border-collapse: collapse;

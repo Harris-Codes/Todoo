@@ -17,7 +17,6 @@
    
     @include('partials.sidebar-teacher')
 
-   
     <div class="class-page"> 
         <div class = "banner">
             <div class = "banner-text">
@@ -26,8 +25,6 @@
             
         </div>
        
-       
-
          <div class="dropdown-content">
 
                 <form method="GET" action="{{ route('quiz.overview') }}">
