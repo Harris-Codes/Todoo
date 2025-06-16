@@ -138,12 +138,23 @@ Route::post('/classroom/{classroom}/folders/{folder}/files', [FileController::cl
 
 
 // ============================ QUIZ ============================ //
+//New quiz over view page
+Route::get('/teacher/quizzes', [QuizController::class, 'overview'])->name('quiz.overview');
 Route::get('/classroom/{classroom}/quiz/{quiz}', [QuizController::class, 'show'])->name('quiz.show');
 Route::get('/classroom/{classroom_id}/create-quiz', [QuizController::class, 'showCreateQuiz'])->name('quiz.create');
 Route::post('/quiz', [QuizController::class, 'store'])->name('quizzes.store');
 Route::get('/classroom/{classroom_id}/quiz/{quiz_id}/edit', [QuizController::class, 'edit'])->name('quiz.edit');
 //update or replace existing quizz
 Route::put('/quiz/{quiz}', [QuizController::class, 'update'])->name('quiz.update');
+//manage
+Route::get('/teacher/quiz/{quiz}/manage', [QuizController::class, 'manage'])->name('quiz.manage');
+//Result
+Route::get('/teacher/quiz/{quiz_id}/results', [QuizController::class, 'viewResults'])->name('teacher.quiz.results');
+
+//publish
+Route::post('/teacher/quiz/{quiz}/publish', [QuizController::class, 'publish'])->name('quiz.publish');
+
+
 
 
 

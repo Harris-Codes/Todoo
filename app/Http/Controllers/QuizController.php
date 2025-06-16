@@ -56,6 +56,31 @@ class QuizController extends Controller
         ]);
         
     }
+
+    public function overview(Request $request)
+    {
+        $teacherId = auth()->id();
+        $classroomId = $request->input('classroom_id');
+    
+        $classrooms = Classroom::where('teacher_id', $teacherId)->get();
+    
+        $quizzes = Quiz::with('classroom')
+            ->when($classroomId, function ($query) use ($classroomId) {
+                $query->where('classroom_id', $classroomId);
+            })
+            ->whereIn('classroom_id', $classrooms->pluck('id'))
+            ->orderByDesc('created_at')
+            ->get();
+    
+        return view('quiz-overview', [
+            'quizzes' => $quizzes,
+            'teacherClassrooms' => $classrooms,
+        ]);
+            
+    }
+    
+    
+
     public function showCreateQuiz($classroom_id)
     {
         $classroom = Classroom::findOrFail($classroom_id);
@@ -196,6 +221,61 @@ class QuizController extends Controller
             'quiz_id' => $quiz->id
         ]);
     }
+
+    public function manage($quizId)
+    {
+        $quiz = Quiz::with('classroom', 'attempts.user')->findOrFail($quizId);
+
+        // Authorization check
+        if ($quiz->classroom->teacher_id !== auth()->id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        return view('teacher.quiz-manage', [
+            'quiz' => $quiz
+        ]);
+    }
+
+    public function viewResults($quiz_id)
+    {
+        $quiz = Quiz::with(['classroom', 'attempts.user'])->findOrFail($quiz_id);
+
+        // Authorization check
+        if ($quiz->classroom->teacher_id !== auth()->id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        return view('teacher.quiz-results', compact('quiz'));
+    }
+
+
+
+    public function publish(Quiz $quiz)
+    {
+        // 🔐 Ensure the current user is the quiz owner (teacher)
+        if ($quiz->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized');
+        }
+    
+        // ✅ Only publish if not already published
+        if (!$quiz->is_published) {
+            $quiz->is_published = true;
+            $quiz->save();
+    
+            // 📣 Create a post in the classroom feed
+            Post::create([
+                'classroom_id' => $quiz->classroom_id,
+                'user_id' => auth()->id(),
+                'content' => '📢 Quiz results are now available for "' . $quiz->title . '"!',
+                'quiz_id' => $quiz->id,
+            ]);
+        }
+    
+        return redirect()->back()->with('success', 'Quiz results have been published successfully.');
+    }
+    
+
+
 
 
     public function edit($classroom_id, $quiz_id)

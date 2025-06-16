@@ -25,11 +25,18 @@
             <!-- List of menu links -->
             <ul class="menu-links">
                 <li class="nav-link">
-                <a href="{{ url('teacher') }}">
+                    <a href="{{ url('teacher') }}">
                             <i class='bx bx-book-content icon' ></i>
                         <span class="text nav-text">Manage Classes</span>
                     </a>
                 </li>
+                <li class="nav-link">
+                    <a href="{{ route('quiz.overview') }}">
+                        <i class='bx bx-task icon'></i>
+                        <span class="text nav-text">Manage Quizzes</span>
+                    </a>
+                </li>
+
             </ul>
       </div>
 
