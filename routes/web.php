@@ -175,4 +175,7 @@ Route::post('/submit-assignment', [SubmissionController::class, 'store'])->name(
 Route::get('/download/{file}', [FileController::class, 'download'])->name('file.download');
 //Attempt Quiz
 Route::post('/quiz/{quiz}/submit', [QuizController::class, 'submitAttempt'])->name('quiz.submit');
+//Leaderboard
+Route::get('/quiz/{id}/leaderboard', [App\Http\Controllers\QuizController::class, 'leaderboard']);
+
 

@@ -31,46 +31,73 @@
 
   <!-- ==================== POSTS TAB ==================== -->
   <div id="posts" class="tab-content active">
-    <div class="class-container">
-
-      <!-- ASSIGNMENT SECTION -->
-      <div class="assignment-section">
-        <h3>TODOO!</h3>
-        <table class="assignment-table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Due</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($classroom->assignments as $assignment)
-              @php
-                $submission = $assignment->submissions->where('student_id', auth()->id())->first();
-              @endphp
-             <tr class="clickable-row"
-                  data-id="{{ $assignment->id }}"
-                  data-title="{{ $assignment->title }}"
-                  data-desc="{{ $assignment->description }}"
-                  data-grade="{{ $submission?->grade }}">
-                  <td>{{ $assignment->title }}</td>
-                  <td>{{ \Carbon\Carbon::parse($assignment->due_date)->format('M d, Y') }}</td>
-                  <td>
-                    @if ($submission && $submission->grade)
-                      <span class="status graded">Graded</span>
-                    @elseif ($submission)
-                      <span class="status submitted">Submitted</span>
-                    @else
-                      <span class="status pending">Pending</span>
-                    @endif
-                  </td>
-
+      <div class="class-container">
+      <div class ="left-panel">
+          <!-- ASSIGNMENT SECTION -->
+        <div class="assignment-section">
+          <h3>TODOO!</h3>
+          <table class="assignment-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Due</th>
+                <th>Status</th>
               </tr>
-            @endforeach
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              @foreach ($classroom->assignments as $assignment)
+                @php
+                  $submission = $assignment->submissions->where('student_id', auth()->id())->first();
+                @endphp
+              <tr class="clickable-row"
+                    data-id="{{ $assignment->id }}"
+                    data-title="{{ $assignment->title }}"
+                    data-desc="{{ $assignment->description }}"
+                    data-grade="{{ $submission?->grade }}">
+                    <td>{{ $assignment->title }}</td>
+                    <td>{{ \Carbon\Carbon::parse($assignment->due_date)->format('M d, Y') }}</td>
+                    <td>
+                      @if ($submission && $submission->grade)
+                        <span class="status graded">Graded</span>
+                      @elseif ($submission)
+                        <span class="status submitted">Submitted</span>
+                      @else
+                        <span class="status pending">Pending</span>
+                      @endif
+                    </td>
+
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+
+        <!-- QUIZ RESULTS SECTION -->
+        <div class="result-section" style="margin-top: 30px;">
+          <h3>Quiz Results</h3>
+          <table class="result-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              @forelse ($quizResults as $result)
+              <tr class="clickable-result-row" data-quiz-id="{{ $result->quiz->id }}">
+                <td>{{ $result->quiz->title }}</td>
+                <td>{{ $result->score }} / {{ $result->quiz->total_points }}</td>
+              </tr>
+              @empty
+                <tr>
+                  <td colspan="3">No quiz results yet.</td>
+                </tr>
+              @endforelse
+            </tbody>
+          </table>
+        </div>
       </div>
+      
 
 
       <!-- POSTS SECTION -->
@@ -235,6 +262,43 @@
 
   </div>
 </div>
+
+
+<!-- Leaderboard Modal -->
+<div class="modal-result" id="leaderboardModal">
+  <div class="card leaderboard-card">
+    <span class="close-btn" onclick="closeLeaderboardModal()">&times;</span>
+    <h2 class="leaderboard-title">🏆 Quiz Leaderboard</h2>
+
+    <div class="podium">
+      <div class="podium-player second">
+        <img class="leaderboard-avatar" id="second-avatar">
+        <p id="second-name">—</p>
+        <small>🥈 2nd</small> <!--  Label -->
+        <span id="second-score">0 pts</span>
+      </div>
+      <div class="podium-player first">
+        <img class="leaderboard-avatar" id="first-avatar">
+        <p id="first-name">—</p>
+        <small>🥇1st</small> <!--  Label -->
+        <span id="first-score">0 pts</span>
+      </div>
+      <div class="podium-player third">
+        <img class="leaderboard-avatar" id="third-avatar">
+        <p id="third-name">—</p>
+        <small>🥉3rd</small> <!--  Label -->
+        <span id="third-score">0 pts</span>
+      </div>
+    </div>
+
+    <div class="leaderboard-list" id="leaderboard-list">
+      <!-- Remaining users will be injected here -->
+    </div>
+  </div>
+</div>
+
+
+
 
 <!-- JS -->
 <script src="{{ asset('js/script.js') }}"></script>

@@ -1202,7 +1202,7 @@ form textarea {
 /* Submit Button */
 .submit-button {
   background-color: var(--add-color);
-  color: white;
+  color: var(--submitted);
   padding: 10px;
   width: 100%;
   border: none;
@@ -1432,7 +1432,7 @@ form textarea {
 /* Submit Button */
 .submit-button {
   width: 100%;
-  background: var(--add-color);
+  background: var(--submitted);
   color: white;
   border: none;
   padding: 10px;

@@ -231,9 +231,8 @@ class QuizController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        return view('teacher.quiz-manage', [
-            'quiz' => $quiz
-        ]);
+        return view('quiz-manage', ['quiz' => $quiz]);
+
     }
 
     public function viewResults($quiz_id)
@@ -328,4 +327,21 @@ class QuizController extends Controller
 
         return response()->json(['message' => 'Quiz submitted successfully.']);
     }
+    
+    public function leaderboard($id)
+    {
+        $quiz = \App\Models\Quiz::with(['attempts.user'])->findOrFail($id);
+    
+        $rankedAttempts = $quiz->attempts
+            ->sort(function ($a, $b) {
+                if ($b->score === $a->score) {
+                    return strtotime($a->created_at) <=> strtotime($b->created_at); // earlier = higher rank
+                }
+                return $b->score <=> $a->score; // higher score = higher rank
+            })
+            ->values(); // reindex to start at 0
+    
+        return response()->json($rankedAttempts);
+    }
+    
 }

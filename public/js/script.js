@@ -267,4 +267,51 @@ document.addEventListener("DOMContentLoaded", function () {
   window.viewFolder = viewFolder;
 
   showMainFileTable();
+
+  // ====================== LEADERBOARD MODAL ======================
+  function openLeaderboardModal(quizId) {
+    fetch(`/quiz/${quizId}/leaderboard`)
+      .then(res => res.json())
+      .then(data => {
+        const avatars = { 0: 'first', 1: 'second', 2: 'third' };
+
+        for (let i = 0; i < 3; i++) {
+          const user = data[i];
+          if (user) {
+            document.getElementById(`${avatars[i]}-name`).innerText = user.user.name;
+            document.getElementById(`${avatars[i]}-score`).innerText = `${user.score} pts`;
+            document.getElementById(`${avatars[i]}-avatar`).src = `/storage/${user.user.profile_picture}`;
+          }
+        }
+
+        const list = document.getElementById("leaderboard-list");
+        list.innerHTML = "";
+        data.slice(3).forEach((entry, index) => {
+          const row = document.createElement("div");
+          row.className = "leaderboard-entry";
+          row.innerHTML = `<span>${index + 4}. ${entry.user.name}</span><span>${entry.score} pts</span>`;
+          list.appendChild(row);
+        });
+
+        const modal = document.getElementById("leaderboardModal");
+        modal.classList.add("show");
+
+      });
+  }
+
+  function closeLeaderboardModal() {
+    const modal = document.getElementById("leaderboardModal");
+    modal.classList.remove("show");
+    
+  }
+  window.closeLeaderboardModal = closeLeaderboardModal;
+
+
+  document.querySelectorAll(".clickable-result-row").forEach(btn => {
+    btn.addEventListener("click", function () {
+      const quizId = this.dataset.quizId;
+      openLeaderboardModal(quizId);
+    });
+  });
+
 });

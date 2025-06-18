@@ -86,7 +86,7 @@
     </div>
 
     {{-- Scripts --}}
-    <script src="{{ asset('js/sidebar-toggle.js') }}"></script> {{-- Your main toggle script --}}
+    
     <script src="{{ asset('js/quiz-overview.js') }}"></script> {{-- Optional: JS for table/filters etc --}}
 </body>
 </html>

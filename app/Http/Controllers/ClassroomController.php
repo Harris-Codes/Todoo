@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Classroom;
+use App\Models\QuizAttempt;
 use Illuminate\Support\Str;
+
 class ClassroomController
 {
     public function index()
@@ -71,8 +73,18 @@ class ClassroomController
             abort(403, 'Unauthorized access');
         }
     
-        return view('classroom', compact('classroom'));
+        
+        $quizResults = QuizAttempt::where('user_id', auth()->id())
+            ->whereHas('quiz', function($query) use ($id) {
+                $query->where('classroom_id', $id)->where('is_published', true);
+            })
+            ->with('quiz')
+            ->get();
+    
+       
+        return view('classroom', compact('classroom', 'quizResults'));
     }
+    
     
 
     public function studentHomepage()

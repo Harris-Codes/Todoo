@@ -26,6 +26,13 @@
   --tran-04: all 0.3s ease;
   --tran-05: all 0.3s ease;
 }
+
+body, html {
+    height: 100%;
+    overflow: hidden; /* prevent outer scrollbars */
+}
+
+
 .home{
     height: 100vh; /* Ensures the full viewport height */
     display: flex;
@@ -62,6 +69,8 @@
     display: flex;
     flex-direction: column;
     background-color: var(--primary-color);
+    overflow-y: auto; 
+    height: calc(100vh - 160px); 
     
 }
 
@@ -82,13 +91,11 @@
     align-items: center;
     width:80%;
     height:300px;
-    margin: 100px auto;
+    margin: 40px auto;
     background-color: white;
     border:1px solid var(--primary-color);
     border-radius: 20px;
     color:black;
-
-    
 }
 
 .question{
@@ -154,11 +161,11 @@
 
 .answer-container{
     
-    flex-grow: 1; /* to make it grow and fill the remaining space */
+    flex-grow: 1;
     display: flex;
     padding: 10px;
     width: 100%;
-    
+    max-height: 300px;
     gap: 50px;
     align-items: center;
 }
@@ -309,3 +316,16 @@
 #goBackButton:hover {
     background-color: #357ac9; /* darker blue on hover */
 }
+
+
+@media screen and (max-height: 700px) {
+    .question-container {
+      height: 200px;
+    }
+  
+    .answer-btn {
+      font-size: 30px;
+      padding: 10px;
+    }
+  }
+  
