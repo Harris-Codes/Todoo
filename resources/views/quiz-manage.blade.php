@@ -28,12 +28,19 @@
     <div class="quiz-table-wrapper">
     <h2>List of Students</h2>
     <div class="publish-button-wrapper">
-        <form method="POST" action="{{ route('quiz.publish', $quiz->id) }}">
-            @csrf
-            <button class="btn btn-secondary" type="submit">
-                <i class="fa-solid fa-paper-plane"></i> Post Results to Students
-            </button>
-        </form>
+        @if ($quiz->is_published)
+                <button class="published-btn" disabled>
+                    <i class='bx bx-check'></i> Published
+                </button>
+                @else
+                <form action="{{ route('quiz.publish', $quiz->id) }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button id="publishBtn" class="publish-btn" type="submit">
+                    <i class='bx bx-paper-plane'></i> Post Results to Students
+                    </button>
+                </form>
+        @endif
+
     </div>
     <table class="quiz-table">
         <thead>

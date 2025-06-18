@@ -25,6 +25,7 @@ class ClassroomController
             'subject' => $request->subject,
             'teacher_id' => auth()->id(),
             'code' => strtoupper(Str::random(6)), // it will generate 6 alphanumerical code
+            'background_image' => $request->background_image
         ]);
 
         return response()->json(['message' => 'Classroom created successfully']);

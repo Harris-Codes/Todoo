@@ -28,7 +28,8 @@
     <div class="card-container">
         @foreach ($joinedClasses as $class)
             <div class="card">
-                <div class="image_container"></div>
+                <div class="image_container" style="background-image: url('/images/{{ $class->background_image }}');"></div>
+
 
                 <div class="title">
                     <span>{{ $class->subject }}</span>

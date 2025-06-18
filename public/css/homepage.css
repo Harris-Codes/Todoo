@@ -298,14 +298,20 @@ body.dark .switch::before {
   left: 20px;
 }
 
+
 .home {
-    position: absolute;
-    top: 0;
-    left: 250px; 
-    height: 100vh;
-    width: calc(100% - 250px); 
-    background-color: var(--body-color);
-    transition: var(--tran-05);
+  background-image: url('/images/class_bg7.jpg');
+  background-size: 70%;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: repeat;
+  position: absolute;
+  top: 0;
+  left: 250px; /* Space for the sidebar when open */
+  height: 100vh;
+  width: calc(100% - 250px); /* Adjust width for the sidebar */
+  background-color: var(--body-color);
+  transition: var(--tran-05);
   }
 
 .home .text {
@@ -328,45 +334,51 @@ body.dark .home .text {
 }
 
 /* =========================================== Main content section ========================================== */
-
-
 .card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  padding: 50px;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  background-color: #fff;
   background-image: url('/images/class_bg7.jpg');
   background-size: 70%;
   background-attachment: fixed;
   background-position: center;
   background-repeat: repeat;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(300px, 1fr)); /* Responsive grid with minimum card width */
-  gap: 50px 20px; /* Consistent spacing between cards */
-  padding: 50px; /* Add padding around the grid */
-  background-color: #fff;
-  height:100%;
 }
 
-/* Cards remain the same */
+
 .card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding: 1rem;
   background-color: white;
   border-radius: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  height: 300px;
   border: 2px solid var(--todoo-color);
+
+  width: 100%;           /* Take full column width */
+  height: auto;
+  box-sizing: border-box;
+
+  /* Remove fixed min/max width */
+  min-width: unset;
+  max-width: unset;
 }
 
+
 .image_container {
-    overflow: hidden;
-    cursor: pointer;
-    position: relative;
-    z-index: 5;
-    flex-shrink: 0; /* Prevent shrinking */
-    width: 100%;
-    height: 8rem; /* Fixed height for the image container */
-    background-color: var(--todoo-color);
-    border-radius: 0.5rem;
+  width: 100%;
+  aspect-ratio: 16 / 10;  /* ✅ maintains fixed size without stretching cards */
+  background-size: cover;
+  background-position: center;
+  border-radius: 0.5rem;
+  background-color: var(--todoo-color);
+  margin-bottom: 1rem;
 }
 
 .title {
@@ -574,12 +586,8 @@ body.dark .home .text {
 }
 
 
-
-
-
-@media screen and (max-width: 600px) {
-    .card-container {
-        grid-template-columns: 1fr; /* Stack cards in one column on smaller screens */
-    }
+@media (min-width: 1280px) {
+  .card-container {
+    grid-template-columns: repeat(3, 1fr); 
+  }
 }
-  

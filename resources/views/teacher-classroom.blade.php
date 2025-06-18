@@ -118,7 +118,7 @@
                                     <div class="post-btn-group">
                                         <button type="button" class="cancel-button" onclick="cancelPost()">Cancel</button>
                                         <button type="submit" class="post-button">Post</button>
-                                        <a href="{{ route('quiz.create', $classroom->id) }}" class="quiz-button"> Create Quiz</a>
+                                        
                                     </div>
                                 </div>
                             </div>

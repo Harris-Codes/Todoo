@@ -261,13 +261,8 @@ class QuizController extends Controller
             $quiz->is_published = true;
             $quiz->save();
     
-            // 📣 Create a post in the classroom feed
-            Post::create([
-                'classroom_id' => $quiz->classroom_id,
-                'user_id' => auth()->id(),
-                'content' => '📢 Quiz results are now available for "' . $quiz->title . '"!',
-                'quiz_id' => $quiz->id,
-            ]);
+            
+            
         }
     
         return redirect()->back()->with('success', 'Quiz results have been published successfully.');

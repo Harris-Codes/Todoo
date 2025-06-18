@@ -29,16 +29,15 @@
 
     <!-- =================== DYNAMIC CARD CONTAINER ===================== -->
     @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <div class="card-container">
     @foreach ($classes as $class)
         <div class="card">
-            <div class="image_container"></div>
-
+            <div class="image_container" style="background-image: url('/images/{{ $class->background_image }}');"></div>
             <div class="title">
                 <span>{{ $class->subject }}</span>
             </div>
@@ -66,33 +65,55 @@
 
 
 
+<!-- ================= FOR CREATING NEW CLASSROOM ======================== -->
+<div class="popup-container" id="popupContainer">
+    <form class="classroom-form" method="POST" action="{{ route('classroom.store') }}">
+        @csrf
+        <h2 class="mainHeading">Create New Classroom</h2>
+     
 
-    <!-- ================= FOR CREATING NEW CLASSROOM ======================== -->
-    <div class="popup-container" id="popupContainer">
-        <form class="classroom-form" method="POST" action="{{ route('classroom.store') }}">
-            @csrf
-            <h2 class="mainHeading">Create New Classroom</h2>
-            <p class="otpSubheading">Enter classroom details</p>
+            <!-- Step 1: Background Selection -->
+            <div class="step step-1 active">
+                <p class="otpSubheading">Select background first!</p>
 
-            <!-- Classroom Name -->
-            <label for="classroomName">Classroom Name</label>
-            <input required type="text" name="subject" id="classroomName" class="classroom-input" placeholder="Enter Classroom Name">
+                <!-- Carousel controls -->
+                <div class="bg-image-options" id="imagePageContainer"></div>
+                <div class="image-carousel-controls">
+                    <button type="button" class="arrow-btn" onclick="changeImagePage(-1)">&#8592;</button>
+                    <span id="imagePageIndicator">1</span>
+                    <button type="button" class="arrow-btn" onclick="changeImagePage(1)">&#8594;</button>
+                </div>
 
-            <button class="createButton" type="submit">Create Classroom</button>
-        </form>
-        @if ($errors->any())
-            <div class="error-box">
-                @foreach ($errors->all() as $error)
-                    <p style="color: red">{{ $error }}</p>
-                @endforeach
+                <button type="button" class="createButton" onclick="goToStep2()">Next</button>
             </div>
-        @endif
 
-        @if (session('success'))
-            <p style="color: green">{{ session('success') }}</p>
-        @endif
+            <!-- Step 2: Classroom Name Input -->
+            <div class="step step-2" style="display: none;">
+                <p class="otpSubheading">Enter classroom details</p>
 
-    </div>
+                <label for="classroomName">Classroom Name</label>
+                <input required type="text" name="subject" id="classroomName" class="classroom-input" placeholder="Enter Classroom Name">
+
+                <button class="createButton" type="submit">Create Classroom</button>
+            </div>
+
+        </div>
+    </form>
+
+    @if ($errors->any())
+        <div class="error-box">
+            @foreach ($errors->all() as $error)
+                <p style="color: red">{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
+
+    @if (session('success'))
+        <p style="color: green">{{ session('success') }}</p>
+    @endif
+</div>
+
+
 
     
 

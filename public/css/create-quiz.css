@@ -63,11 +63,19 @@ html, body {
 }
 
 .quiz-title-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto; /* centers the box itself */
   width: 100%;
-  text-align: center;
-  margin-top: 20px;
-  position: relative;
+  max-width: 500px;
+  padding: 10px 15px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
+
 
 #quiz-title {
   font-size: 24px;
@@ -75,8 +83,9 @@ html, body {
   border: none;
   background: transparent;
   outline: none;
-  color: var(--text-color);
+  color: var(--todoo-color);
   text-align: center;
+  width: 100%;
 }
 
 .question-meta {

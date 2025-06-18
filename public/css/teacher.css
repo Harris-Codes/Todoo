@@ -300,6 +300,11 @@ body.dark .switch::before {
 }
 
 .home {
+  background-image: url('/images/class_bg7.jpg');
+  background-size: 70%;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: repeat;
     position: absolute;
     top: 0;
     left: 250px; /* Space for the sidebar when open */
@@ -333,48 +338,50 @@ body.dark .home .text {
 
 
 .card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  padding: 50px;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  background-color: #fff;
   background-image: url('/images/class_bg7.jpg');
   background-size: 70%;
   background-attachment: fixed;
   background-position: center;
   background-repeat: repeat;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(300px, 1fr)); /* Responsive grid with minimum card width */
-  gap: 50px 20px; /* Consistent spacing between cards */
-  padding: 50px; /* Add padding around the grid */
-  background-color: #fff;
-  height:100%;
 }
 
-/* Cards remain the same */
+
 .card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding: 1rem;
   background-color: white;
   border-radius: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  height: 300px; 
   border: 2px solid var(--todoo-color);
-} 
+
+  width: 100%;           /* Take full column width */
+  height: auto;
+  box-sizing: border-box;
+
+  /* Remove fixed min/max width */
+  min-width: unset;
+  max-width: unset;
+}
+
 
 .image_container {
-  background-image: url('/images/class_bg2.jpg'); 
+  width: 100%;
+  aspect-ratio: 16 / 10;  /* ✅ maintains fixed size without stretching cards */
   background-size: cover;
   background-position: center;
-  width: 100%;
-  height: 300px; /* or any height you want */
-  overflow: hidden;
-  cursor: pointer;
-  position: relative;
-  z-index: 5;
-  flex-shrink: 0; /* Prevent shrinking */
-  width: 100%;
-  height: 8rem; /* Fixed height for the image container */
-  background-color: var(--todoo-color);
   border-radius: 0.5rem;
-  
+  background-color: var(--todoo-color);
+  margin-bottom: 1rem;
 }
 
 .title {
@@ -478,28 +485,32 @@ body.dark .home .text {
     justify-content: center;
     align-items: center;
     z-index: 1000; /* Ensure it's above other elements */
+
+     /* 🛠️ New: Allow scrolling if modal is too tall */
+    overflow-y: auto;
+    padding: 2rem;
   }
   
   .popup-container.active {
     display: flex; /* Show modal when active */
   }
   
-/* Centering the modal */
-.classroom-form {
+  .classroom-form {
     width: 700px;
-    height: auto;
+    max-height: 90vh; /* 🛠️ Prevent from exceeding viewport */
+    overflow-y: auto; /* 🛠️ Enable scroll inside the modal box if needed */
     background-color: var(--primary-color);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start; /* 🛠️ So it scrolls from top */
     padding: 20px 30px;
     gap: 15px;
     position: relative;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
     border-radius: 15px;
-    
   }
+  
 
 
 .classroom-form label {
@@ -565,14 +576,90 @@ body.dark .home .text {
     cursor: pointer;
   }
   
+  /*======================= BACKGROUND IMAGES ======================*/
+
+  .image-carousel-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .arrow-btn {
+    font-size: 1.5rem;
+    padding: 0.3rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--todoo-color);
+    color: white;
+    cursor: pointer;
+  }
+
+  #imagePageIndicator {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+  }
 
 
-
-
-
-@media screen and (max-width: 600px) {
-    .card-container {
-        grid-template-columns: 1fr; /* Stack cards in one column on smaller screens */
-    }
-}
+  .bg-image-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 1rem;
+    margin-top: 0.5rem;
+    justify-items: center; 
+  }
   
+  
+  .bg-image-options label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .bg-image-options input[type="radio"] {
+    display: none;
+  }
+  
+  .bg-thumb {
+    width: 200px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    transition: border 0.3s ease;
+  }
+  
+  input[type="radio"]:checked + .bg-thumb {
+    border: 2px solid var(--todoo-color);
+  }
+  
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;     /* ✅ centers children horizontally */
+    justify-content: center;
+    width: 100%;
+    gap: 1rem;
+  }
+  
+
+.step-2 {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+
+
+
+
+@media (min-width: 1280px) {
+  .card-container {
+    grid-template-columns: repeat(3, 1fr); 
+  }
+}

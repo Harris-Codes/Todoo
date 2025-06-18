@@ -11,7 +11,8 @@ class Classroom extends Model
     protected $fillable = [
         'subject',
         'teacher_id',
-        'code'
+        'code',
+        'background_image'
     ];
 
     public function teacher()

@@ -715,7 +715,7 @@ body.dark .sidebar header .toggle {
 }
 
 .view-button:hover {
-  background-color: #357ac9;
+  background-color:#d79f03;
 }
 
 /* Delete Button Styling */
@@ -750,7 +750,9 @@ body.dark .sidebar header .toggle {
   align-items: center;
 }
 
-
+.edit-button:hover {
+  background-color: #0e64c7;
+}
 
 
 /*================================ TAB GRADING ========================*/
