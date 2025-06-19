@@ -50,6 +50,11 @@ class Classroom extends Model
                     ->withTimestamps();
     }
     
+    public function badges()
+    {
+        return $this->hasMany(Badge::class);
+    }
+
 
     
 

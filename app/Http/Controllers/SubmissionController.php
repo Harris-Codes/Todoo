@@ -7,6 +7,9 @@ use App\Models\Submission;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use App\Services\BadgeEvaluationService;
+use App\Models\Assignment;
+
 class SubmissionController extends Controller
 {
     public function store(Request $request)
@@ -52,6 +55,12 @@ class SubmissionController extends Controller
                 'submitted_at' => now()
             ]
         );
+
+        // Evaluate badge conditions
+        $assignment = Assignment::find($assignmentId);
+        BadgeEvaluationService::evaluate($studentId, $assignment->classroom_id);
+
+
 
         return back()->with('success', 'Assignment submitted successfully!');
     }

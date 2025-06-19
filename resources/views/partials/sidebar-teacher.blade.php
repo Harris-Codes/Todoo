@@ -37,6 +37,13 @@
                     </a>
                 </li>
 
+                <li class="nav-link">
+                    <a href="{{ route('badges.overview') }}">
+                        <i class='bx bx-medal icon'></i>
+                        <span class="text nav-text">Manage Badges</span>
+                    </a>
+                </li>
+
             </ul>
       </div>
 

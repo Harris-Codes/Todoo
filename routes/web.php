@@ -72,6 +72,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\BadgeController;
 //------------------------------------Login Page------------------------------
 //Login and Logout
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -154,10 +155,6 @@ Route::get('/teacher/quiz/{quiz_id}/results', [QuizController::class, 'viewResul
 //publish
 Route::post('/teacher/quiz/{quiz}/publish', [QuizController::class, 'publish'])->name('quiz.publish');
 
-
-
-
-
 //==================== STUDENT ===========================
 //STUDENT HOMEPAGE
 Route::get('/student/homepage', [ClassroomController::class, 'studentHomepage'])->name('student.homepage')->middleware('auth');
@@ -179,3 +176,11 @@ Route::post('/quiz/{quiz}/submit', [QuizController::class, 'submitAttempt'])->na
 Route::get('/quiz/{id}/leaderboard', [App\Http\Controllers\QuizController::class, 'leaderboard']);
 
 
+
+//==================== BADGES ===========================
+Route::middleware(['auth'])->group(function () {
+    Route::get('/badges-overview', [BadgeController::class, 'overview'])->name('badges.overview');
+    Route::get('/teacher/badges', [BadgeController::class, 'index'])->name('badges.index');
+    Route::get('/teacher/badges/create/{classroom_id}', [BadgeController::class, 'create'])->name('badges.create');
+    Route::post('/teacher/badges/store', [BadgeController::class, 'store'])->name('badges.store');
+});
