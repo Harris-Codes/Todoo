@@ -18,9 +18,6 @@ class AssignmentController
             'file' => 'nullable|file|mimes:pdf,doc,docx,txt|max:2048'
         ]);
 
-        
-
-
         $path = null;
 
         if ($request->hasFile('file')) {

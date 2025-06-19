@@ -33,7 +33,8 @@
   <div id="posts" class="tab-content active">
       <div class="class-container">
       <div class ="left-panel">
-          <!-- ASSIGNMENT SECTION -->
+
+          <!---------------- ASSIGNMENT SECTION ------------------------>
         <div class="assignment-section">
           <h3>TODOO!</h3>
           <table class="assignment-table">
@@ -298,9 +299,57 @@
 </div>
 
 
+<!-- Badge Modal -->
+@if (session('new_badge'))
+    @php
+        $badge = session('new_badge');
+    @endphp
+
+    <div id="badgeModal" class="badge-modal">
+        <div class="badge-modal-content">
+            <div class="badge-card">
+                <div class="badge-banner">
+                    <img src="{{ asset('images/' . $badge['image']) }}" alt="Badge Image" class="badge-medal">
+                </div>
+
+                <div class="badge-body">
+                    <h2 class="badge-title">🎉 Congratulations!</h2>
+                    <p class="badge-subtext">{{ $badge['name'] }}</p>
+                    <p class="badge-condition">
+                        @switch($badge['type'])
+                            @case('submission_count')
+                                {{ $badge['condition_value'] }} assignment submissions
+                                @break
+                            @case('perfect_quiz')
+                                {{ $badge['condition_value'] }} perfect quiz scores
+                                @break
+                            @case('quiz_count')
+                                {{ $badge['condition_value'] }} total quiz attempts
+                                @break
+                            @default
+                                Achievement Unlocked
+                        @endswitch
+                    </p>
+                    <button class="badge-button" onclick="closeBadgeModal()">Got it!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+
 
 
 <!-- JS -->
+<script>
+function closeBadgeModal() {
+    const modal = document.getElementById('badgeModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+</script>
+
 <script src="{{ asset('js/script.js') }}"></script>
 <script>
     const csrfToken = '{{ csrf_token() }}';

@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
         modalDescription.innerText = this.dataset.desc;
         modalAssignmentId.value = this.dataset.id;
         modal.style.display = "flex";
+        modal.style.visibility = "visible";
     
         if (fileInput) fileInput.value = '';
         if (fileNameDisplay) fileNameDisplay.innerText = "No file chosen";
@@ -96,11 +97,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     closeBtn?.addEventListener("click", function () {
       modal.style.display = "none";
+      modal.style.visibility = "hidden";
     });
 
     window.addEventListener("click", function (event) {
       if (event.target === modal) {
         modal.style.display = "none";
+        modal.style.visibility = "hidden";
       }
     });
   }
@@ -305,6 +308,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
   }
   window.closeLeaderboardModal = closeLeaderboardModal;
+
 
 
   document.querySelectorAll(".clickable-result-row").forEach(btn => {

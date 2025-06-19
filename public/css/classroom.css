@@ -1298,3 +1298,115 @@ button svg {
 .clickable-result-row:hover {
   background-color: #f9f9f9;
 }
+/*======================= Badge Modal ========================*/
+
+#badgeModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+}
+
+
+.badge-modal-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+}
+
+
+.badge-card {
+  background: white;
+  width: 320px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  margin: 0 auto; /* optional */
+  position: relative;
+  
+}
+
+
+
+.badge-banner {
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  padding: 40px 20px 20px;
+  position: relative;
+}
+
+.badge-medal {
+  width: 100px;
+  height: auto;
+  z-index: 2;
+  position: relative;
+}
+
+.badge-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;    
+}
+
+.badge-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 10px 0 5px;
+  color: #222;
+}
+
+.badge-subtext {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 5px 0;
+  color: #333;
+}
+
+.badge-condition {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.badge-button {
+  padding: 10px 30px;
+  background-color: #ffa500;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  transition: 0.3s ease;
+}
+
+.badge-button:hover {
+  background-color: #ff8c00;
+}
+
+
+
+
+@keyframes popIn {
+  from {
+      transform: scale(0.7);
+      opacity: 0;
+  }
+  to {
+      transform: scale(1);
+      opacity: 1;
+  }
+}
