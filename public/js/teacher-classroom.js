@@ -316,9 +316,144 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+// ===================== STUDENT FEEDBACK MODAL =========================
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.feedback-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = document.getElementById('feedbackModal');
+            const studentId = button.dataset.studentId;
+            const studentName = button.dataset.studentName;
+            const feedbacks = JSON.parse(button.dataset.feedbacks);
+    
+            // Set values
+            document.getElementById('feedbackStudentId').value = studentId;
+            document.getElementById('feedbackStudentName').innerText = studentName;
+    
+            // Inject feedbacks
+            const container = document.getElementById('existingFeedbacks');
+            container.innerHTML = ''; // Clear previous
+            feedbacks.forEach(fb => {
+                const card = document.createElement('div');
+                card.classList.add('existing-feedback-card');
+                card.setAttribute('data-feedback-id', fb.id); // For button handlers
+            
+                card.innerHTML = `
+                <div class="feedback-header">
+                    <p class="feedback-text">${fb.message}</p>
+                </div>
+                
+                <form class="edit-feedback-form" method="POST" action="/feedback/${fb.id}" style="display: none;">
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="hidden" name="_token" value="${document.querySelector('meta[name="csrf-token"]').content}">
+                    
+                    <textarea name="message" required>${fb.message}</textarea>
+                    
+                    <div class="feedback-actions">
+                        <button type="submit" class="btn-save">Post</button>
+                        <button type="button" class="btn-cancel">Cancel</button>
+                    </div>
+                </form>
+                
+                <div class="feedback-actions">
+                    <button type="button" class="btn-edit">Edit</button>
+                    <form method="POST" action="/feedback/${fb.id}" onsubmit="return confirm('Delete this feedback?')">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="${document.querySelector('meta[name="csrf-token"]').content}">
+                        <button type="submit" class="btn-delete">Delete</button>
+                    </form>
+                </div>
+            
+                `;
+            
+                container.appendChild(card);
+
+                card.querySelector('.btn-edit').addEventListener('click', function () {
+                    const editForm = card.querySelector('.edit-feedback-form');
+                    const editDeleteActions = card.querySelector('.feedback-actions:not(form .feedback-actions)');
+                    const feedbackText = card.querySelector('.feedback-text');
+                
+                    // Show edit form
+                    editForm.style.display = 'block';
+                    if (editDeleteActions) editDeleteActions.style.display = 'none';
+                
+                    // Hide original text
+                    if (feedbackText) feedbackText.style.display = 'none';
+                });
+                
+
+                card.querySelector('.btn-cancel').addEventListener('click', function () {
+                    const editForm = card.querySelector('.edit-feedback-form');
+                    const editDeleteActions = card.querySelector('.feedback-actions:not(form .feedback-actions)');
+                    const feedbackText = card.querySelector('.feedback-text');
+
+                    // Hide edit form
+                    editForm.style.display = 'none';
+
+                    // Show Edit/Delete actions again
+                    if (editDeleteActions) editDeleteActions.style.display = 'flex';
+
+                    // Show original text
+                    if (feedbackText) feedbackText.style.display = 'block';
+                });
+
+
+                
+            });
+
+            
+    
+
+            setTimeout(() => {
+                document.querySelectorAll(".btn-edit").forEach(btn => {
+                    btn.addEventListener("click", function () {
+                        const parent = btn.closest(".existing-feedback-card");
+                        parent.querySelector(".feedback-text").style.display = "none";
+                        parent.querySelector(".edit-feedback-form").style.display = "block";
+                    });
+                });
+
+                document.querySelectorAll(".btn-cancel").forEach(btn => {
+                    btn.addEventListener("click", function () {
+                        const parent = btn.closest(".existing-feedback-card");
+                        parent.querySelector(".edit-feedback-form").style.display = "none";
+                        parent.querySelector(".feedback-text").style.display = "block";
+                    });
+                });
+            }, 50); // Slight delay to ensure DOM elements are available
+
+            
+            // Show modal
+            modal.classList.add('active');
+        });
+    });
+    
+
+    window.closeFeedbackModal = function () {
+        document.getElementById('feedbackModal').classList.remove('active');
+    };
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".btn-edit").forEach(btn => {
+        btn.addEventListener("click", function () {
+            const parent = btn.closest(".existing-feedback-card");
+            parent.querySelector(".feedback-text").style.display = "none";
+            parent.querySelector(".edit-feedback-form").style.display = "block";
+        });
+    });
+
+    document.querySelectorAll(".btn-cancel").forEach(btn => {
+        btn.addEventListener("click", function () {
+            const parent = btn.closest(".existing-feedback-card");
+            parent.querySelector(".edit-feedback-form").style.display = "none";
+            parent.querySelector(".feedback-text").style.display = "block";
+        });
+    });
+});
+
+
 //=====================Files TAB=====================================================
-
-
 function showMainFileTable() {
     currentFolderId = null;
     currentFolderName = null;

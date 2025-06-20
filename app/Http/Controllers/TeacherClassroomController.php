@@ -20,7 +20,8 @@ class TeacherClassroomController
             'files',
             'students',
             'teacher',
-            'posts.quiz.questions' 
+            'posts.quiz.questions' ,
+            'feedbacks.teacher'
         ])->findOrFail($id);
 
         foreach ($classroom->posts as $post) {

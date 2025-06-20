@@ -73,6 +73,10 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\BadgeController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FeedbackController;
+
 //------------------------------------Login Page------------------------------
 //Login and Logout
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -88,6 +92,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/teacher', [ClassroomController::class, 'index'])->name('teacher.dashboard');
     Route::post('/classroom/create', [ClassroomController::class, 'store'])->name('classroom.store');
     Route::delete('/classroom/{id}', [ClassroomController::class, 'destroy'])->name('classroom.destroy');
+    
     
 });
 
@@ -174,6 +179,22 @@ Route::get('/download/{file}', [FileController::class, 'download'])->name('file.
 Route::post('/quiz/{quiz}/submit', [QuizController::class, 'submitAttempt'])->name('quiz.submit');
 //Leaderboard
 Route::get('/quiz/{id}/leaderboard', [App\Http\Controllers\QuizController::class, 'leaderboard']);
+//Dashboard
+Route::get('/dashboard', [DashboardController::class, 'index'])
+     ->middleware('auth')
+     ->name('student.dashboard');
+
+//Dashboard-Profile edit
+Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/feedback/store', [FeedbackController::class, 'store'])->name('feedback.store');
+    Route::get('/teacher/feedback/{studentId}', [FeedbackController::class, 'index'])->name('feedback.index');
+    Route::put('/feedback/{id}', [FeedbackController::class, 'update'])->name('feedback.update');
+    Route::delete('/feedback/{id}', [FeedbackController::class, 'destroy'])->name('feedback.destroy');
+
+    
+});
 
 
 

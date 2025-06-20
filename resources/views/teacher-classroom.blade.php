@@ -310,10 +310,23 @@
                     <td>{{ $student->name }}</td>
                     <td>{{ $student->email }}</td>
                     <td>
-                        <form method="POST" action="{{ route('classroom.removeStudent', [$classroom->id, $student->id]) }}">
+                        <!-- ✅ FEEDBACK BUTTON (does not submit form) -->
+                        <button class="feedback-btn"
+                            data-student-id="{{ $student->id }}"
+                            data-student-name="{{ $student->name }}"
+                            data-feedbacks='@json($student->feedbacks->where("classroom_id", $classroom->id)->where("teacher_id", Auth::id())->values())'>
+                            <i class='bx bx-message-dots'></i>
+                        </button>
+
+                        <!-- 🗑️ DELETE BUTTON (in its own form) -->
+                        <form method="POST" 
+                            action="{{ route('classroom.removeStudent', [$classroom->id, $student->id]) }}" 
+                            style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="delete-student"><i class='bx bx-trash'></i></button>
+                            <button type="submit" class="delete-student">
+                                <i class='bx bx-trash'></i>
+                            </button>
                         </form>
                     </td>
                 </tr>
@@ -410,6 +423,38 @@
     </div>
     </div>
 
+    <!-------------------------------- FEEDBACK MODAL -------------------------------------------->
+    <div id="feedbackModal" class="modal-student">
+        <div class="card">
+            <span class="close-btn" onclick="closeFeedbackModal()">&times;</span>
+            <h2>Give Feedback to <span id="feedbackStudentName"></span></h2>
+
+            <!-- Feedback Form -->
+            <form method="POST" action="{{ route('feedback.store') }}">
+                @csrf
+                <input type="hidden" name="student_id" id="feedbackStudentId">
+                <input type="hidden" name="classroom_id" value="{{ $classroom->id }}">
+                <textarea name="message" id="newFeedbackMessage" placeholder="Write your feedback..." required autocomplete="off"></textarea>
+                <button type="submit" class="submit-button">Submit Feedback</button>
+            </form>
+
+
+            <h3 style="margin-top: 20px;">💬 Feedback History</h3>
+
+            <!-- Feedback list -->
+            <div id="existingFeedbacks" class="feedback-history-scrollable">
+            </div>
+
+
+            @if(session('success'))
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        alert("{{ session('success') }}");
+                    });
+                </script>
+            @endif
+        </div>
+    </div>
 
     
 </section>

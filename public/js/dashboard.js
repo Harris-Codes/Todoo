@@ -1,50 +1,60 @@
-
-//=================DASHBOARD CARD CLASS======================
 document.addEventListener("DOMContentLoaded", function () {
-    let currentIndex = 0;
-    
-    const bmTeacherImage = "/images/bm_teacher.png";
-    const mathTeacherImage = "/images/math_teacher.png";
-    // Class Data (Using Direct File Paths)
-    const classData = [
-      {
-          name: "Bahasa Malaysia",
-          teacher: "Fatimah Rosli",
-          image: bmTeacherImage,
-          assignments: 5,
-          students: 312
-      },
-      {
-          name: "Mathematics",
-          teacher: "Stephena Hawking",
-          image: mathTeacherImage,
-          assignments: 8,
-          students: 280
-      }
-  ];
-  
-    // Function to Switch Content
-    function updateCard() {
-        document.getElementById("className").textContent = classData[currentIndex].name;
-        document.getElementById("teacherName").textContent = classData[currentIndex].teacher;
-        document.getElementById("teacherImage").src = classData[currentIndex].image;
-        document.getElementById("assignmentCount").textContent = classData[currentIndex].assignments;
-        document.getElementById("studentCount").textContent = classData[currentIndex].students;
+    const grid = document.getElementById("badgeGrid");
+    const badges = grid.querySelectorAll(".badge");
+    const badgesPerSlide = 6;
+    const totalSlides = Math.ceil(badges.length / badgesPerSlide);
+    let currentSlide = 0;
+
+    function updateBadgeCarousel() {
+        const offset = currentSlide * -100;
+        grid.style.transform = `translateX(${offset}%)`;
     }
-  
-    // Initialize the card with default content
-    updateCard();
-  
-    // Previous Card Function
+
+    function openEditModal() {
+        document.getElementById('editProfileModal').classList.add('active');
+    }
+    function closeEditModal() {
+        document.getElementById('editProfileModal').classList.remove('active');
+    }
+    
+
+    window.prevBadgeSlide = function () {
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateBadgeCarousel();
+        }
+    };
+
+    window.nextBadgeSlide = function () {
+        if ((currentSlide + 1) * badgesPerSlide < badges.length) {
+            currentSlide++;
+            updateBadgeCarousel();
+        }
+    };
+
+    updateBadgeCarousel();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    let currentClassIndex = 0;
+    const slides = document.querySelectorAll('.class-slide');
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.style.display = i === index ? 'flex' : 'none'; // or block depending on your layout
+        });
+    }
+
     window.prevCard = function () {
-        currentIndex = (currentIndex - 1 + classData.length) % classData.length;
-        updateCard();
+        currentClassIndex = (currentClassIndex - 1 + slides.length) % slides.length;
+        showSlide(currentClassIndex);
     };
-  
-    // Next Card Function
+
     window.nextCard = function () {
-        currentIndex = (currentIndex + 1) % classData.length;
-        updateCard();
+        currentClassIndex = (currentClassIndex + 1) % slides.length;
+        showSlide(currentClassIndex);
     };
-  });
-  
+
+    // Init
+    showSlide(currentClassIndex);
+});

@@ -102,6 +102,19 @@ class User extends Authenticatable
         return $this->belongsToMany(Badge::class, 'badge_user')->withTimestamps();
     }
 
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class, 'student_id');
+    }
+
+    public function feedbacksGiven()
+    {
+        return $this->hasMany(Feedback::class, 'teacher_id');
+    }
+    public function receivedFeedback()
+    {
+        return $this->hasMany(Feedback::class, 'student_id');
+    }
 
 
 

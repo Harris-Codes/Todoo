@@ -8,22 +8,21 @@
 }
 
 :root {
-  /* ===== Colors ===== */
   --body-color: #f1f4fa;
   --sidebar-color: #FFF;
   --primary-color: #4a90e2;
   --primary-color-light: #F6F5FF;
   --toggle-color: #DDD;
   --text-color: #707070;
-  --todoo-color:#ffc21b;
+  --todoo-color: #ffc21b;
+  --submitted: rgb(10, 190, 10);
+  --graded: rgb(7, 121, 214);
+  --delete: #ff4d4d;
 
-  /* ====== Transition ====== */
-  --tran-03: all 0.2s ease;
   --tran-03: all 0.3s ease;
   --tran-04: all 0.3s ease;
   --tran-05: all 0.3s ease;
 }
-
 
 
 ::selection {
@@ -51,6 +50,7 @@ body.dark {
   background: var(--sidebar-color);
   transition: var(--tran-05);
   z-index: 100;
+  border: 1px solid #e2dfdf;
 }
 
 .sidebar.close {
@@ -235,388 +235,376 @@ body.dark .sidebar li a:hover .text {
   transition: var(--tran-05);
 }
 
-.menu-bar .mode .sun-moon {
-  height: 50px;
-  width: 60px;
+
+body {
+  background-color: var(--body-color);
+  background-image: url('/images/class_bg7.jpg');
+  background-size: 70%;
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 
-.mode .sun-moon i {
-  position: absolute;
-}
-
-.mode .sun-moon i.sun {
-  opacity: 0;
-}
-
-body.dark .mode .sun-moon i.sun {
-  opacity: 1;
-}
-
-body.dark .mode .sun-moon i.moon {
-  opacity: 0;
-}
-
-.menu-bar .bottom-content .toggle-switch {
-  position: absolute;
-  right: 0;
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
   height: 100%;
-  min-width: 60px;
+  width: 250px;
+  padding: 10px 14px;
+  background: var(--sidebar-color);
+  z-index: 100;
+  transition: var(--tran-05);
+}
+.sidebar.close { width: 88px; }
+.sidebar li {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  list-style: none;
+}
+.sidebar .icon, .sidebar .text {
+  color: var(--text-color);
+  transition: var(--tran-03);
+}
+.sidebar .icon {
+  font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  cursor: pointer;
 }
+.sidebar .text {
+  font-size: 17px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.sidebar.close .text { opacity: 0; }
 
-.toggle-switch .switch {
-  position: relative;
-  height: 22px;
-  width: 40px;
-  border-radius: 25px;
-  background-color: var(--toggle-color);
+/* HEADER */
+.home {
+  position: absolute;
+  top: 0;
+  left: 250px;
+  width: calc(100% - 250px);
+  height: 100vh;
   transition: var(--tran-05);
 }
-
-.switch::before {
-  content: '';
-  position: absolute;
-  height: 15px;
-  width: 15px;
-  border-radius: 50%;
-  top: 50%;
-  left: 5px;
-  transform: translateY(-50%);
-  background-color: var(--sidebar-color);
-  transition: var(--tran-04);
+.sidebar.close ~ .home {
+  left: 88px;
+  width: calc(100% - 88px);
 }
-
-body.dark .switch::before {
-  left: 20px;
-}
-
 .home {
-    position: absolute;
-    top: 0;
-    left: 250px; /* Space for the sidebar when open */
-    height: 100vh;
-    width: calc(100% - 250px); /* Adjust width for the sidebar */
-    background-color: var(--body-color);
-    transition: var(--tran-05);
-  }
-
-.home .text {
-  font-size: 50px;
-  font-weight: bold;
-  color: #ffc21b;
-  padding: 12px 60px;
-}
-
-.sidebar.close~.home {
-  left: 88px; /* Sidebar collapsed width */
-  height: 100vh;
-  width: calc(100% - 88px); /* Adjust width for the collapsed sidebar */
-}
-
-body.dark .home .text {
-  color: var(--text-color);
-}
-
-
-/* ==================================Main Content===============================*/
-.home{
-  height:100vh;
-  display:grid;
+  display: grid;
   grid-template-rows: 90px 1fr;
-  grid-template-areas:
-  "header"
-  "main" ;
-  
+  grid-template-areas: "header" "main";
 }
-
-.header{
+.header {
   background-color: var(--todoo-color);
   font-size: 30px;
-  color:black;
-  grid-area:header;
-  align-content: center;
-  
+  color: black;
+  grid-area: header;
 }
-
-
-/* Header Content (Wrapper for Image & Text) */
 .header-content {
   display: flex;
-  margin-left:35px;
-  gap: 15px; /* Space between image and text */
+  align-items: center;
+  margin-left: 35px;
+  gap: 15px;
+  margin-top:10px;
 }
 
-/* Student Avatar */
+.header-content h1{
+  color:white
+}
 .student-avatar {
-  width: 60px;  /* Adjust as needed */
+  width: 60px;
   height: 60px;
-  border-radius: 50%; /* Makes it round */
-  object-fit: cover; /* Ensures the image doesn't stretch */
-  border: 2px solid white; /* Optional border */
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
 }
-
-/* Greeting Text */
 .hello {
+  font-size:30px;
   font-weight: bold;
-  color: white; /* Match your theme color */
+  color: black;
 }
 
-
-
-.main{
-  background-color: var(--primary-color);
+/* MAIN GRID */
+.main {
   grid-area: main;
-
-  display:grid;
+  display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto auto;
   gap: 20px;
-  padding:25px;
-
+  padding: 25px;
   grid-template-areas: 
-  "c1 c2"
-  "c3 c2";
+    "overview details"
+    "badges feedback";
 }
 
-.card{
+.class-overview-card { grid-area: overview; }
+.student-details-card { grid-area: details; }
+.feedback-card { grid-area: feedback; }
+.badges-card { grid-area: badges; }
+
+/* CARD STYLING */
+.card {
   background-color: white;
-  border-radius: 10px;
-}
-
-
-
-/*================================== CARD C1 =======================================*/
-.card:nth-child(1){
-  grid-area: c1;
   border-radius: 20px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  border: 5px solid #ffc21b; /* Yellow border */
+  border: 5px solid var(--todoo-color);
+  padding: 20px;
 }
 
-.card:nth-child(1) h1{
+.card h1 {
+  font-size: 28px;
+  color: var(--todoo-color);
+}
+
+/* ==================CLASS OVERVIEW ======================== */
+.class-carousel {
+  display: flex;
   width: 100%;
-  padding-left:20px;
-  margin-top:20px;
-  font-size:28px;
-  color:var(--todoo-color);
 }
 
-.card:nth-child(1) .card-content{
+.class-slide {
+  flex: 1;
+  display: flex;
+  justify-content: center; /* You can change this to space-between if needed */
+  width: 100%;
+}
+
+.class-details {
+  flex: 1;
+  width: 100%;
+}
+
+.class-slide.active {
+  display: flex !important;
+}
+.class-overview-card {
+  grid-area: overview;
+  border-radius: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border: 5px solid #ffc21b;
+}
+
+.class-overview-card h1 {
+  width: 100%;
+  padding-left: 20px;
+  margin-top: 20px;
+  font-size: 28px;
+  color: var(--todoo-color);
+}
+
+.class-overview-card .card-content {
   width: 100%;
   display: flex;
   align-items: center;
-  margin-top:30px;
+  margin-top: 30px;
 }
 
-/* Arrow Styling */
-.card:nth-child(1) .arrow {
-
+.class-overview-card .arrow {
   font-size: 40px;
   color: var(--primary-color);
   cursor: pointer;
   transition: color 0.2s ease-in-out;
-  
 }
 
-/* Hover Effect */
-.card:nth-child(1) .arrow:hover {
+.class-overview-card .arrow:hover {
   color: var(--todoo-color);
 }
 
-
-/* Teacher Image */
-.card:nth-child(1) .teacher-image {
-  width: 120px; /* Bigger Image */
+.class-overview-card .teacher-image {
+  width: 120px;
   height: 120px;
   border-radius: 50%;
   overflow: hidden;
-  border: 5px solid #ffc21b;
-  margin-right: 20px;
-  
+  border: 5px solid var(--todoo-color);
+  flex-shrink: 0;
 }
 
-.card:nth-child(1) .teacher-image img {
+.class-overview-card .teacher-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* Class Info Expands */
-.card:nth-child(1) .class-info {
-  flex: 1; 
+.class-overview-card .class-details {
   display: flex;
-  flex-direction: column;
-  justify-content: center; 
-}
-
-/* Bigger Class Name */
-.card:nth-child(1) .class-info h3 {
-  font-size: 18px; 
-  font-weight: bold;
-  color: var(--primary-color);
-  margin-bottom: 15px;
-}
-
-/* Class Details */
-.card:nth-child(1) .class-details {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  font-size: 20px; 
+  align-items: center;
+  gap: 20px;
+  font-size: 20px;
   color: #555;
-  padding: 20px; 
+  padding: 20px;
   border-radius: 10px;
-  background-color: #f3f1ef; 
+  background-color: #f3f1ef;
   width: 100%;
 }
 
-/* Ensure Details Expand */
-.card:nth-child(1) .class-details p {
+.class-overview-card .class-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.class-overview-card .class-subject {
+  color: var(--todoo-color);
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.class-overview-card .class-details p {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-weight: 600; /* Make text bolder */
+  font-weight: 600;
 }
 
-/* Bigger Icons */
-.card:nth-child(1) .class-details i {
+.class-overview-card .class-details i {
   color: #4CAF50;
-  font-size: 24px; /* Bigger icons */
+  font-size: 24px;
 }
 
 
-/*================================== CARD C2 =======================================*/
-.card:nth-child(2){
-  grid-area: c2;
-  border-radius: 20px;
+/*================= STUDENT DETAILS================================== */
+form .classroom-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.createButton {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: var(--submitted);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.createButton:hover {
+  background-color: rgb(9, 144, 9);
 }
 
-.card:nth-child(2) h1{
- padding-left:20px;
- margin-top:20px;
- font-size:28px;
- color:var(--todoo-color)
-}
-
+/* ===================FEEDBACK========================================== */
 .feedback-container {
-  
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   padding: 20px;
-  
+  width: 100%; /* 🟢 Stretch full width */
+  box-sizing: border-box;
 }
 
+/* Each Feedback Card */
 .feedback-card {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   background: white;
   border-radius: 12px;
   padding: 10px;
-  margin-bottom: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  width: 100%; /* 🟢 Stretch full width */
+  box-sizing: border-box;
 }
 
+/* Teacher Image */
 .feedback-card img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 12px;
   border: 2px solid #4a90e2;
   object-fit: cover;
 }
 
+/* Feedback Content */
 .feedback-content {
   background-color: #e3f2fd;
-  padding: 10px;
+  padding: 10px 15px;
   border-radius: 10px;
-  flex: 1;
+  flex: 1; /* 🟢 Take up remaining space */
+  box-sizing: border-box;
 }
 
 .feedback-content h4 {
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 600;
   color: #333;
 }
 
 .feedback-content p {
-  margin: 5px 0 0;
-  color: #555;
+  margin-top: 6px;
   font-size: 14px;
+  color: #444;
 }
 
-
-
-
-/*================================== CARD C3 =======================================*/
-.card:nth-child(3){
-  grid-area: c3;
-  border-radius: 20px;
+/*==================== BADGES ===================================*/
+.badge-carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
 }
-
-
-.card:nth-child(3) h1{
-  margin-top:20px;
-  padding-left:20px;
-  font-size:28px;
-  color:var(--todoo-color);
-  
-}
-
-
 
 .badge-grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 80px;
-  padding-top:20px;
-  padding:30px;
+  display: flex;
+  flex: 1;
   justify-content: center;
-  text-align: center;
-  
+  align-items: center;
+  gap: 80px;
 }
 
 .badge {
+  text-align: center;
   display: flex;
-  flex-direction:rows;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .badge img {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
 }
 
 .badge p {
-  font-size: 17px;
+  margin-top: 10px;
+  font-size: 18px;
   font-weight: bold;
-  padding:15px;
-  color:var(--primary-color);
+  color: var(--graded);
+}
+
+/* Arrows */
+.badge-arrow {
+  font-size: 36px;
+  color: var(--primary-color);
+  cursor: pointer;
+  padding: 10px;
+  user-select: none;
+}
+
+.badge-arrow:hover {
+  color: var(--todoo-color);
 }
 
 
-
-
-
-@media (max-width:925px){
-  
-  .main{
+/* RESPONSIVE */
+@media (max-width: 925px) {
+  .main {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(3,500px);
-    grid-template-areas: initial;
-    
-    
-
+    grid-template-areas: none;
+    grid-template-rows: repeat(4, auto);
   }
-
-  .card{
+  .card {
     grid-area: initial !important;
-
   }
-
-  
 }
-
-

@@ -55,6 +55,11 @@ class Classroom extends Model
         return $this->hasMany(Badge::class);
     }
 
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class);
+    }
+
 
     
 

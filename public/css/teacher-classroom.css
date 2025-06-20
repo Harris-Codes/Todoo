@@ -1381,7 +1381,8 @@ form textarea {
 
 
 .delete-student{
-  background-color: red;
+  font-size:15px;
+  background-color: var(--delete)
 }
 
 
@@ -1615,4 +1616,202 @@ td:last-child {
   font-size:50px;
   font-weight: bold;
   color:var(--primary-color);
+}
+
+
+
+
+
+
+/*=============================== FeedBack  Modal ====================*/
+
+
+.teacher-pic {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#feedbackModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* backdrop */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* ✅ Shown when active */
+#feedbackModal.active {
+  display: flex;
+}
+
+/* 📝 Card style inside modal */
+#feedbackModal .card {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ❌ Close button */
+#feedbackModal .close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #888;
+  transition: color 0.2s;
+}
+
+#feedbackModal .close-btn:hover {
+  color: #333;
+}
+
+/* 🧠 Header */
+#feedbackModal h2 {
+  margin-bottom: 15px;
+  font-size: 22px;
+  color: #333;
+}
+
+/* 📤 Textarea */
+#feedbackModal textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  margin-bottom: 20px;
+}
+
+/* ✅ Submit button */
+#feedbackModal .submit-button {
+  background-color: var(--submitted);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#feedbackModal .submit-button:hover {
+  background-color: var(--submitted);
+}
+
+/* ✨ Optional fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
+.feedback-btn{
+  background-color: var(--graded);
+  font-size:15px;
+}
+
+/* Scrollable container for many feedbacks */
+.feedback-history-scrollable {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 20px;
+  padding-right: 5px;
+}
+
+/* Teacher profile image next to feedback */
+.feedback-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 5px;
+}
+
+.feedback-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.existing-feedback-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+
+.feedback-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.feedback-actions button {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.feedback-actions form {
+  margin: 0;
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-edit {
+  background-color: var(--graded);
+  color: white;
+}
+
+.btn-delete {
+  background-color: var(--delete);
+  color: white;
+}
+
+.btn-edit:hover {
+  --graded: rgb(4, 77, 137);
+  
+}
+
+.btn-delete:hover {
+  --delete:  #be3939;
+}
+
+.btn-save {
+  background-color:var(--submitted);
+  color: white;
+}
+
+.btn-cancel {
+  background-color: var(--todoo-color);
+  color: white;
 }
