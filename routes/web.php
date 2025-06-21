@@ -73,6 +73,7 @@ use App\Http\Controllers\BadgeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\ResetPasswordController;
 
 //------------------------------------Login Page------------------------------
 //Login and Logout
@@ -83,6 +84,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 //Register
 Route::get('/register', [AuthController::class, 'showRegisterForm']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/reset-password', [ResetPasswordController::class, 'submit'])->name('reset.password.submit');
+
+
 
 //-----------------------------------Classroom----------------------------------
 Route::middleware('auth')->group(function () {

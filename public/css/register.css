@@ -15,6 +15,7 @@ body {
     display: flex;
     width: 100%; /* Full width of the viewport */
     height: 100%; /* Full height of the viewport */
+    border: 2px solid #e8e8e8;
    
 }
 
@@ -25,7 +26,13 @@ body {
     align-items: center;
     width: 100vw;
     height: 100vh; /* Full viewport height */
-    background-color: #5c9fe6; /* Same background color as before */
+ 
+
+    background-image: url('/images/class_bg7.jpg');
+    background-size: 70%;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    background-position: center;
     
 }
 

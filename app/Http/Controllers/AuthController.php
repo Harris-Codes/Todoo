@@ -34,7 +34,7 @@ class AuthController extends Controller
             if (Auth::user()->role === 'Teacher') {
                 return redirect()->route('teacher.dashboard');
             } elseif (Auth::user()->role === 'Student') {
-                return redirect()->route('student.homepage');
+                return redirect()->route('student.dashboard');
             } else {
                 return redirect('/dashboard'); // fallback
             }
