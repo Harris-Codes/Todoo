@@ -25,6 +25,12 @@
             <!-- List of menu links -->
             <ul class="menu-links">
                 <li class="nav-link">
+                    <a href="{{ route('teacher.dashboard') }}">
+                        <i class='bx bxs-dashboard icon' ></i>
+                        <span class="text nav-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-link">
                     <a href="{{ url('teacher') }}">
                             <i class='bx bx-book-content icon' ></i>
                         <span class="text nav-text">Manage Classes</span>

@@ -80,52 +80,52 @@
 
   </div>
 
-  <!-- ✅ STUDENT DETAILS (Right Side - Top) -->
+  <!-- STUDENT PROFILE SECTION -->
   <div class="card student-details-card">
-      <h1>👤 Your Details</h1>
+      <h1>👤 Your Profile</h1>
 
-      @if(session('success'))
-          <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
-              {{ session('success') }}
+      {{-- Profile Preview Image (Centered) --}}
+      @if(Auth::user()->profile_picture_url)
+          <div style="display: flex; justify-content: center; margin-bottom: 15px;">
+              <img src="{{ asset(Auth::user()->profile_picture_url) }}"
+                  alt="Current Profile Picture"
+                  style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--todoo-color);">
           </div>
       @endif
 
-      <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 15px;">
+      {{-- Profile Update Form --}}
+      <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
           @csrf
 
-          <!-- Name -->
-          <div>
+          <div style="margin-bottom: 15px;">
               <label for="name">Name</label>
-              <input class="classroom-input" type="text" id="name" name="name" value="{{ old('name', Auth::user()->name) }}" required>
+              <input class="classroom-input" type="text" name="name" value="{{ old('name', Auth::user()->name) }}" required>
           </div>
 
-          <!-- Email -->
-          <div>
+          <div style="margin-bottom: 15px;">
               <label for="email">Email</label>
-              <input class="classroom-input" type="email" id="email" name="email" value="{{ old('email', Auth::user()->email) }}" required>
+              <input class="classroom-input" type="email" name="email" value="{{ old('email', Auth::user()->email) }}" required>
           </div>
 
-          <!-- Profile Picture -->
-          <div>
+          <div style="margin-bottom: 15px;">
               <label for="profile_picture">Profile Picture</label>
               <input type="file" name="profile_picture" accept="image/*">
-              @if(Auth::user()->profile_picture_url)
-                  <img src="{{ asset(Auth::user()->profile_picture_url) }}" alt="Current Picture" style="margin-top: 10px; width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
-              @endif
           </div>
 
-          <!-- Submit Button -->
           <button class="createButton" type="submit">Update Profile</button>
       </form>
   </div>
 
 
-  <!-- ✅ FEEDBACK (Right Side - Bottom) -->
-  <div class="card feedback-card">
-    <div class="feedback-container">
-      <h1>📝 Feedback</h1>
 
-      @forelse($feedbacks as $feedback)
+  <!-- ✅ FEEDBACK CARD CONTAINER -->
+  <div class="card feedback-card">
+    <div class="feedback-header">
+      <h1>📝 Feedback</h1>
+    </div>
+
+    <div class="feedback-container">
+      @foreach ($feedbacks as $feedback)
         <div class="feedback-card">
           <img src="{{ $feedback->teacher->profile_picture_url ?? asset('images/default-profile.png') }}" alt="{{ $feedback->teacher->name }}">
           <div class="feedback-content">
@@ -133,12 +133,14 @@
             <p>{{ $feedback->message }}</p>
           </div>
         </div>
-      @empty
-        <p style="padding: 20px;">No feedback yet 💤</p>
-      @endforelse
-
+      @endforeach
     </div>
   </div>
+
+
+
+
+
 
 
 

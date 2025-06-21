@@ -18,9 +18,6 @@ Route::get('/register', function () {
 });
 
 // =================Role-based dashboard redirection=========================
-Route::get('/teacher/dashboard', function () {
-    return view('teacher'); // Loads teacher.blade.php
-})->name('teacher.dashboard')->middleware('auth');
 
 
 // Forgot Password Page
@@ -192,9 +189,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/teacher/feedback/{studentId}', [FeedbackController::class, 'index'])->name('feedback.index');
     Route::put('/feedback/{id}', [FeedbackController::class, 'update'])->name('feedback.update');
     Route::delete('/feedback/{id}', [FeedbackController::class, 'destroy'])->name('feedback.destroy');
-
     
 });
+
+Route::middleware('auth')->group(function () {
+    Route::get('/teacher/dashboard', [DashboardController::class, 'teacherDashboard'])->name('teacher.dashboard');
+});
+
 
 
 

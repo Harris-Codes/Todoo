@@ -402,7 +402,7 @@ body {
   width: 100%;
   display: flex;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 80px;
 }
 
 .class-overview-card .arrow {
@@ -416,13 +416,17 @@ body {
   color: var(--todoo-color);
 }
 
+
+
 .class-overview-card .teacher-image {
+  background-color: var(--todoo-color);
   width: 120px;
   height: 120px;
   border-radius: 50%;
   overflow: hidden;
   border: 5px solid var(--todoo-color);
   flex-shrink: 0;
+  
 }
 
 .class-overview-card .teacher-image img {
@@ -470,10 +474,11 @@ body {
 
 /*================= STUDENT DETAILS================================== */
 form .classroom-input {
-  width: 100%;
   padding: 10px;
-  border-radius: 6px;
   border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 100%;
 }
 .createButton {
   width: 100%;
@@ -490,16 +495,24 @@ form .classroom-input {
 }
 
 /* ===================FEEDBACK========================================== */
+/* ✅ FEEDBACK CONTAINER - VERTICAL SCROLL */
 .feedback-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 20px;
-  width: 100%; /* 🟢 Stretch full width */
+  overflow-y: auto;
+  max-height: 400px;
+  padding-right: 10px;
   box-sizing: border-box;
 }
 
-/* Each Feedback Card */
+.feedback-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.feedback-container::-webkit-scrollbar-thumb {
+  background-color: var(--todoo-color);
+  border-radius: 3px;
+}
+
+/* ✅ FEEDBACK CARD */
 .feedback-card {
   display: flex;
   align-items: flex-start;
@@ -507,11 +520,9 @@ form .classroom-input {
   border-radius: 12px;
   padding: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  width: 100%; /* 🟢 Stretch full width */
-  box-sizing: border-box;
 }
 
-/* Teacher Image */
+/* ✅ TEACHER IMAGE */
 .feedback-card img {
   width: 50px;
   height: 50px;
@@ -521,13 +532,12 @@ form .classroom-input {
   object-fit: cover;
 }
 
-/* Feedback Content */
+/* ✅ CONTENT */
 .feedback-content {
   background-color: #e3f2fd;
   padding: 10px 15px;
   border-radius: 10px;
-  flex: 1; /* 🟢 Take up remaining space */
-  box-sizing: border-box;
+  flex: 1;
 }
 
 .feedback-content h4 {
@@ -543,6 +553,7 @@ form .classroom-input {
   color: #444;
 }
 
+
 /*==================== BADGES ===================================*/
 .badge-carousel-container {
   display: flex;
@@ -552,6 +563,7 @@ form .classroom-input {
   position: relative;
   width: 100%;
   box-sizing: border-box;
+  margin-top:80px;
 }
 
 .badge-grid {
@@ -595,6 +607,38 @@ form .classroom-input {
 .badge-arrow:hover {
   color: var(--todoo-color);
 }
+
+/* === Enhanced Student Profile Section === */
+.student-details-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.student-details-card label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.student-details-card .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.student-details-card .profile-preview {
+  margin-top: 10px;
+}
+
+.student-details-card .profile-preview img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+}
+
+
 
 
 /* RESPONSIVE */
