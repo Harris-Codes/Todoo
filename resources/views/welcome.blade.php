@@ -7,15 +7,27 @@
     <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
 </head>
 <body>
-    <div class="welcome-container">
-        <div class="welcome-content">
-            <h1>Welcome to <span class="brand">Todoo!</span></h1>
-            <p>A fun and simple classroom system for primary students and teachers.</p>
-            <div class="button-group">
-                <a href="{{ url('/login') }}" class="btn">Login</a>
-                <a href="{{ url('/register') }}" class="btn outline">Create Account</a>
-            </div>
+    <nav class="navbar">
+        <div class="logo">Todoo!</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Work</a></li>
+            <li><a href="#">Info</a></li>
+        </ul>
+        <a href="{{ url('login') }}" class="get-started">Get Started</a>
+    </nav>
+
+    <main class="main-content">
+        <div class="text-section">
+            <h1>Join Student Communities</h1>
+            <p>Learn, grow, and succeed with your peers in a collaborative online classroom environment.</p>
+            <a href="{{ url('register') }}" class="read-more-btn">Read More</a>
         </div>
-    </div>
+        <div class="image-section">
+            <img src="{{ asset('images/student_community.png') }}" alt="Student Community Illustration" class="hero-illustration">
+
+        </div>
+    </main>
 </body>
 </html>
