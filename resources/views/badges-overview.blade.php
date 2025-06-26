@@ -90,6 +90,6 @@
         </div>
     @endif
 </div>
-
+<script src="{{ asset('js/badges-create.js') }}"></script>
 </body>
 </html>

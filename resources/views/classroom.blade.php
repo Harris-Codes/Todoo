@@ -190,15 +190,6 @@
     <div class="file-wrapper">
             <div class="file-header">
                 <h2 id="folderTitle">Files</h2>
-                <div class="file-buttons"> <!-- Added class here -->
-                    <button onclick="openFolderModal()" class="add-folder-btn">
-                    <i class="bx bx-folder-plus"></i> Add Folder
-                    </button>
-                    <input type="file" id="uploadInput" style="display: none;" />
-                    <button onclick="triggerUpload(null)">
-                    <i class='bx bx-upload'></i> Upload File
-                    </button>
-                </div>
             </div>
 
             <table class="file-table">
@@ -207,7 +198,6 @@
                     <th>Name</th>
                     <th>Modified</th>
                     <th>Modified By</th>
-                    <th>Action</th> 
                     </tr>
                 </thead>
                 <tbody id="fileTableBody">
@@ -308,6 +298,11 @@
     <div id="badgeModal" class="badge-modal">
         <div class="badge-modal-content">
             <div class="badge-card">
+              <!-- ✨ SVG Sketch Outline INSIDE here -->
+              <svg class="badge-sketch" viewBox="0 0 320 400" preserveAspectRatio="none">
+                    <rect x="0" y="0" width="100%" height="100%" stroke="#0072ff" stroke-width="4"
+                          fill="none" style="stroke-dasharray: 2000; stroke-dashoffset: 2000;" />
+              </svg>
                 <div class="badge-banner">
                     <img src="{{ asset('images/' . $badge['image']) }}" alt="Badge Image" class="badge-medal">
                 </div>
@@ -333,6 +328,7 @@
                     <button class="badge-button" onclick="closeBadgeModal()">Got it!</button>
                 </div>
             </div>
+            
         </div>
     </div>
 @endif
@@ -366,6 +362,7 @@ function closeBadgeModal() {
 </div>
 
 
+<audio id="badgeSound" src="{{ asset('sounds/get_badge2.mp3') }}"></audio>
 
 
 </body>

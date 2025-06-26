@@ -7,6 +7,9 @@ let correctAnswers = 0;
 const quizElement = document.getElementById('quizData');
 const quiz = JSON.parse(quizElement.dataset.quiz);
 const questions = quiz.questions;
+const soundCorrect = document.getElementById('sound-correct');
+const soundWrong = document.getElementById('sound-wrong');
+
 
 // Quiz Title
 document.querySelector('.creation-header h1').textContent = quiz.title;
@@ -102,15 +105,24 @@ function handleAnswerClick(button, selected, correct, points) {
     if (selected === correct) {
         button.classList.add("correct-answer");
         correctAnswers += points;
+
+        soundCorrect.pause();
+        soundCorrect.currentTime = 0;
+        soundCorrect.play();
     } else {
         button.classList.add("wrong-answer");
         allButtons[correct].classList.add("correct-answer");
+
+        soundWrong.pause();
+        soundWrong.currentTime = 0;
+        soundWrong.play();
     }
 
     setTimeout(() => {
         nextQuestion();
     }, 1500);
 }
+
 
 function autoSelectNone() {
     const q = questions[currentQuestionIndex];

@@ -7,6 +7,7 @@ use App\Models\Folder;
 use App\Models\File;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class FolderController extends Controller
 {
@@ -51,6 +52,25 @@ class FolderController extends Controller
     
         return response()->json($files);
     }
+
+    public function destroy($classroomId, $folderId)
+    {
+        $folder = Folder::where('id', $folderId)
+            ->where('classroom_id', $classroomId)
+            ->firstOrFail();
+
+        // Delete all files in the folder from storage and database
+        foreach ($folder->files as $file) {
+            Storage::disk('public')->delete($file->file_path);
+            $file->delete();
+        }
+
+        // Finally, delete the folder itself
+        $folder->delete();
+
+        return response()->json(['success' => true]);
+    }
+
     
 
 

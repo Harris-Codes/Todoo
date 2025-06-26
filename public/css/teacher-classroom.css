@@ -1128,7 +1128,7 @@ button svg {
 
 
 #backToMainTable {
-  background: #ffcc00;
+  background: white;
   color: black;
   padding: 8px 12px;
   border: none;
@@ -1814,4 +1814,25 @@ td:last-child {
 .btn-cancel {
   background-color: var(--todoo-color);
   color: white;
+}
+
+.clickable-folder-row {
+  cursor: pointer;
+  background-color: #f9f9f9;
+  transition: background-color 0.2s ease;
+}
+
+.clickable-folder-row:hover {
+  background-color: #f0f0ff;
+}
+
+
+.clickable-file-row {
+  cursor: pointer;
+  background-color: #fff;
+  transition: background-color 0.2s ease;
+}
+
+.clickable-file-row:hover {
+  background-color: #f0f0ff;
 }

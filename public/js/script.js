@@ -29,7 +29,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const fileInput = document.getElementById("fileInput");
   const fileNameDisplay = document.getElementById("fileNameDisplay");
   const closeBtn = document.querySelector(".close-btn");
+  const badgeModal = document.getElementById("badgeModal");
+  const badgeSound = document.getElementById("badgeSound");
 
+  if (badgeModal && badgeSound) {
+    // Delay playback just slightly after modal shows (if animated)
+    setTimeout(() => {
+      badgeSound.play().catch(err => {
+        console.warn("Autoplay blocked or error playing sound:", err);
+      });
+    }, 100); 
+  }
+
+  
   if (modal) {
     modal.style.display = "none";
 
@@ -177,58 +189,70 @@ document.addEventListener("DOMContentLoaded", function () {
     folderTitle.innerText = "Files";
     backToMainTable.style.display = "none";
     fileTableBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
-
+  
     let folders = [];
-
+  
     fetch(`/classroom/${classroomId}/folders/list`)
       .then(res => res.json())
       .then(data => {
         folders = data;
-
+  
         fetch(`/classroom/${classroomId}/files/root`)
           .then(res => res.json())
           .then(files => {
             fileTableBody.innerHTML = "";
-
+  
             if (folders.length === 0 && files.length === 0) {
               fileTableBody.innerHTML = "<tr><td colspan='4'>No folders or files found.</td></tr>";
               return;
             }
-
+  
+            // Render folders as clickable rows
             folders.forEach(folder => {
               const row = document.createElement("tr");
+              row.classList.add("clickable-folder-row");
+              row.dataset.id = folder.id;
+              row.dataset.name = folder.name;
               row.innerHTML = `
-                <td><i class='bx bx-folder'></i> ${folder.name}</td>
-                <td>-</td>
-                <td>-</td>
-                <td>
-                  <button onclick="viewFolder(${folder.id}, '${folder.name}')" class="file-action-view">
-                    VIEW FOLDER
-                  </button>
-                </td>`;
+                <td colspan="4"><i class='bx bx-folder'></i> ${folder.name}</td>
+              `;
               fileTableBody.appendChild(row);
             });
-            
-
+  
+            // Attach click handlers
+            document.querySelectorAll('.clickable-folder-row').forEach(row => {
+              row.addEventListener('click', function () {
+                const folderId = this.dataset.id;
+                const folderName = this.dataset.name;
+                viewFolder(folderId, folderName);
+              });
+            });
+  
+            // Render files
             files.forEach(file => {
               const row = document.createElement("tr");
+              row.classList.add("clickable-file-row");
+              row.dataset.filePath = file.file_path;
+            
               row.innerHTML = `
                 <td><i class='bx bx-file'></i> ${file.file_name}</td>
                 <td>${file.modified_at}</td>
                 <td>${file.modified_by}</td>
-                <td>
-                  <div style="display: flex; gap: 10px;">
-                    <a href="/storage/${file.file_path}" target="_blank" class="file-action-view" title="View File">
-                    <i class='bx bxs-download'></i>
-                    </a>
-                  </div>
-                </td>`;
+              `;
+            
+              // Make entire row clickable
+              row.addEventListener("click", function () {
+                const filePath = this.dataset.filePath;
+                window.open(`/storage/${filePath}`, '_blank');
+              });
+            
               fileTableBody.appendChild(row);
             });
             
           });
       });
   }
+  
 
   function viewFolder(folderId, folderName) {
     currentFolderId = folderId;
@@ -236,34 +260,38 @@ document.addEventListener("DOMContentLoaded", function () {
     folderTitle.innerText = `📂 ${folderName}`;
     backToMainTable.style.display = "inline-block";
     fileTableBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
-
+  
     fetch(`/classroom/${classroomId}/folders/${folderId}/files`)
       .then(res => res.json())
       .then(files => {
         fileTableBody.innerHTML = "";
-
+  
         if (files.length === 0) {
           fileTableBody.innerHTML = "<tr><td colspan='4'>No files in this folder.</td></tr>";
           return;
         }
-
+  
         files.forEach(file => {
           const row = document.createElement("tr");
+          row.classList.add("clickable-file-row");
+          row.dataset.filePath = file.file_path;
+  
           row.innerHTML = `
             <td><i class='bx bx-file'></i> ${file.file_name}</td>
             <td>${file.modified_at}</td>
             <td>${file.modified_by}</td>
-            <td>
-              <div style="display: flex; gap: 10px;">
-                <a href="/storage/${file.file_path}" target="_blank" class="file-action-view" title="View File">
-                  <i class='bx bxs-download'></i>
-                </a>
-              </div>
-            </td>`;
+          `;
+  
+          row.addEventListener("click", function () {
+            window.open(`/storage/${file.file_path}`, '_blank');
+          });
+  
           fileTableBody.appendChild(row);
         });
       });
   }
+  
+  
 
   // Expose for global use
   window.showMainFileTable = showMainFileTable;

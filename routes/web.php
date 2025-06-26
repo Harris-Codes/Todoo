@@ -136,6 +136,8 @@ Route::prefix('classroom/{classroom}')->middleware('auth')->group(function () {
     Route::get('/files/root', [FileController::class, 'listRootFiles'])->name('files.root');
     Route::delete('/files/{file}', [FileController::class, 'destroy'])->name('files.delete');
     Route::post('/folders/{folder}/files', [FileController::class, 'uploadToFolder'])->name('files.upload.folder');
+    Route::delete('/folders/{folder}', [FolderController::class, 'destroy'])->name('folders.destroy');
+
 
 });
 Route::post('/classroom/{classroom}/folders/{folder}/files', [FileController::class, 'uploadToFolder'])

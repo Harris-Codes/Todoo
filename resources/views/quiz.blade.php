@@ -48,6 +48,8 @@
 </div>
 
 <div id="classroomMeta" data-classroom-id="{{ $classroom->id }}"></div>
+<audio id="sound-correct" src="{{ asset('sounds/right_answer.mp3') }}"></audio>
+<audio id="sound-wrong" src="{{ asset('sounds/wrong_answer.mp3') }}"></audio>
 </body>
 <script src="{{ asset('js/quiz.js') }}"></script>
 </html>

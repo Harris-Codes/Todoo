@@ -1124,23 +1124,18 @@ button svg {
   font-size: 16px;
 }
 
-/* Back Button */
 #backToMainTable {
-  background: transparent;
+  background: white;
+  color: black;
+  padding: 8px 12px;
   border: none;
-  font-size: 14px;
-  color: #007bff;
-  margin-top: 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
+  border-radius: 5px;
+  font-weight: bold;
   cursor: pointer;
-  margin-bottom: 10px;
+  display: none;
 }
-
-#backToMainTable:hover {
-  text-decoration: underline;
-  color: var(--todoo-color);
+#backToMainTable i {
+  margin-right: 5px;
 }
 
 /* Empty State */
@@ -1326,19 +1321,31 @@ button svg {
 
 
 .badge-card {
+  position: relative;
   background: white;
   width: 320px;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
   text-align: center;
-  font-family: 'Poppins', sans-serif;
-  margin: 0 auto; /* optional */
-  position: relative;
-  
+  animation: badgeFadeIn 0.5s ease-in-out forwards; /* Optional */
 }
 
+.badge-sketch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Behind content */
+  pointer-events: none;
+}
 
+.badge-sketch rect {
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: sketchIn 0.8s ease forwards 0.2s;
+}
 
 .badge-banner {
   background: linear-gradient(to right, #00c6ff, #0072ff);
@@ -1399,14 +1406,48 @@ button svg {
 
 
 
+.clickable-folder-row {
+  cursor: pointer;
+  background-color: #f9f9f9;
+  transition: background-color 0.2s ease;
+}
 
-@keyframes popIn {
-  from {
-      transform: scale(0.7);
-      opacity: 0;
+.clickable-folder-row:hover {
+  background-color: #e8f0ff;
+}
+
+
+.clickable-file-row {
+  cursor: pointer;
+  background-color: #fff;
+  transition: background-color 0.2s ease;
+}
+
+.clickable-file-row:hover {
+  background-color: #f0f0ff;
+}
+
+
+
+@keyframes sketchIn {
+  0% {
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+    opacity: 0;
   }
-  to {
-      transform: scale(1);
-      opacity: 1;
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes badgeFadeIn {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
 }

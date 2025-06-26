@@ -465,30 +465,16 @@ function showMainFileTable() {
 
     let folders = [];
 
-    console.log("🚀 Fetching folders...");
-
     fetch(`/classroom/${classroomId}/folders/list`)
-        .then(res => {
-            console.log("📦 Folder response status:", res.status);
-            return res.json();
-        })
+        .then(res => res.json())
         .then(folderList => {
-            console.log("📂 Folders:", folderList);
             folders = folderList;
         })
-        .catch(err => {
-            console.error("❌ Error fetching folders:", err);
-        })
+        .catch(err => console.error("❌ Error fetching folders:", err))
         .finally(() => {
-            console.log("📥 Now fetching root files...");
-
             fetch(`/classroom/${classroomId}/files/root`)
-                .then(res => {
-                    console.log("📄 File response status:", res.status);
-                    return res.json();
-                })
+                .then(res => res.json())
                 .then(files => {
-                    console.log("📄 Files:", files);
                     fileTableBody.innerHTML = "";
 
                     if (folders.length === 0 && files.length === 0) {
@@ -496,40 +482,111 @@ function showMainFileTable() {
                         return;
                     }
 
+                    // Render folders
                     folders.forEach(folder => {
                         const row = document.createElement("tr");
+                        row.classList.add("clickable-file-row"); // ✅ Add this line
+                        row.dataset.folderId = folder.id;
+                        row.dataset.folderName = folder.name;
+                        
+
                         row.innerHTML = `
                             <td><i class='bx bx-folder'></i> ${folder.name}</td>
-                            <td>-</td><td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                             <td>
-                                <button onclick="viewFolder(${folder.id}, '${folder.name}')" class="view-folder-btn">
-                                    VIEW
+                                <button class="delete-button" data-folder-id="${folder.id}">
+                                    <i class="bx bx-trash"></i>
                                 </button>
-                            </td>`;
+                             </td>
+                        
+                        `;
+
+                        row.querySelector("td:first-child").addEventListener("click", function () {
+                            const id = row.dataset.folderId;
+                            const name = row.dataset.folderName;
+                            viewFolder(id, name);
+                        });
+
+                        // Folder delete event
+                        row.querySelector(".delete-button").addEventListener("click", function (e) {
+                            e.stopPropagation(); // Prevent folder open on delete click
+                            const folderId = this.dataset.folderId;
+                            if (confirm("Are you sure you want to delete this folder?")) {
+                                fetch(`/classroom/${classroomId}/folders/${folderId}`, {
+                                    method: "DELETE",
+                                    headers: {
+                                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                        "Content-Type": "application/json"
+                                    }
+                                })
+                                .then(res => {
+                                    if (!res.ok) throw new Error("Failed to delete folder.");
+                                    return res.json();
+                                })
+                                .then(() => {
+                                    showMainFileTable();
+                                })
+                                .catch(err => {
+                                    alert("❌ Error deleting folder.");
+                                    console.error(err);
+                                });
+                            }
+                        });
+
                         fileTableBody.appendChild(row);
                     });
 
+                    
+
                     files.forEach(file => {
                         const row = document.createElement("tr");
+                        row.classList.add("clickable-file-row");
+                        row.dataset.filePath = file.file_path;
+
                         row.innerHTML = `
                             <td><i class='bx bx-file'></i> ${file.file_name}</td>
                             <td>${file.modified_at}</td>
                             <td>${file.modified_by}</td>
-                            <td> 
+                            <td>
                                 <div style="display: flex; gap: 10px;">
-                                    <a href="/storage/${file.file_path}" target="_blank" class="download-button">
-                                    <i class='bx bxs-download'></i>
-                                    </a>
+                                
                                     <button type="button" class="delete-button" data-file-id="${file.id}">
-                                    <i class='bx bx-trash'></i>
+                                        <i class='bx bx-trash'></i>
                                     </button>
                                 </div>
-                        </td>`;
+                            </td>
+                        `;
+
+                        row.addEventListener("click", function () {
+                            window.open(`/storage/${file.file_path}`, '_blank');
+                        });
+
+                        // Prevent file open when delete is clicked
+                        row.querySelector(".delete-button").addEventListener("click", function (e) {
+                            e.stopPropagation();
+                            const fileId = this.dataset.fileId;
+                            if (confirm("Delete this file?")) {
+                                fetch(`/classroom/${classroomId}/files/${fileId}`, {
+
+
+                                    method: "DELETE",
+                                    headers: {
+                                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                                    }
+                                }).then(res => {
+                                    if (res.ok) {
+                                        row.remove();
+                                    }
+                                });
+                            }
+                        });
+
                         fileTableBody.appendChild(row);
                     });
                 })
                 .catch(err => {
-                    console.error("❌ Error fetching root files:", err);
+                    console.error("❌ Error fetching files:", err);
                     fileTableBody.innerHTML = "<tr><td colspan='4'>Failed to load files.</td></tr>";
                 });
         });
@@ -537,20 +594,22 @@ function showMainFileTable() {
 
 
 
+
 function viewFolder(folderId, folderName) {
     currentFolderId = folderId;
     currentFolderName = folderName;
-    console.log("📁 Setting currentFolderId:", folderId);
 
     document.getElementById("folderTitle").innerText = `📂 ${folderName}`;
     document.getElementById("backToMainTable").style.display = "inline-block";
 
     const fileTableBody = document.getElementById("fileTableBody");
-    fileTableBody.innerHTML = "";
+    fileTableBody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
 
     fetch(`/classroom/${classroomId}/folders/${folderId}/files`)
         .then(res => res.json())
         .then(files => {
+            fileTableBody.innerHTML = "";
+
             if (!files.length) {
                 fileTableBody.innerHTML = "<tr><td colspan='4'>No files in this folder.</td></tr>";
                 return;
@@ -558,25 +617,50 @@ function viewFolder(folderId, folderName) {
 
             files.forEach(file => {
                 const row = document.createElement("tr");
+                row.classList.add("clickable-file-row");
+                row.dataset.filePath = file.file_path;
+
                 row.innerHTML = `
                     <td><i class='bx bx-file'></i> ${file.file_name}</td>
                     <td>${file.modified_at}</td>
                     <td>${file.modified_by}</td>
                     <td>
                         <div style="display: flex; gap: 10px;">
-                            <a href="/storage/${file.file_path}" target="_blank" class="view-button">
-                            <i class='bx bxs-download'></i>
-                            </a>
+              
                             <button type="button" class="delete-button" data-file-id="${file.id}">
-                            <i class='bx bx-trash'></i>
+                                <i class='bx bx-trash'></i>
                             </button>
                         </div>
-                    </td>`;
+                    </td>
+                `;
+
+                row.addEventListener("click", function () {
+                    window.open(`/storage/${file.file_path}`, '_blank');
+                });
+
+                row.querySelector(".delete-button").addEventListener("click", function (e) {
+                    e.stopPropagation();
+                    const fileId = this.dataset.fileId;
+                    if (confirm("Delete this file?")) {
+                        fetch(`/classroom/${classroomId}/files/${fileId}`, {
+
+                            method: "DELETE",
+                            headers: {
+                                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                            }
+                        }).then(res => {
+                            if (res.ok) {
+                                row.remove();
+                            }
+                        });
+                    }
+                });
+
                 fileTableBody.appendChild(row);
             });
-            
         });
 }
+
 
 function createFolder() {
     const name = document.getElementById("folderName").value.trim();

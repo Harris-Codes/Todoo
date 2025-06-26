@@ -67,6 +67,8 @@
             <img src="{{ asset('images/info.png') }}" alt="Info Illustration">
         </div>
     </section>
+        
+
 
 </body>
 </html>

@@ -81,10 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 `).join('')}
             </div>
 
-            <div class="slide-note-block">
-                <label>Slide Note (Optional):</label>
-                <textarea class="slide-note" data-q="${index}">${q.slideNote || ''}</textarea>
-            </div>
+    
         `;
 
 
@@ -110,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
             title: "",
             answers: ["", "", "", ""],
             correctAnswers: [false, false, false, false],
-            slideNote: "",
+           
             points: points,
             time: time
         });
@@ -136,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
             classroom_id: classroomId,
             questions: questions.map(q => ({
                 text: q.title,
-                slide_note: q.slideNote,
+            
                 points: q.points,
                 time: q.time,
                 answers: q.answers.map((a, i) => ({
@@ -188,10 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
             questions[qIndex].answers[aIndex] = target.value;
         }
 
-        if (target.classList.contains("slide-note")) {
-            const qIndex = parseInt(target.dataset.q);
-            questions[qIndex].slideNote = target.value;
-        }
+   
 
         if (target.classList.contains("question-timer")) {
             const qIndex = parseInt(target.dataset.q);
