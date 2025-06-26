@@ -70,11 +70,23 @@ body {
     
 }
 
-h2 {
-    color: #000000;
+.welcome-text {
     margin-bottom: 50px;
-    text-align: center;
 }
+
+.welcome-text .hello {
+    font-size:56px;
+    color: #fdcc44;; /* regular blue */
+    font-weight: 400;
+
+}
+
+.welcome-text .welcome {
+    font-size:72px;
+    color: #ffc21b;; /* stronger blue for welcome */
+    font-weight: 800;
+}
+
 
 form {
     display: flex;

@@ -1,4 +1,23 @@
-/* CSS: login.css */
+:root {
+    /* ===== Colors ===== */
+    --body-color: #f1f4fa;
+    --sidebar-color: #FFF;
+    --primary-color: #4a90e2;
+    --primary-color-light: #F6F5FF;
+    --toggle-color: #DDD;
+    --text-color: #707070;
+    --todoo-color:#ffc21b;
+    --submitted: rgb(10, 190, 10);
+    --graded: rgb(7, 121, 214);
+    --delete:  #ff4d4d;
+  
+    /* ====== Transition ====== */
+    --tran-03: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.3s ease;
+    --tran-05: all 0.3s ease;
+  }
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -46,9 +65,11 @@ body {
 }
 
 h1 {
-    color: #000000;
+    color: var(--todoo-color);
     margin-bottom: 50px;
     text-align: center;
+    font-size: 56px;
+    font-weight: 800;
 }
 
 form {

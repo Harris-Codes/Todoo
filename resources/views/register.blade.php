@@ -10,7 +10,7 @@
     <div class="container">
         <!-- Left Section -->
         <div class="left-section">
-            <h1>Register</h1>
+            <h1>REGISTER</h1>
 
             <!-- Laravel form for registration -->
             <form action="{{ url('/register') }}" method="POST" enctype="multipart/form-data">

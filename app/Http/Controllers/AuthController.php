@@ -71,12 +71,12 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
             'role' => 'required|string|in:Student,Teacher',
-            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048', // Optional validation
+            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048', 
         ]);
         
         $imagePath = null;
 
-        // Handle the uploaded profile picture if exists
+       
         if ($request->hasFile('profile_picture')) {
             $file = $request->file('profile_picture');
             $filename = time() . '_' . $file->getClientOriginalName();
