@@ -164,3 +164,16 @@
 .btn-create i{
     font-size: 13px;
 }
+
+
+.btn-delete {
+    background-color: var(--delete);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-delete:hover {
+    background-color: #e42121; /* darker on hover */
+}

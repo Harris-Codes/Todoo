@@ -31,7 +31,8 @@ function renderBadgePage() {
         const label = document.createElement('label');
         label.classList.add('badge-option');
         label.innerHTML = `
-            <input type="radio" value="${imageName}" onchange="selectBadgeImage('${imageName}')">
+            <input type="radio" name="badgeImage" value="${imageName}" onchange="selectBadgeImage('${imageName}')">
+
             <img src="/images/${imageName}" alt="Badge ${i}">
         `;
         container.appendChild(label);

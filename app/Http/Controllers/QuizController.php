@@ -12,6 +12,9 @@ use App\Models\Classroom;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\QuizAttempt;
+use Illuminate\Support\Facades\Session;
+use App\Services\BadgeEvaluationService;
+
 
 class QuizController extends Controller
 {   
@@ -251,12 +254,11 @@ class QuizController extends Controller
 
     public function publish(Quiz $quiz)
     {
-        // 🔐 Ensure the current user is the quiz owner (teacher)
+  
         if ($quiz->user_id !== auth()->id()) {
             abort(403, 'Unauthorized');
         }
-    
-        // ✅ Only publish if not already published
+   
         if (!$quiz->is_published) {
             $quiz->is_published = true;
             $quiz->save();
@@ -297,31 +299,68 @@ class QuizController extends Controller
         return view('create-quiz', compact('classroom', 'quiz', 'transformedQuestions'));
     }
 
+
+    public function destroy(Quiz $quiz)
+    {
+      
+        if ($quiz->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        try {
+            // Delete related data
+            foreach ($quiz->questions as $question) {
+                $question->answers()->delete();
+                $question->delete();
+            }
+
+            Post::where('quiz_id', $quiz->id)->delete();
+
+            $quiz->delete();
+
+            return redirect()->route('quiz.overview')->with('success', 'Quiz deleted successfully.');
+        } catch (\Exception $e) {
+            Log::error('Error deleting quiz: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to delete quiz. Please try again.');
+        }
+    }
+
+
     public function submitAttempt(Request $request, $quizId)
     {
+        $data = $request->json()->all(); 
+        $request->merge($data);
         $request->validate([
             'score' => 'required|integer',
         ]);
-
+    
         $quiz = Quiz::findOrFail($quizId);
-
-   
+    
         $existing = QuizAttempt::where('quiz_id', $quiz->id)
                     ->where('user_id', auth()->id())
                     ->first();
-
+    
         if ($existing) {
             return response()->json(['message' => 'You have already attempted this quiz.'], 409);
         }
-
-        QuizAttempt::create([
+    
+        $studentId = auth()->id();
+        $classroomId = $quiz->classroom_id;
+    
+        $attempt = QuizAttempt::create([
             'quiz_id' => $quiz->id,
-            'user_id' => auth()->id(),
+            'user_id' => $studentId,
             'score' => $request->score,
         ]);
-
+    
+       
+        BadgeEvaluationService::evaluate($studentId, $classroomId);
+    
         return response()->json(['message' => 'Quiz submitted successfully.']);
     }
+    
+    
+    
     
     public function leaderboard($id)
     {

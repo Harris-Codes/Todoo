@@ -67,14 +67,25 @@
                                     <td>{{ $quiz->created_at->format('d M Y') }}</td>
                                     <td>{{ $quiz->total_points }}</td>
                                     <td>
-                                        <div class="action-buttons">
-                                            <a href="{{ route('quiz.edit', [$quiz->classroom_id, $quiz->id]) }}" class="btn btn-sm btn-primary">
-                                                <i class='bx bx-edit'></i>
-                                            </a>
-                                            <a href="{{ route('quiz.manage', $quiz->id) }}" class="btn btn-sm btn-secondary">
-                                                <i class='bx bx-detail'></i>
-                                            </a>
-                                        </div>
+                                    <div class="action-buttons">
+                                        <a href="{{ route('quiz.edit', [$quiz->classroom_id, $quiz->id]) }}" class="btn btn-sm btn-primary">
+                                            <i class='bx bx-edit'></i>
+                                        </a>
+                                        <a href="{{ route('quiz.manage', $quiz->id) }}" class="btn btn-sm btn-secondary">
+                                            <i class='bx bx-detail'></i>
+                                        </a>
+
+                                        <!-- DELETE BUTTON -->
+                                        <form action="{{ route('quiz.destroy', $quiz->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Are you sure you want to delete this quiz?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-delete">
+                                                <i class='bx bx-trash'></i>
+                                            </button>
+
+                                        </form>
+                                    </div>
+
                                     </td>
                                 </tr>
                             @endforeach

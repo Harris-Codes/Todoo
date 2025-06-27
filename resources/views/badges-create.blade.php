@@ -74,7 +74,6 @@
                     <option value="submission_count">More than X assignment submissions</option>
                     <option value="perfect_quiz">X perfect quiz scores</option>
                     <option value="quiz_count">Total X quiz attempts</option>
-                    <option value="general_activity">General activity</option>
                 </select>
 
 

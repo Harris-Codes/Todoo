@@ -31,17 +31,22 @@ class BadgeEvaluationService
                     }
                     break;
 
-                case 'perfect_quiz':
-                    $perfectCount = QuizAttempt::where('user_id', $studentId)
-                        ->whereHas('quiz', fn($q) => $q->where('classroom_id', $classroomId))
-                        ->whereColumn('score', 'total_points')
+                    case 'perfect_quiz':
+                        $perfectCount = QuizAttempt::where('user_id', $studentId)
+                        ->whereHas('quiz', function($q) use ($classroomId) {
+                            $q->where('classroom_id', $classroomId);
+                        })
+                        ->whereHas('quiz', function($q) {
+                            $q->whereColumn('quizzes.total_points', 'quiz_attempts.score');
+                        })
                         ->count();
-
-                    if ($perfectCount >= $badge->condition_value) {
-                        $badge->users()->attach($studentId);
-                        $earnedBadges[] = $badge;
-                    }
-                    break;
+                    
+                        if ($perfectCount >= $badge->condition_value) {
+                            $badge->awardedToUsers()->attach($studentId);
+                            $earnedBadges[] = $badge;
+                        }
+                        break;
+                    
 
                 case 'quiz_count':
                     $quizCount = QuizAttempt::where('user_id', $studentId)
@@ -49,7 +54,7 @@ class BadgeEvaluationService
                         ->count();
 
                     if ($quizCount >= $badge->condition_value) {
-                        $badge->users()->attach($studentId);
+                        $badge->awardedToUsers()->attach($studentId);
                         $earnedBadges[] = $badge;
                     }
                     break;

@@ -162,6 +162,8 @@ Route::get('/teacher/quiz/{quiz_id}/results', [QuizController::class, 'viewResul
 
 //publish
 Route::post('/teacher/quiz/{quiz}/publish', [QuizController::class, 'publish'])->name('quiz.publish');
+Route::delete('/quizzes/{quiz}', [QuizController::class, 'destroy'])->name('quiz.destroy');
+
 
 //==================== STUDENT ===========================
 //STUDENT HOMEPAGE
@@ -211,4 +213,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/teacher/badges', [BadgeController::class, 'index'])->name('badges.index');
     Route::get('/teacher/badges/create/{classroom_id}', [BadgeController::class, 'create'])->name('badges.create');
     Route::post('/teacher/badges/store', [BadgeController::class, 'store'])->name('badges.store');
+    Route::delete('/badges/{badge}', [BadgeController::class, 'destroy'])->name('badges.destroy');
+
 });

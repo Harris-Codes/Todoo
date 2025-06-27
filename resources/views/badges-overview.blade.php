@@ -54,14 +54,16 @@
             </div>
 
             <table class="quiz-table">
-                <thead>
-                    <tr>
-                        <th>Badge Name</th>
-                        <th>Condition Type</th>
-                        <th>Requirement</th>
-                        <th>Created</th>
-                    </tr>
-                </thead>
+            <thead>
+                <tr>
+                    <th>Badge Name</th>
+                    <th>Condition Type</th>
+                    <th>Requirement</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
                 <tbody>
                     @forelse ($badges as $badge)
                         <tr>
@@ -79,13 +81,23 @@
                                 @endif
                             </td>
                             <td>{{ $badge->created_at->format('d M Y') }}</td>
+                            <td>
+                                <form action="{{ route('badges.destroy', $badge->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Are you sure you want to delete this badge?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-delete">
+                                        <i class='bx bx-trash'></i>
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" style="text-align: center;">No badges created for this class.</td>
+                            <td colspan="5" style="text-align: center;">No badges created for this class.</td>
                         </tr>
                     @endforelse
                 </tbody>
+
             </table>
         </div>
     @endif

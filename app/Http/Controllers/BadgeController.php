@@ -38,7 +38,7 @@ class BadgeController extends Controller
         $validated = $request->validate([
             'classroom_id'     => 'required|exists:classrooms,id',
             'name'             => 'required|string|max:255',
-            'type'             => 'required|in:submission_count,perfect_quiz,quiz_count,general_activity',
+            'type'             => 'required|in:submission_count,perfect_quiz,quiz_count',
             'condition_value'  => 'required|integer|min:1',
             'image'            => 'required|string'  
         ]);
@@ -66,8 +66,33 @@ class BadgeController extends Controller
         }
         
     }
-    
-    
+
+
+    public function destroy(Badge $badge)
+    {
+        // Authorization: Only the teacher who owns the classroom can delete the badge
+        $teacherId = Auth::id();
+        $classroom = Classroom::findOrFail($badge->classroom_id);
+
+        if ($classroom->teacher_id !== $teacherId) {
+            abort(403, 'Unauthorized');
+        }
+
+        try {
+            $badge->delete();
+
+            return redirect()
+                ->route('badges.index', ['classroom_id' => $badge->classroom_id])
+                ->with('success', 'Badge deleted successfully.');
+        } catch (\Exception $e) {
+            Log::error('Badge deletion failed: ' . $e->getMessage());
+
+            return redirect()
+                ->back()
+                ->with('error', 'Failed to delete badge. Please try again.');
+        }
+    }
+
     
 
     public function overview(Request $request)
