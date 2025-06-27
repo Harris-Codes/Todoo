@@ -761,11 +761,42 @@ body.dark .sidebar header .toggle {
   display: block; /* Show active tab */
 }
 
-#grading-title{
-  font-size:30px;
-  padding-bottom: 20px;
-  color:var(--todoo-color)
+
+#grading .student-table {
+  background-color: white;
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
+#grading .student-table th,
+#grading .student-table td {
+  padding: 12px 20px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+#grading .student-table th {
+  background-color: #f9f9f9;
+  color: #e44c7f;
+  font-weight: bold;
+}
+
+
+
+#grading #grading-title {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  color: var(--todoo-color);
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
 
 
 
