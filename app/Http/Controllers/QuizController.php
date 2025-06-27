@@ -305,7 +305,7 @@ class QuizController extends Controller
 
         $quiz = Quiz::findOrFail($quizId);
 
-        // Optional: Prevent duplicate submission
+   
         $existing = QuizAttempt::where('quiz_id', $quiz->id)
                     ->where('user_id', auth()->id())
                     ->first();

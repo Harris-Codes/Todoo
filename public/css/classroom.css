@@ -1225,6 +1225,8 @@ button svg {
   width: 700px;
   max-height: 90vh;
   overflow-y: auto;
+  background-color: var(--primary-color);
+  color:white;
 }
 
 .leaderboard-title {
@@ -1244,12 +1246,14 @@ button svg {
 
 .podium-player {
   text-align: center;
+  color:var(--todoo-color);
+  font-weight: bold;
 }
 .podium-player small {
   display: block;
   margin-top: 4px;
   font-weight: bold;
-  color: #555;
+  color: #ffffff;
 }
 
 .podium-player.first {
@@ -1274,6 +1278,7 @@ button svg {
 }
 
 .leaderboard-entry {
+  color:black;
   display: flex;
   justify-content: space-between;
   padding: 10px 15px;
