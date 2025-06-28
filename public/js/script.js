@@ -69,10 +69,15 @@ document.addEventListener("DOMContentLoaded", function () {
         const grade = this.dataset.grade;
         const submissionWrapper = document.getElementById("submissionWrapper");
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    
         const attachment = this.dataset.attachment ?? '';
+    
+        const dueDateStr = this.dataset.due;
+        const dueDate = new Date(dueDateStr);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const isOverdue = dueDate < today;
+    
         let attachmentHTML = '';
-
         if (attachment) {
             attachmentHTML = `
                 <div class="attachment-section" style="margin-bottom:15px;">
@@ -90,56 +95,67 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
             `;
         }
-
-        if (!grade) {
-          submissionWrapper.innerHTML = `
-          ${attachmentHTML}
-          <form action="/submit-assignment" method="POST" enctype="multipart/form-data">
-              <input type="hidden" name="_token" value="${csrfToken}">
-              <input type="hidden" name="assignment_id" value="${this.dataset.id}">
-      
-              <div class="upload-section">
-                  <div class="file-upload-container">
-                      <input type="file" id="fileInput" name="submission_file" style="display: none;" required>
-                      <button type="button" id="uploadButton">
-                          <i class="fa fa-upload"></i> ADD FILE
-                      </button>
-                      <p id="fileNameDisplay" class="file-name">No file chosen</p>
-                  </div>
-              </div>
-      
-              <div class="submit-btn-container">
-                  <button type="submit" class="submit-btn">Submit Assignment</button>
-              </div>
-          </form>
-      `;
-      
-        
-          // rebind file triggers
-          document.getElementById("uploadButton")?.addEventListener("click", function () {
-            document.getElementById("fileInput").click();
-          });
-        
-          document.getElementById("fileInput")?.addEventListener("change", function () {
-            const fileName = this.files.length > 0 ? this.files[0].name : "No file chosen";
-            document.getElementById("fileNameDisplay").innerText = fileName;
-          });
-        
-        } else {
-          submissionWrapper.innerHTML = `
+    
+        if (!grade && !isOverdue) {
+            submissionWrapper.innerHTML = `
+            ${attachmentHTML}
+            <form action="/submit-assignment" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="${csrfToken}">
+                <input type="hidden" name="assignment_id" value="${this.dataset.id}">
+    
+                <div class="upload-section">
+                    <div class="file-upload-container">
+                        <input type="file" id="fileInput" name="submission_file" style="display: none;" required>
+                        <button type="button" id="uploadButton">
+                            <i class="fa fa-upload"></i> ADD FILE
+                        </button>
+                        <p id="fileNameDisplay" class="file-name">No file chosen</p>
+                    </div>
+                </div>
+    
+                <div class="submit-btn-container">
+                    <button type="submit" class="submit-btn">Submit Assignment</button>
+                </div>
+            </form>
+            `;
+    
+            // Rebind file upload triggers
+            document.getElementById("uploadButton")?.addEventListener("click", function () {
+                document.getElementById("fileInput").click();
+            });
+            document.getElementById("fileInput")?.addEventListener("change", function () {
+                const fileName = this.files.length > 0 ? this.files[0].name : "No file chosen";
+                document.getElementById("fileNameDisplay").innerText = fileName;
+            });
+    
+        } else if (isOverdue && !grade) {
+            submissionWrapper.innerHTML = `
+            ${attachmentHTML}
             <div class="graded-card">
-              <div class="grade-circle">C</div>
+              <div class="grade-circle">⏰</div>
+              <div class="graded-info">
+                  <h3>Assignment Overdue</h3>
+                  <p>This assignment was due on <strong>${dueDate.toDateString()}</strong>.</p>
+                  <p class="resubmit-note">You can no longer submit this assignment.</p>
+              </div>
+            </div>
+            `;
+        } else {
+            submissionWrapper.innerHTML = `
+            ${attachmentHTML}
+            <div class="graded-card">
+              <div class="grade-circle">${grade ?? '-'}</div>
               <div class="graded-info">
                   <h3>Assignment Graded</h3>
-                  <p>You have received a grade of <strong>C</strong> for this assignment.</p>
+                  <p>You have received a grade of <strong>${grade ?? '-'}</strong> for this assignment.</p>
                   <p class="resubmit-note">Resubmission is not allowed.</p>
               </div>
-          </div>
-          `;
+            </div>
+            `;
         }
-        
       });
     });
+    
     
     
     
