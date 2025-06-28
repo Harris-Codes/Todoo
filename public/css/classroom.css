@@ -1433,6 +1433,196 @@ button svg {
 }
 
 
+.badge-section {
+  background-color: white;
+  margin-top: 30px;
+  border-radius: 10px;
+}
+
+.badge-section h3 {
+  background-color:  #e91e63;
+  color: white;
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
+}
+
+.badge-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.badge-table th,
+.badge-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.badge-table th {
+  background-color: #f9f9f9;
+  color:  #e91e63;
+  font-weight: 600;
+}
+
+.badge-table tr:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+
+
+.badge-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.badge-modal.show {
+  display: flex;
+}
+
+.badge-modal-content {
+  background: transparent;
+  padding: 20px 30px;
+  
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  text-align: center;
+ 
+
+  animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.badge-modal-content .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #333;
+}
+
+.badge-medal {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+.badge-modal-content h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #e91e63;
+}
+
+.badge-modal-content p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.badge-modal-content button {
+  background:  #e91e63;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.badge-modal-content button:hover {
+  background: #d13b6c;
+}
+
+
+
+.table-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+  border-radius: 8px; 
+}
+
+.table-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollable-assignment {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+
+
+.graded-card {
+  display: flex;
+  align-items: center;
+  background-color: #fef3f2;
+  border: 1px solid #fca5a5;
+  border-radius: 12px;
+  padding: 20px;
+  gap: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.grade-circle {
+  background-color: #ef4444; 
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.graded-info h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #b91c1c;
+}
+
+.graded-info p {
+  margin: 5px 0;
+  color: #7f1d1d;
+}
+
+.resubmit-note {
+  font-weight: bold;
+}
+
+
+
 
 @keyframes sketchIn {
   0% {

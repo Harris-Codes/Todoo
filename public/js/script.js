@@ -32,8 +32,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const badgeModal = document.getElementById("badgeModal");
   const badgeSound = document.getElementById("badgeSound");
 
+
+
+  const assignmentTableBody = document.querySelector(".assignment-table tbody");
+    if (assignmentTableBody) {
+        const rows = assignmentTableBody.querySelectorAll("tr");
+        if (rows.length > 4) {
+            assignmentTableBody.parentElement.classList.add("scrollable-assignment");
+        }
+    }
+
   if (badgeModal && badgeSound) {
-    // Delay playback just slightly after modal shows (if animated)
+
     setTimeout(() => {
       badgeSound.play().catch(err => {
         console.warn("Autoplay blocked or error playing sound:", err);
@@ -60,28 +70,50 @@ document.addEventListener("DOMContentLoaded", function () {
         const submissionWrapper = document.getElementById("submissionWrapper");
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     
-        // Restore original form HTML if not graded
+        const attachment = this.dataset.attachment ?? '';
+        let attachmentHTML = '';
+
+        if (attachment) {
+            attachmentHTML = `
+                <div class="attachment-section" style="margin-bottom:15px;">
+                    <a href="/storage/${attachment}" target="_blank" class="view-file-button" style="
+                        display: inline-block;
+                        background-color: var(--graded);
+                        color: white;
+                        padding: 8px 16px;
+                        border-radius: 8px;
+                        text-decoration: none;
+                        font-weight: bold;
+                    ">
+                        <i class="fa fa-file"></i> View Attached File
+                    </a>
+                </div>
+            `;
+        }
+
         if (!grade) {
           submissionWrapper.innerHTML = `
-            <form action="/submit-assignment" method="POST" enctype="multipart/form-data">
+          ${attachmentHTML}
+          <form action="/submit-assignment" method="POST" enctype="multipart/form-data">
               <input type="hidden" name="_token" value="${csrfToken}">
               <input type="hidden" name="assignment_id" value="${this.dataset.id}">
-        
+      
               <div class="upload-section">
-                <div class="file-upload-container">
-                  <input type="file" id="fileInput" name="submission_file" style="display: none;" required>
-                  <button type="button" id="uploadButton">
-                    <i class="fa fa-upload"></i> ADD FILE
-                  </button>
-                  <p id="fileNameDisplay" class="file-name">No file chosen</p>
-                </div>
+                  <div class="file-upload-container">
+                      <input type="file" id="fileInput" name="submission_file" style="display: none;" required>
+                      <button type="button" id="uploadButton">
+                          <i class="fa fa-upload"></i> ADD FILE
+                      </button>
+                      <p id="fileNameDisplay" class="file-name">No file chosen</p>
+                  </div>
               </div>
-        
+      
               <div class="submit-btn-container">
-                <button type="submit" class="submit-btn">Submit Assignment</button>
+                  <button type="submit" class="submit-btn">Submit Assignment</button>
               </div>
-            </form>
-          `;
+          </form>
+      `;
+      
         
           // rebind file triggers
           document.getElementById("uploadButton")?.addEventListener("click", function () {
@@ -95,9 +127,14 @@ document.addEventListener("DOMContentLoaded", function () {
         
         } else {
           submissionWrapper.innerHTML = `
-            <p style="color: red; font-weight: bold;">
-              You have already been graded <strong>(Grade: ${grade})</strong>. Resubmission is not allowed.
-            </p>
+            <div class="graded-card">
+              <div class="grade-circle">C</div>
+              <div class="graded-info">
+                  <h3>Assignment Graded</h3>
+                  <p>You have received a grade of <strong>C</strong> for this assignment.</p>
+                  <p class="resubmit-note">Resubmission is not allowed.</p>
+              </div>
+          </div>
           `;
         }
         
@@ -219,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
               fileTableBody.appendChild(row);
             });
   
-            // Attach click handlers
+     
             document.querySelectorAll('.clickable-folder-row').forEach(row => {
               row.addEventListener('click', function () {
                 const folderId = this.dataset.id;
@@ -345,5 +382,36 @@ document.addEventListener("DOMContentLoaded", function () {
       openLeaderboardModal(quizId);
     });
   });
+
+  // ====================== BADGE INFO MODAL ======================
+document.querySelectorAll('.clickable-badge-row').forEach(row => {
+  row.addEventListener('click', () => {
+      document.getElementById('badgeInfoImage').src = row.dataset.image;
+      document.getElementById('badgeInfoName').textContent = row.dataset.name;
+
+      const type = row.dataset.type;
+      const value = row.dataset.condition;
+      let conditionText = '';
+
+      if (type === 'submission_count') {
+          conditionText = `Submit ${value} assignments to earn this badge.`;
+      } else if (type === 'perfect_quiz') {
+          conditionText = `Achieve ${value} perfect quiz scores to earn this badge.`;
+      } else if (type === 'quiz_count') {
+          conditionText = `Attempt ${value} quizzes to earn this badge.`;
+      } else {
+          conditionText = 'Earn this badge by completing the required condition.';
+      }
+
+      document.getElementById('badgeInfoCondition').textContent = conditionText;
+
+      document.getElementById('badgeInfoModal').style.display = 'flex';
+  });
+});
+
+window.closeBadgeInfoModal = function () {
+  document.getElementById('badgeInfoModal').style.display = 'none';
+}
+
 
 });

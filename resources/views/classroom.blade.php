@@ -37,65 +37,115 @@
           <!---------------- ASSIGNMENT SECTION ------------------------>
         <div class="assignment-section">
           <h3>TODOO!</h3>
-          <table class="assignment-table">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Due</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($classroom->assignments as $assignment)
-                @php
-                  $submission = $assignment->submissions->where('student_id', auth()->id())->first();
-                @endphp
-              <tr class="clickable-row"
+          <div class="table-scroll">
+            <table class="assignment-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Due</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($classroom->assignments as $assignment)
+                  @php
+                    $submission = $assignment->submissions->where('student_id', auth()->id())->first();
+                  @endphp
+                  
+                  <tr class="clickable-row"
                     data-id="{{ $assignment->id }}"
                     data-title="{{ $assignment->title }}"
                     data-desc="{{ $assignment->description }}"
-                    data-grade="{{ $submission?->grade }}">
-                    <td>{{ $assignment->title }}</td>
-                    <td>{{ \Carbon\Carbon::parse($assignment->due_date)->format('M d, Y') }}</td>
-                    <td>
-                      @if ($submission && $submission->grade)
-                        <span class="status graded">Graded</span>
-                      @elseif ($submission)
-                        <span class="status submitted">Submitted</span>
-                      @else
-                        <span class="status pending">Pending</span>
-                      @endif
-                    </td>
+                    data-grade="{{ $submission?->grade }}"
+                    data-attachment="{{ $assignment->file_path ?? '' }}">
 
-                </tr>
-              @endforeach
-            </tbody>
-          </table>
+                      <td>{{ $assignment->title }}</td>
+                      <td>{{ \Carbon\Carbon::parse($assignment->due_date)->format('M d, Y') }}</td>
+                      <td>
+                        @if ($submission && $submission->grade)
+                          <span class="status graded">Graded</span>
+                        @elseif ($submission)
+                          <span class="status submitted">Submitted</span>
+                        @else
+                          <span class="status pending">Pending</span>
+                        @endif
+                      </td>
+
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <!-- QUIZ RESULTS SECTION -->
         <div class="result-section" style="margin-top: 30px;">
           <h3>Quiz Results</h3>
-          <table class="result-table">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              @forelse ($quizResults as $result)
-              <tr class="clickable-result-row" data-quiz-id="{{ $result->quiz->id }}">
-                <td>{{ $result->quiz->title }}</td>
-                <td>{{ $result->score }} / {{ $result->quiz->total_points }}</td>
-              </tr>
-              @empty
+          <div class="table-scroll">
+            <table class="result-table">
+              <thead>
                 <tr>
-                  <td colspan="3">No quiz results yet.</td>
+                  <th>Title</th>
+                  <th>Score</th>
                 </tr>
-              @endforelse
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                @forelse ($quizResults as $result)
+                <tr class="clickable-result-row" data-quiz-id="{{ $result->quiz->id }}">
+                  <td>{{ $result->quiz->title }}</td>
+                  <td>{{ $result->score }} / {{ $result->quiz->total_points }}</td>
+                </tr>
+                @empty
+                  <tr>
+                    <td colspan="3">No quiz results yet.</td>
+                  </tr>
+                @endforelse
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- BADGES SECTION -->
+        <div class="badge-section" style="margin-top: 30px;">
+            <h3>Obtainable Badges</h3>
+            <div class="table-scroll">
+              <table class="badge-table">
+                  <thead>
+                      <tr>
+                          <th>Badge</th>
+                          <th>Name</th>
+                          <th>Condition</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @foreach($classroom->badges as $badge)
+                      <tr class="clickable-badge-row"
+                          data-name="{{ $badge->name }}"
+                          data-image="{{ asset('images/' . $badge->image) }}"
+                          data-type="{{ $badge->type }}"
+                          data-condition="{{ $badge->condition_value }}">
+                          <td><img src="{{ asset('images/' . $badge->image) }}" class="badge-thumbnail" style="width:40px; border-radius:50%;"></td>
+                          <td>{{ $badge->name }}</td>
+                          <td>
+                              @switch($badge->type)
+                                  @case('submission_count')
+                                      Submit {{ $badge->condition_value }} assignments
+                                      @break
+                                  @case('perfect_quiz')
+                                      {{ $badge->condition_value }} perfect quiz scores
+                                      @break
+                                  @case('quiz_count')
+                                      {{ $badge->condition_value }} total quiz attempts
+                                      @break
+                                  @default
+                                      Achievement
+                              @endswitch
+                          </td>
+                      </tr>
+                      @endforeach
+                  </tbody>
+              </table>
+            </div>
         </div>
       </div>
       
@@ -332,6 +382,22 @@
         </div>
     </div>
 @endif
+
+<!-- Badge Info Modal -->
+<div id="badgeInfoModal" class="badge-modal" style="display:none;">
+    <div class="badge-modal-content">
+        <div class="badge-card">
+            <div class="badge-banner">
+                <img id="badgeInfoImage" src="" class="badge-medal">
+            </div>
+            <div class="badge-body">
+                <h2 id="badgeInfoName" class="badge-title"></h2>
+                <p id="badgeInfoCondition" class="badge-condition"></p>
+                <button class="badge-button" onclick="closeBadgeInfoModal()">Got it!</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

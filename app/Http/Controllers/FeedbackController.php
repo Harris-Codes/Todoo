@@ -41,7 +41,7 @@ class FeedbackController extends Controller
 
         $feedback = Feedback::findOrFail($id);
 
-        // Optional: Only allow teacher who wrote it to update
+
         if ($feedback->teacher_id !== Auth::id()) {
             abort(403, 'Unauthorized');
         }
