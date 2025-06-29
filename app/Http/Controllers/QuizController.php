@@ -254,10 +254,12 @@ class QuizController extends Controller
 
     public function publish(Quiz $quiz)
     {
+         
   
-        if ($quiz->user_id !== auth()->id()) {
+            if ($quiz->classroom->teacher_id !== auth()->id()) {
             abort(403, 'Unauthorized');
         }
+
    
         if (!$quiz->is_published) {
             $quiz->is_published = true;

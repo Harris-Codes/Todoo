@@ -600,6 +600,8 @@ body.dark .home .text {
 }
 
 
+
+
 @media (min-width: 1280px) {
   .card-container {
     grid-template-columns: repeat(3, 1fr); 
