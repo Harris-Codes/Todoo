@@ -27,7 +27,24 @@ Gamified classroom system with quizzes, assignments, and badges built with Larav
 
 ## 🖥️ Screenshots
 
-> Add screenshots here for professional showcasing (e.g., login page, dashboard, quiz attempt screen).
+### 🖼️ Login Page
+![Login Page](screenshots/loginpage.png)
+
+### 🖼️ Homepage
+![Homepage](screenshots/homepage.png)
+
+### 🖼️ Classroom View
+![Classroom View](screenshots/classroom.png)
+
+### 🖼️ Class Overview
+![Class Overview](screenshots/classoverview.png)
+
+### 🖼️ Quiz Attempt
+![Quiz Attempt](screenshots/quiz.png)
+
+### 🖼️ Badge Earned Popup
+![Badge Earned](screenshots/BadgeEarned.png)
+
 
 ---
 
@@ -151,9 +168,9 @@ npm run dev
 
 ---
 
-## 🤝 Contributing
+## 🚫 No Contributions Accepted
 
-Pull requests are welcome! For major changes, please open an issue first to discuss improvements.
+Thank you for your interest, but this repository does not accept pull requests.
 
 ---
 
