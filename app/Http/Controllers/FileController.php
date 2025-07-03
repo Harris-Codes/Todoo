@@ -49,7 +49,7 @@ class FileController extends Controller
             'file_path' => $path,
             'uploaded_by' => auth()->id()
         ]);
-        
+
 
         return response()->json(['success' => true]);
     }
@@ -58,18 +58,18 @@ class FileController extends Controller
     public function listRootFiles($classroomId)
     {
         $files = File::where('classroom_id', $classroomId)
-                    ->whereNull('folder_id') // only root files
-                    ->with('uploader') // if you're showing modified_by
-                    ->get()
-                    ->map(function ($file) {
-                        return [
-                            'file_name' => $file->file_name,
-                            'file_path' => $file->file_path,
-                            'modified_at' => $file->updated_at->format('M d, Y'),
-                            'modified_by' => $file->uploader->name ?? 'Unknown',
-                            'id' => $file->id
-                        ];
-                    });
+            ->whereNull('folder_id') // only root files
+            ->with('uploader') // if you're showing modified_by
+            ->get()
+            ->map(function ($file) {
+                return [
+                    'file_name' => $file->file_name,
+                    'file_path' => $file->file_path,
+                    'modified_at' => $file->updated_at->format('M d, Y'),
+                    'modified_by' => $file->uploader->name ?? 'Unknown',
+                    'id' => $file->id
+                ];
+            });
 
         return response()->json($files);
     }
@@ -78,15 +78,12 @@ class FileController extends Controller
     public function destroy($classroomId, $fileId)
     {
         $file = File::where('id', $fileId)
-                    ->where('classroom_id', $classroomId)
-                    ->firstOrFail();
-    
+            ->where('classroom_id', $classroomId)
+            ->firstOrFail();
+
         Storage::disk('public')->delete($file->file_path);
         $file->delete();
-    
+
         return response()->json(['success' => true]);
     }
-
-    
-    
 }

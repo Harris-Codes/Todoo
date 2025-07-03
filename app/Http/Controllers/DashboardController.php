@@ -16,11 +16,11 @@ class DashboardController extends Controller
         //without this itll just show squiggle lines but it still works!
         /** @var \App\Models\User $user */
         $user = Auth::user();
-    
+
         $classrooms = $user->classrooms()->with(['teacher', 'assignments', 'students'])->get();
         $badges = $user->badges()->latest()->take(6)->get(); // Or just ->take(6) if no timestamps
-    
-  
+
+
         $feedbacks = $user->receivedFeedback()->with('teacher')->latest()->get();
 
         return view('dashboard', compact('classrooms', 'badges', 'feedbacks'));
@@ -29,11 +29,11 @@ class DashboardController extends Controller
     public function teacherDashboard()
     {
         $user = Auth::user();
-    
+
         // ✅ Classrooms created by the logged-in teacher
         $classrooms = Classroom::where('teacher_id', $user->id)->with(['students', 'assignments', 'teacher'])->get();
-    
-       
+
+
         $teacherClassroomIds = Classroom::where('teacher_id', $user->id)->pluck('id');
 
         $recentAssignments = Assignment::whereIn('classroom_id', $teacherClassroomIds)
@@ -48,7 +48,7 @@ class DashboardController extends Controller
                 ];
             });
 
-            
+
         $recentFeedbacks = Feedback::where('teacher_id', $user->id)
             ->with('student')
             ->latest()
@@ -60,16 +60,13 @@ class DashboardController extends Controller
                     'created_at' => $f->created_at,
                 ];
             });
-    
-        // ✅ Combine and sort by date
+
+       
         $activities = $recentAssignments->merge($recentFeedbacks)->sortByDesc('created_at')->values();
-    
+
         return view('teacher-dashboard', [
             'classrooms' => $classrooms,
             'activities' => $activities,
         ]);
     }
-
-    
-    
 }

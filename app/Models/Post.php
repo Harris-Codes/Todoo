@@ -9,7 +9,8 @@ class Post extends Model
     protected $fillable = ['classroom_id', 'user_id', 'content', 'quiz_id'];
 
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
@@ -27,5 +28,4 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
-
 }

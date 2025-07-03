@@ -4,26 +4,25 @@ let currentQuestionIndex = 0;
 let correctAnswers = 0;
 
 // Fetch quiz data from HTML
-const quizElement = document.getElementById('quizData');
+const quizElement = document.getElementById("quizData");
 const quiz = JSON.parse(quizElement.dataset.quiz);
 const questions = quiz.questions;
-const soundCorrect = document.getElementById('sound-correct');
-const soundWrong = document.getElementById('sound-wrong');
-
+const soundCorrect = document.getElementById("sound-correct");
+const soundWrong = document.getElementById("sound-wrong");
 
 // Quiz Title
-document.querySelector('.creation-header h1').textContent = quiz.title;
+document.querySelector(".creation-header h1").textContent = quiz.title;
 
 function formatTime(seconds) {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
 }
 
 function startTimer(duration) {
     clearInterval(timer);
     timeLeft = duration;
-    document.getElementById('countdown').textContent = formatTime(timeLeft);
+    document.getElementById("countdown").textContent = formatTime(timeLeft);
 
     const timerBar = document.getElementById("timerBar");
     timerBar.style.width = "100%";
@@ -32,7 +31,7 @@ function startTimer(duration) {
 
     timer = setInterval(() => {
         timeLeft--;
-        document.getElementById('countdown').textContent = formatTime(timeLeft);
+        document.getElementById("countdown").textContent = formatTime(timeLeft);
 
         const percentage = (timeLeft / totalTime) * 100;
         timerBar.style.width = percentage + "%";
@@ -44,7 +43,6 @@ function startTimer(duration) {
         }
     }, 1000);
 }
-
 
 function renderQuestionSkeleton() {
     document.querySelector(".creation-main").innerHTML = `
@@ -72,14 +70,15 @@ function renderQuestionSkeleton() {
     `;
 }
 
-
 function loadQuestion(index) {
     const q = questions[index];
-    document.querySelector('.question').textContent = q.text;
-    document.getElementById('question-title').textContent = `QUESTION ${index + 1}`;
-    document.getElementById('questionPoints').textContent = q.points;
+    document.querySelector(".question").textContent = q.text;
+    document.getElementById("question-title").textContent = `QUESTION ${
+        index + 1
+    }`;
+    document.getElementById("questionPoints").textContent = q.points;
 
-    const answerContainer = document.querySelector('.answer-container');
+    const answerContainer = document.querySelector(".answer-container");
     answerContainer.innerHTML = "";
 
     q.options.forEach((opt, i) => {
@@ -100,7 +99,7 @@ function handleAnswerClick(button, selected, correct, points) {
     clearInterval(timer);
 
     const allButtons = document.querySelectorAll(".answer-btn");
-    allButtons.forEach(btn => btn.classList.add("disabled"));
+    allButtons.forEach((btn) => btn.classList.add("disabled"));
 
     if (selected === correct) {
         button.classList.add("correct-answer");
@@ -123,7 +122,6 @@ function handleAnswerClick(button, selected, correct, points) {
     }, 1500);
 }
 
-
 function autoSelectNone() {
     const q = questions[currentQuestionIndex];
     const buttons = document.querySelectorAll(".answer-btn");
@@ -141,63 +139,76 @@ async function nextQuestion() {
         loadQuestion(currentQuestionIndex);
     } else {
         submitQuiz(quizElement.dataset.quizId, correctAnswers);
-        document.getElementById('quizCompleteModal').style.display = 'flex';
+        document.getElementById("quizCompleteModal").style.display = "flex";
 
         setTimeout(() => {
-            const classroomId = document.getElementById("classroomMeta").dataset.classroomId;
+            const classroomId =
+                document.getElementById("classroomMeta").dataset.classroomId;
             window.location.href = `/student/classroom/${classroomId}`;
         }, 3000);
     }
 }
 
-
-
 function submitQuiz(quizId, score) {
     // 🚫 Disable warning after submission
-    window.removeEventListener('beforeunload', beforeUnloadHandler);
+    window.removeEventListener("beforeunload", beforeUnloadHandler);
 
     fetch(`/quiz/${quizId}/submit`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+            "X-CSRF-TOKEN": document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content"),
         },
-        body: JSON.stringify({ score: score })
+        body: JSON.stringify({ score: score }),
     })
-    .then(res => {
-        if (!res.ok) throw new Error("Submission failed");
-        return res.json();
-    })
-    .catch(err => {
-        console.error(err);
-        alert("There was a problem submitting your quiz. Please try again.");
-    });
+        .then((res) => {
+            if (!res.ok) throw new Error("Submission failed");
+            return res.json();
+        })
+        .catch((err) => {
+            console.error(err);
+            alert(
+                "There was a problem submitting your quiz. Please try again."
+            );
+        });
 }
 
 function beforeUnloadHandler(e) {
     const currentQuizId = quizElement.dataset.quizId;
     const currentScore = correctAnswers;
 
-    navigator.sendBeacon(`/quiz/${currentQuizId}/submit`, new Blob([
-        JSON.stringify({
-            score: currentScore,
-            _token: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
-        })
-    ], { type: 'application/json' }));
+    navigator.sendBeacon(
+        `/quiz/${currentQuizId}/submit`,
+        new Blob(
+            [
+                JSON.stringify({
+                    score: currentScore,
+                    _token: document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute("content"),
+                }),
+            ],
+            { type: "application/json" }
+        )
+    );
 
     e.preventDefault();
-    e.returnValue = '';
+    e.returnValue = "";
 }
 
 window.onload = () => {
     renderQuestionSkeleton();
     loadQuestion(currentQuestionIndex);
-       // Enable unload warning when quiz starts
-       window.addEventListener('beforeunload', beforeUnloadHandler);
+    // Enable unload warning when quiz starts
+    window.addEventListener("beforeunload", beforeUnloadHandler);
 };
 
 // Go back button
 document.getElementById("goBackButton").addEventListener("click", () => {
-    const classroomId = document.getElementById("classroomMeta")?.dataset.classroomId || "/student/homepage";
+    const classroomId =
+        document.getElementById("classroomMeta")?.dataset.classroomId ||
+        "/student/homepage";
     window.location.href = `/student/classroom/${classroomId}`;
 });

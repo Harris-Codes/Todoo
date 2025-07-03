@@ -59,7 +59,7 @@ class User extends Authenticatable
 
     public function getProfilePictureUrlAttribute()
     {
-        return $this->profile_picture 
+        return $this->profile_picture
             ? asset('storage/' . $this->profile_picture)
             : asset('images/default-profile.png'); // fallback image
     }
@@ -69,23 +69,23 @@ class User extends Authenticatable
     public function classrooms()
     {
         return $this->belongsToMany(Classroom::class, 'classroom_user')
-                    ->using(\App\Models\ClassroomUser::class) // only if you use a custom pivot model
-                    ->withPivot('role')
-                    ->withTimestamps();
+            ->using(\App\Models\ClassroomUser::class) // only if you use a custom pivot model
+            ->withPivot('role')
+            ->withTimestamps();
     }
 
     public function joinedClassrooms()
     {
         return $this->belongsToMany(Classroom::class)
-                    ->using(ClassroomUser::class)
-                    ->withPivot('role')
-                    ->withTimestamps();
+            ->using(ClassroomUser::class)
+            ->withPivot('role')
+            ->withTimestamps();
     }
 
     public function classesJoined()
     {
         return $this->belongsToMany(Classroom::class, 'classroom_user', 'user_id', 'classroom_id')
-                    ->withTimestamps();
+            ->withTimestamps();
     }
 
     public function comments()
@@ -93,10 +93,11 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    public function submissions() {
+    public function submissions()
+    {
         return $this->hasMany(Submission::class, 'student_id');
     }
-    
+
     public function badges()
     {
         return $this->belongsToMany(Badge::class, 'badge_user')->withTimestamps();
@@ -115,7 +116,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Feedback::class, 'student_id');
     }
-
-
-
 }

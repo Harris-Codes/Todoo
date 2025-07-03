@@ -11,12 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function openEditModal() {
-        document.getElementById('editProfileModal').classList.add('active');
+        document.getElementById("editProfileModal").classList.add("active");
     }
     function closeEditModal() {
-        document.getElementById('editProfileModal').classList.remove('active');
+        document.getElementById("editProfileModal").classList.remove("active");
     }
-    
 
     window.prevBadgeSlide = function () {
         if (currentSlide > 0) {
@@ -37,16 +36,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
     let currentClassIndex = 0;
-    const slides = document.querySelectorAll('.class-slide');
+    const slides = document.querySelectorAll(".class-slide");
 
     function showSlide(index) {
         slides.forEach((slide, i) => {
-            slide.style.display = i === index ? 'flex' : 'none'; // or block depending on your layout
+            slide.style.display = i === index ? "flex" : "none"; // or block depending on your layout
         });
     }
 
     window.prevCard = function () {
-        currentClassIndex = (currentClassIndex - 1 + slides.length) % slides.length;
+        currentClassIndex =
+            (currentClassIndex - 1 + slides.length) % slides.length;
         showSlide(currentClassIndex);
     };
 

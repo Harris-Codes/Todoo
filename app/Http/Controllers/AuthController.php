@@ -12,7 +12,7 @@ use App\Models\User;
 class AuthController extends Controller
 
 {
-     // =====================Login=============================
+    // =====================Login=============================
     //When User first visit /Login this method runs
     public function showLoginForm()
     {
@@ -30,7 +30,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-           // To check if it's a student or teacher
+            // To check if it's a student or teacher
             if (Auth::user()->role === 'Teacher') {
                 return redirect()->route('teacher.dashboard');
             } elseif (Auth::user()->role === 'Student') {
@@ -38,7 +38,6 @@ class AuthController extends Controller
             } else {
                 return redirect('/dashboard'); // fallback
             }
-
         }
 
         return back()->withErrors([
@@ -65,18 +64,18 @@ class AuthController extends Controller
     // Handles form submission for registration
     public function register(Request $request)
     {
-        
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
             'role' => 'required|string|in:Student,Teacher',
-            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048', 
+            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
-        
+
         $imagePath = null;
 
-       
+
         if ($request->hasFile('profile_picture')) {
             $file = $request->file('profile_picture');
             $filename = time() . '_' . $file->getClientOriginalName();
@@ -84,8 +83,8 @@ class AuthController extends Controller
         } else {
             $path = null;
         }
-        
-        
+
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -93,12 +92,8 @@ class AuthController extends Controller
             'role' => $request->role,
             'profile_picture' => $path,
         ]);
-        
+
 
         return redirect('/login')->with('success', 'Account created successfully. Please log in.');
-        
     }
-
-    
-
 }

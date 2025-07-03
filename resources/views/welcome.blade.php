@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Welcome to Todoo</title>
@@ -11,6 +12,7 @@
         }
     </style>
 </head>
+
 <body>
     <nav class="navbar">
         <div class="logo">
@@ -41,18 +43,18 @@
 
     <!-- About Section -->
     <section id="about" class="section-content">
-    <div class="about-text">
-        <h2>About Todoo!</h2>
-        <p>
-            Todoo! is an interactive learning management system designed for primary students.
-            It makes education fun and effective with tools like quizzes, assignments, gamified badges,
-            and feedback—all built for collaborative learning.
-        </p>
-    </div>
-    <div class="about-image-placeholder">
-        <img src="{{ asset('images/about.png') }}" alt="Info Illustration">
-    </div>
-</section>
+        <div class="about-text">
+            <h2>About Todoo!</h2>
+            <p>
+                Todoo! is an interactive learning management system designed for primary students.
+                It makes education fun and effective with tools like quizzes, assignments, gamified badges,
+                and feedback—all built for collaborative learning.
+            </p>
+        </div>
+        <div class="about-image-placeholder">
+            <img src="{{ asset('images/about.png') }}" alt="Info Illustration">
+        </div>
+    </section>
 
 
     <!-- Info Section -->
@@ -60,14 +62,16 @@
         <div class="text-box">
             <h2>Inside Todoo!</h2>
             <p>
-                Todoo! is built using Laravel and Blade templating, designed to be scalable and user-friendly for teachers and students. It includes authentication, classroom management, quizzes, assignments, file storage, feedback, and gamification features.
+                Todoo! is built using Laravel and Blade templating, designed to be scalable and user-friendly for
+                teachers and students. It includes authentication, classroom management, quizzes, assignments, file
+                storage, feedback, and gamification features.
             </p>
         </div>
         <div class="image-box">
             <img src="{{ asset('images/info.png') }}" alt="Info Illustration">
         </div>
     </section>
-        
+
 
 
 </body>

@@ -16,22 +16,22 @@ class BadgeController extends Controller
     {
         $teacherId = Auth::id();
         $classroomId = $request->input('classroom_id');
-    
+
         $teacherClassrooms = Classroom::where('teacher_id', $teacherId)->get();
-    
+
         $badges = collect(); // Empty collection by default
-    
+
         if ($classroomId) {
             $badges = Badge::where('classroom_id', $classroomId)->orderBy('created_at', 'desc')->get();
         }
-    
+
         return view('badges-overview', [
             'teacherClassrooms' => $teacherClassrooms,
             'badges' => $badges,
         ]);
     }
-    
-    
+
+
     public function store(Request $request)
     {
         // Validate incoming request
@@ -40,11 +40,11 @@ class BadgeController extends Controller
             'name'             => 'required|string|max:255',
             'type'             => 'required|in:submission_count,perfect_quiz,quiz_count',
             'condition_value'  => 'required|integer|min:1',
-            'image'            => 'required|string'  
+            'image'            => 'required|string'
         ]);
-    
+
         try {
-            
+
             // Attempt to create the badge
             Badge::create([
                 'classroom_id'    => $validated['classroom_id'],
@@ -53,18 +53,17 @@ class BadgeController extends Controller
                 'condition_value' => $validated['condition_value'],
                 'image'           => $validated['image'],
             ]);
-            
+
             return redirect()
                 ->route('badges.overview', ['classroom_id' => $validated['classroom_id']])
                 ->with('success', 'Badge created successfully!');
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             Log::error('Badge creation failed: ' . $e->getMessage());
             return redirect()
                 ->back()
                 ->withInput()
                 ->with('error', 'Failed to create badge. Please try again.');
         }
-        
     }
 
 
@@ -93,7 +92,7 @@ class BadgeController extends Controller
         }
     }
 
-    
+
 
     public function overview(Request $request)
     {
@@ -114,7 +113,5 @@ class BadgeController extends Controller
     public function create($classroomId)
     {
         return view('badges-create', ['classroom_id' => $classroomId]);
-
     }
-    
 }

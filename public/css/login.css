@@ -2,22 +2,22 @@
 :root {
     /* ===== Colors ===== */
     --body-color: #f1f4fa;
-    --sidebar-color: #FFF;
+    --sidebar-color: #fff;
     --primary-color: #4a90e2;
-    --primary-color-light: #F6F5FF;
-    --toggle-color: #DDD;
+    --primary-color-light: #f6f5ff;
+    --toggle-color: #ddd;
     --text-color: #707070;
-    --todoo-color:#ffc21b;
+    --todoo-color: #ffc21b;
     --submitted: rgb(10, 190, 10);
     --graded: rgb(7, 121, 214);
-    --delete:  #ff4d4d;
-  
+    --delete: #ff4d4d;
+
     /* ====== Transition ====== */
     --tran-03: all 0.2s ease;
     --tran-03: all 0.3s ease;
     --tran-04: all 0.3s ease;
     --tran-05: all 0.3s ease;
-  }
+}
 
 body {
     margin: 0;
@@ -31,33 +31,25 @@ body {
 
 /* Container for the entire page */
 .container {
-   
     display: flex;
     width: 100%; /* Full width of the viewport */
     height: 100%; /* Full height of the viewport */
     border: 2px solid #e8e8e8;
-   
 }
 
 .Containerforgraphic {
-    
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100vw;
     height: 100vh; /* Full viewport height */
-   
-    background-image: url('/images/class_bg7.jpg');
+
+    background-image: url("/images/class_bg7.jpg");
     background-size: 70%;
     background-repeat: repeat;
     background-attachment: fixed;
     background-position: center;
-
- 
-    
 }
-
-
 
 /* Left section for the form */
 .left-section {
@@ -66,8 +58,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
-    
 }
 
 .welcome-text {
@@ -75,18 +65,16 @@ body {
 }
 
 .welcome-text .hello {
-    font-size:56px;
-    color: #fdcc44;; /* regular blue */
+    font-size: 56px;
+    color: #fdcc44; /* regular blue */
     font-weight: 400;
-
 }
 
 .welcome-text .welcome {
-    font-size:72px;
-    color: #ffc21b;; /* stronger blue for welcome */
+    font-size: 72px;
+    color: #ffc21b; /* stronger blue for welcome */
     font-weight: 800;
 }
-
 
 form {
     display: flex;
@@ -101,14 +89,14 @@ label {
 
 h3 {
     display: flex;
-    justify-content: space-between;  /*buat dia ade space in between*/
+    justify-content: space-between; /*buat dia ade space in between*/
     font-size: 16px;
     color: #333;
     margin: 10px 0;
 }
 
 h3 a {
-    color: #007BFF;
+    color: #007bff;
     text-decoration: none;
     font-weight: bold;
 }
@@ -116,7 +104,6 @@ h3 a {
 h3 a:hover {
     text-decoration: underline;
 }
-
 
 input[type="text"],
 input[type="password"] {
@@ -128,17 +115,16 @@ input[type="password"] {
     font-size: 14px;
 }
 
-
-#forgot{
-    display:flex;
+#forgot {
+    display: flex;
 }
 
-#new{
-    display:flex;
+#new {
+    display: flex;
 }
 
 input[type="submit"] {
-    margin-top:20px;
+    margin-top: 20px;
     background-color: #0077ff;
     color: white;
     font-weight: bold;
@@ -151,7 +137,6 @@ input[type="submit"] {
     border: 1px solid #ddd;
     border-radius: 10px;
     font-size: 14px;
-
 }
 
 input[type="submit"]:hover {
@@ -176,7 +161,6 @@ input[type="submit"]:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    
 }
 
 .right-section img {
@@ -184,4 +168,3 @@ input[type="submit"]:hover {
     height: auto; /* Maintain aspect ratio */
     object-fit: contain; /* Ensure the image fits nicely within its container */
 }
-

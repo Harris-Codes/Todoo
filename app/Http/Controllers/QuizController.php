@@ -17,27 +17,27 @@ use App\Services\BadgeEvaluationService;
 
 
 class QuizController extends Controller
-{   
+{
     public function show($classroomId, $quizId)
     {
         $classroom = Classroom::findOrFail($classroomId);
         $quiz = Quiz::with('questions.answers')->findOrFail($quizId);
-    
+
         // 🔒 Block if student is not in the class
         if (!$classroom->students()->where('user_id', auth()->id())->exists()) {
             abort(403, 'You are not part of this classroom');
         }
-    
+
         // 🔒 Block if already attempted
         $alreadyAttempted = QuizAttempt::where('quiz_id', $quiz->id)
-                                       ->where('user_id', auth()->id())
-                                       ->exists();
-    
+            ->where('user_id', auth()->id())
+            ->exists();
+
         if ($alreadyAttempted) {
             return redirect()->route('student.classroom', $classroomId)
-                             ->with('error', 'You have already attempted this quiz.');
+                ->with('error', 'You have already attempted this quiz.');
         }
-    
+
         // 🧠 Prepare quiz data
         $quizData = [
             'title' => $quiz->title,
@@ -51,22 +51,21 @@ class QuizController extends Controller
                 ];
             }),
         ];
-    
+
         return view('quiz', [
             'classroom' => $classroom,
             'quizData' => $quizData,
             'quiz' => $quiz,
         ]);
-        
     }
 
     public function overview(Request $request)
     {
         $teacherId = auth()->id();
         $classroomId = $request->input('classroom_id');
-    
+
         $classrooms = Classroom::where('teacher_id', $teacherId)->get();
-    
+
         $quizzes = Quiz::with('classroom')
             ->when($classroomId, function ($query) use ($classroomId) {
                 $query->where('classroom_id', $classroomId);
@@ -74,21 +73,20 @@ class QuizController extends Controller
             ->whereIn('classroom_id', $classrooms->pluck('id'))
             ->orderByDesc('created_at')
             ->get();
-    
+
         return view('quiz-overview', [
             'quizzes' => $quizzes,
             'teacherClassrooms' => $classrooms,
         ]);
-            
     }
-    
-    
+
+
 
     public function showCreateQuiz($classroom_id)
     {
         $classroom = Classroom::findOrFail($classroom_id);
 
-        
+
 
         if ($classroom->teacher_id !== auth()->id()) {
             abort(403, 'Unauthorized');
@@ -235,7 +233,6 @@ class QuizController extends Controller
         }
 
         return view('quiz-manage', ['quiz' => $quiz]);
-
     }
 
     public function viewResults($quiz_id)
@@ -254,33 +251,26 @@ class QuizController extends Controller
 
     public function publish(Quiz $quiz)
     {
-         
-  
-            if ($quiz->classroom->teacher_id !== auth()->id()) {
+
+
+        if ($quiz->classroom->teacher_id !== auth()->id()) {
             abort(403, 'Unauthorized');
         }
 
-   
+
         if (!$quiz->is_published) {
             $quiz->is_published = true;
             $quiz->save();
-    
-            
-            
         }
-    
+
         return redirect()->back()->with('success', 'Quiz results have been published successfully.');
     }
-    
-
-
-
 
     public function edit($classroom_id, $quiz_id)
     {
         $classroom = Classroom::findOrFail($classroom_id);
-       
-        
+
+
         if ($classroom->teacher_id !== auth()->id()) {
             abort(403, 'Unauthorized');
         }
@@ -304,7 +294,7 @@ class QuizController extends Controller
 
     public function destroy(Quiz $quiz)
     {
-      
+
         if ($quiz->user_id !== auth()->id()) {
             abort(403, 'Unauthorized');
         }
@@ -330,44 +320,41 @@ class QuizController extends Controller
 
     public function submitAttempt(Request $request, $quizId)
     {
-        $data = $request->json()->all(); 
+        $data = $request->json()->all();
         $request->merge($data);
         $request->validate([
             'score' => 'required|integer',
         ]);
-    
+
         $quiz = Quiz::findOrFail($quizId);
-    
+
         $existing = QuizAttempt::where('quiz_id', $quiz->id)
-                    ->where('user_id', auth()->id())
-                    ->first();
-    
+            ->where('user_id', auth()->id())
+            ->first();
+
         if ($existing) {
             return response()->json(['message' => 'You have already attempted this quiz.'], 409);
         }
-    
+
         $studentId = auth()->id();
         $classroomId = $quiz->classroom_id;
-    
+
         $attempt = QuizAttempt::create([
             'quiz_id' => $quiz->id,
             'user_id' => $studentId,
             'score' => $request->score,
         ]);
-    
-       
+
+
         BadgeEvaluationService::evaluate($studentId, $classroomId);
-    
+
         return response()->json(['message' => 'Quiz submitted successfully.']);
     }
-    
-    
-    
-    
+
     public function leaderboard($id)
     {
         $quiz = \App\Models\Quiz::with(['attempts.user'])->findOrFail($id);
-    
+
         $rankedAttempts = $quiz->attempts
             ->sort(function ($a, $b) {
                 if ($b->score === $a->score) {
@@ -376,8 +363,7 @@ class QuizController extends Controller
                 return $b->score <=> $a->score; // higher score = higher rank
             })
             ->values(); // reindex to start at 0
-    
+
         return response()->json($rankedAttempts);
     }
-    
 }

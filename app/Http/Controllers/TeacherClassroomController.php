@@ -10,17 +10,17 @@ use App\Models\File;
 
 class TeacherClassroomController
 {
-    
+
     public function show($id)
     {
         $classroom = Classroom::with([
             'assignments',
-            'posts.user', 
+            'posts.user',
             'posts.comments.user',
             'files',
             'students',
             'teacher',
-            'posts.quiz.questions' ,
+            'posts.quiz.questions',
             'feedbacks.teacher'
         ])->findOrFail($id);
 
@@ -34,22 +34,22 @@ class TeacherClassroomController
         return view('teacher-classroom', compact('classroom'));
     }
 
-    
+
     //Adding student to the classroom
-    public function addStudent(Request $request, $classroomId){
-        
+    public function addStudent(Request $request, $classroomId)
+    {
+
         //make sure to validate the email
         $request->validate([
-            'email'=>'required|email'
+            'email' => 'required|email'
         ]);
 
-        $user = User::where('email',$request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
         //if not a user show this:
-        if(!$user){
+        if (!$user) {
 
-            return back()->with('error','User with this email does not exist.');
-
+            return back()->with('error', 'User with this email does not exist.');
         }
 
         $classroom = Classroom::findOrFail($classroomId);
@@ -57,25 +57,23 @@ class TeacherClassroomController
         // Check if user already added
         if ($classroom->students()->where('user_id', $user->id)->exists()) {
 
-            return back()->with('error','Student already in this classroom.');
+            return back()->with('error', 'Student already in this classroom.');
         }
-        
+
         // Attach student to classroom
         $classroom->students()->attach($user->id, ['role' => 'student']);
 
-        return back()->with('success','Student added successfully.');
-
+        return back()->with('success', 'Student added successfully.');
     }
 
 
     // Remove students from the tab
-    public function removeStudent($classroomId,$studentId){
+    public function removeStudent($classroomId, $studentId)
+    {
 
         $classroom = Classroom::findOrFail($classroomId);
         $classroom->students()->detach($studentId);
 
         return back()->with('Success', 'Student removed');
     }
-    
-
 }

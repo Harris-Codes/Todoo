@@ -14,7 +14,7 @@ class ClassroomController
         $classes = auth()->user()->classesCreated; // only classes by logged-in teacher
         return view('teacher', compact('classes'));
     }
-    
+
     public function store(Request $request)
     {
         $request->validate([
@@ -48,7 +48,7 @@ class ClassroomController
     public function show($id)
     {
         $classroom = Classroom::findOrFail($id);
-    
+
         // Optional: Eager load relationships if needed (e.g., posts)
         return view('teacher-classroom', compact('classroom'));
     }
@@ -60,7 +60,7 @@ class ClassroomController
             'teacher',
             'assignments',
             'files.uploader',
-            'folders.files.uploader', 
+            'folders.files.uploader',
             'posts.quiz.attempts',
             'posts' => function ($query) {
                 $query->latest(); // Order posts by newest first
@@ -68,25 +68,25 @@ class ClassroomController
             'posts.user',
             'posts.comments.user'
         ])->findOrFail($id);
-    
+
         // Optional: Check if student is enrolled
         if (!$classroom->students()->where('user_id', auth()->id())->exists()) {
             abort(403, 'Unauthorized access');
         }
-    
-        
+
+
         $quizResults = QuizAttempt::where('user_id', auth()->id())
-            ->whereHas('quiz', function($query) use ($id) {
+            ->whereHas('quiz', function ($query) use ($id) {
                 $query->where('classroom_id', $id)->where('is_published', true);
             })
             ->with('quiz')
             ->get();
-    
-       
+
+
         return view('classroom', compact('classroom', 'quizResults'));
     }
-    
-    
+
+
 
     public function studentHomepage()
     {
@@ -128,9 +128,4 @@ class ClassroomController
 
         return redirect()->route('student.homepage')->with('success', 'You have left the classroom.');
     }
-
-   
-
-
-    
 }

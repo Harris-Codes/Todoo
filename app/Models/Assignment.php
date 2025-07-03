@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Assignment extends Model
 {
-    
+
     use HasFactory;
 
     protected $fillable = [
@@ -24,13 +24,13 @@ class Assignment extends Model
         return $this->belongsTo(Classroom::class);
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function submissions() {
+    public function submissions()
+    {
         return $this->hasMany(Submission::class);
     }
-    
-    
 }

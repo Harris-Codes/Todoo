@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Quiz Results - {{ $quiz->title }}</title>
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/quiz-results.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 </head>
+
 <body>
 
     <section class="result-section">
@@ -61,4 +63,5 @@
     </section>
 
 </body>
+
 </html>

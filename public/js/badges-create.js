@@ -19,8 +19,8 @@ const totalBadges = 9;
 
 // === Render carousel images ===
 function renderBadgePage() {
-    const container = document.getElementById('badgeImagePageContainer');
-    container.innerHTML = '';
+    const container = document.getElementById("badgeImagePageContainer");
+    container.innerHTML = "";
 
     const start = currentBadgePage * badgesPerPage;
     const end = Math.min(start + badgesPerPage, totalBadges);
@@ -28,8 +28,8 @@ function renderBadgePage() {
     for (let i = start + 1; i <= end; i++) {
         const imageName = `badge-${i}.png`;
 
-        const label = document.createElement('label');
-        label.classList.add('badge-option');
+        const label = document.createElement("label");
+        label.classList.add("badge-option");
         label.innerHTML = `
             <input type="radio" name="badgeImage" value="${imageName}" onchange="selectBadgeImage('${imageName}')">
 
@@ -38,7 +38,8 @@ function renderBadgePage() {
         container.appendChild(label);
     }
 
-    document.getElementById('badgeImagePageIndicator').innerText = currentBadgePage + 1;
+    document.getElementById("badgeImagePageIndicator").innerText =
+        currentBadgePage + 1;
 
     // Optional: auto-select the first badge of the page
     const firstRadio = container.querySelector('input[type="radio"]');
@@ -47,8 +48,6 @@ function renderBadgePage() {
         selectBadgeImage(firstRadio.value);
     }
 }
-
-
 
 // === Navigate carousel left/right ===
 function changeBadgeImagePage(direction) {
@@ -62,22 +61,20 @@ function changeBadgeImagePage(direction) {
 }
 
 function selectBadgeImage(imageName) {
-    const hiddenInput = document.getElementById('selectedBadgeImage');
+    const hiddenInput = document.getElementById("selectedBadgeImage");
     if (hiddenInput) {
         hiddenInput.value = imageName;
-        console.log('Selected badge image set to:', imageName);
+        console.log("Selected badge image set to:", imageName);
     }
 }
 
-
 // === Switch to Step 2 ===
 function goToBadgeStep2() {
-    document.querySelector('.step-1').style.display = 'none';
-    document.querySelector('.step-2').style.display = 'flex';
+    document.querySelector(".step-1").style.display = "none";
+    document.querySelector(".step-2").style.display = "flex";
 }
 
 function goToBadgeStep1() {
-    document.querySelector('.step-2').style.display = 'none';
-    document.querySelector('.step-1').style.display = 'flex';
+    document.querySelector(".step-2").style.display = "none";
+    document.querySelector(".step-1").style.display = "flex";
 }
-

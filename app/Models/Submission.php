@@ -9,13 +9,15 @@ class Submission extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['assignment_id', 'student_id', 'file_path', 'submitted_at', 'grade', 'feedback','original_filename'];
+    protected $fillable = ['assignment_id', 'student_id', 'file_path', 'submitted_at', 'grade', 'feedback', 'original_filename'];
 
-    public function assignment() {
+    public function assignment()
+    {
         return $this->belongsTo(Assignment::class);
     }
 
-    public function student() {
+    public function student()
+    {
         return $this->belongsTo(User::class, 'student_id');
     }
 }

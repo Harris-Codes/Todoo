@@ -28,6 +28,4 @@ class Badge extends Model
     {
         return $this->belongsToMany(User::class, 'badge_user')->withTimestamps();
     }
-
-    
 }

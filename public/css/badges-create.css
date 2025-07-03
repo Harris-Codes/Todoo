@@ -1,22 +1,22 @@
 :root {
     /* ===== Colors ===== */
     --body-color: #f1f4fa;
-    --sidebar-color: #FFF;
+    --sidebar-color: #fff;
     --primary-color: #4a90e2;
-    --primary-color-light: #F6F5FF;
-    --toggle-color: #DDD;
+    --primary-color-light: #f6f5ff;
+    --toggle-color: #ddd;
     --text-color: #707070;
-    --todoo-color:#ffc21b;
+    --todoo-color: #ffc21b;
     --submitted: rgb(10, 190, 10);
     --graded: rgb(7, 121, 214);
-    --delete:  #ff4d4d;
-  
+    --delete: #ff4d4d;
+
     /* ====== Transition ====== */
     --tran-03: all 0.2s ease;
     --tran-03: all 0.3s ease;
     --tran-04: all 0.3s ease;
     --tran-05: all 0.3s ease;
-  }
+}
 
 .form-wrapper {
     max-width: 700px;
@@ -97,7 +97,6 @@
     background-color: #357ac9;
 }
 
-
 /* ========== Badge Creation Steps ========== */
 
 .step {
@@ -106,17 +105,16 @@
     gap: 1.2rem;
     width: 100%;
     align-items: center;
-  }
-  
-  .step-1 {
+}
+
+.step-1 {
     display: flex;
-  }
-  
-  .step-2 {
-    display: none; 
-  }
-  
-  
+}
+
+.step-2 {
+    display: none;
+}
+
 .badge-step {
     display: flex;
     flex-direction: column;
@@ -124,68 +122,65 @@
     justify-content: center;
     width: 100%;
     gap: 1rem;
-  }
-  
-  
+}
+
 .otpSubheading {
     font-size: 30px;
     font-weight: bold;
-    color:var(--todoo-color);
-
+    color: var(--todoo-color);
 }
 
-  
-  .badge-step.step-2 {
+.badge-step.step-2 {
     margin-top: 20px;
     display: none;
     align-items: center;
     flex-direction: column;
     width: 100%;
-  }
-  
-  /* ========== Badge Image Carousel Grid ========== */
-  .badge-image-options {
+}
+
+/* ========== Badge Image Carousel Grid ========== */
+.badge-image-options {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     justify-content: center;
     margin-top: 1rem;
-  }
-  
-  .badge-option {
+}
+
+.badge-option {
     display: flex;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-  }
-  
-  .badge-option input[type="radio"] {
+}
+
+.badge-option input[type="radio"] {
     display: none;
-  }
-  
-  .badge-option img {
+}
+
+.badge-option img {
     width: 100px;
     height: 100px;
     object-fit: contain;
     border-radius: 10px;
     border: 2px solid transparent;
     transition: border 0.3s ease;
-  }
-  
-  .badge-option input[type="radio"]:checked + img {
+}
+
+.badge-option input[type="radio"]:checked + img {
     border: 3px solid var(--todoo-color);
-  }
-  
-  /* ========== Carousel Controls ========== */
-  .badge-carousel-controls {
+}
+
+/* ========== Carousel Controls ========== */
+.badge-carousel-controls {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 1.5rem;
     margin-top: 1rem;
-  }
-  
-  .badge-arrow-btn {
+}
+
+.badge-arrow-btn {
     font-size: 1.5rem;
     padding: 0.4rem 1rem;
     border: none;
@@ -193,52 +188,50 @@
     background-color: var(--todoo-color);
     color: white;
     cursor: pointer;
-  }
-  
-  #badgeImagePageIndicator {
+}
+
+#badgeImagePageIndicator {
     font-size: 1.2rem;
     font-weight: bold;
     color: black;
-  }
-  
-  /* ========== Form Field Spacing ========== */
-  .badge-form-group {
+}
+
+/* ========== Form Field Spacing ========== */
+.badge-form-group {
     margin-bottom: 1.2rem;
     width: 100%;
-  }
-  
-  .badge-form-group label {
+}
+
+.badge-form-group label {
     color: #444; /* soft black */
     font-weight: 600;
     font-size: 16px;
     margin-bottom: 6px;
-  }
-  
-  .badge-form-group input,
-  .badge-form-group select {
+}
+
+.badge-form-group input,
+.badge-form-group select {
     width: 100%;
     padding: 0.5rem;
     border-radius: 8px;
     border: 1px solid #ccc;
     font-size: 1rem;
-  }
+}
 
-  .classroom-input {
+.classroom-input {
     color: #333;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
     padding: 12px;
-  }
-  
+}
 
-  label {
-    color: var(--todoo-color);  /* your yellow theme color */
-    
+label {
+    color: var(--todoo-color); /* your yellow theme color */
+
     font-size: 18px;
-  }
-  
+}
 
-  .step2-header {
+.step2-header {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -259,7 +252,6 @@
 .back-icon-btn:hover {
     color: #e0a800;
 }
-
 
 .alert {
     padding: 12px 16px;

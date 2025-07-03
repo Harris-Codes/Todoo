@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Routing\Controller;
 
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'post_id' => 'required|exists:posts,id', 
+            'post_id' => 'required|exists:posts,id',
             'comment_text' => 'required|string|max:1000',
         ]);
 
@@ -20,10 +21,7 @@ class CommentController extends Controller
             'user_id' => auth()->check() ? auth()->id() : (auth('teacher')->check() ? auth('teacher')->id() : null),
             'comment_text' => $request->comment_text,
         ]);
-    
-        return redirect()->back()->with('success', 'Comment posted!');
-    
-    }
 
-   
+        return redirect()->back()->with('success', 'Comment posted!');
+    }
 }

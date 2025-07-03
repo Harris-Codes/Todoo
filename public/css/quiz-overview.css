@@ -1,43 +1,40 @@
 :root {
     /* ===== Colors ===== */
     --body-color: #f1f4fa;
-    --sidebar-color: #FFF;
+    --sidebar-color: #fff;
     --primary-color: #4a90e2;
-    --primary-color-light: #F6F5FF;
-    --toggle-color: #DDD;
+    --primary-color-light: #f6f5ff;
+    --toggle-color: #ddd;
     --text-color: #707070;
-    --todoo-color:#ffc21b;
+    --todoo-color: #ffc21b;
     --submitted: rgb(10, 190, 10);
     --graded: rgb(7, 121, 214);
-    --delete:  #ff4d4d;
-  
+    --delete: #ff4d4d;
+
     /* ====== Transition ====== */
     --tran-03: all 0.2s ease;
     --tran-03: all 0.3s ease;
     --tran-04: all 0.3s ease;
     --tran-05: all 0.3s ease;
-  }
+}
 
-  html {
+html {
     scroll-behavior: smooth;
-  }
+}
 
-
-  .home {
-    background-image: url('/images/class_bg7.jpg');
+.home {
+    background-image: url("/images/class_bg7.jpg");
     background-size: 70%;
     background-attachment: fixed;
     background-position: center;
     background-repeat: repeat;
+}
 
-  }
-  
-  
-.banner{
+.banner {
     background-color: var(--graded);
     color: white;
     height: 300px;
-    display:flex;
+    display: flex;
     padding-top: 140px;
     padding-left: 30px;
     align-items: center;
@@ -46,7 +43,7 @@
     border-bottom-right-radius: 15px;
 }
 
-.banner-text{
+.banner-text {
     font-size: 25px;
 }
 
@@ -60,11 +57,10 @@
 }
 
 .quiz-overview-container h2 {
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
     font-size: 28px;
     color: #333;
 }
-
 
 /* Dropdown Content */
 .dropdown-content {
@@ -122,12 +118,11 @@
     background-color: #f9f9f9;
 }
 
-
 .action-buttons {
     display: flex;
     gap: 10px;
-  }
-  
+}
+
 /* Action buttons */
 .quiz-table .btn {
     padding: 6px 12px;
@@ -146,7 +141,6 @@
     background-color: var(--todoo-color);
 }
 
-
 .btn-create {
     text-decoration: none;
     padding: 6px 16px; /* smaller padding */
@@ -161,10 +155,9 @@
     appearance: none;
 }
 
-.btn-create i{
+.btn-create i {
     font-size: 13px;
 }
-
 
 .btn-delete {
     background-color: var(--delete);

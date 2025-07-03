@@ -17,12 +17,14 @@ class Quiz extends Model
         'total_points'
     ];
 
-    public function classroom(){
+    public function classroom()
+    {
 
         return $this->belongsTo(Classroom::class);
     }
 
-    public function user(){
+    public function user()
+    {
 
         return $this->belongsTo(User::class);
     }
@@ -36,10 +38,6 @@ class Quiz extends Model
     {
         return $this->hasOne(Post::class);
     }
-
-    // Quiz.php
-
-    // In Quiz.php
 
     public function getCalculatedPointsAttribute()
     {
@@ -55,6 +53,4 @@ class Quiz extends Model
     {
         return $this->hasMany(QuizAttempt::class);
     }
-
-
 }

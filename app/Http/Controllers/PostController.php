@@ -11,7 +11,7 @@ use App\Models\Quiz;
 
 class PostController extends Controller
 {
-    public function store (Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'classroom_id' => 'required|exists:classrooms,id',
@@ -23,7 +23,7 @@ class PostController extends Controller
             'user_id' => Auth::id(),
             'content' => $request->content,
         ]);
-        
+
 
         return redirect()->back()->with('success', 'Post created successfully');
     }
@@ -54,5 +54,4 @@ class PostController extends Controller
 
         return redirect()->back()->with('success', 'Post deleted.');
     }
-
 }

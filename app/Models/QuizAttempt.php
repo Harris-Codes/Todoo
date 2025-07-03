@@ -10,11 +10,13 @@ class QuizAttempt extends Model
     use HasFactory;
     protected $fillable = ['quiz_id', 'user_id', 'score'];
 
-    public function quiz() {
+    public function quiz()
+    {
         return $this->belongsTo(Quiz::class);
     }
-    
-    public function user() {
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

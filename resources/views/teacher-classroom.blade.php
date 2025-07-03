@@ -464,7 +464,4 @@
 <script src="{{ asset('js/teacher-classroom.js') }}"></script>
 
 </body>
-
-
-
 </html>

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Page</title>
     <link rel="stylesheet" href="{{ asset('css/register.css') }}">
 </head>
+
 <body>
     <div class="container">
         <!-- Left Section -->
@@ -14,7 +16,7 @@
 
             <!-- Laravel form for registration -->
             <form action="{{ url('/register') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+                @csrf
 
                 <!-- Show validation errors, if any -->
                 @if ($errors->any())
@@ -55,7 +57,8 @@
 
                 <!-- Confirm Password -->
                 <label for="password_confirmation">Confirm Password</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" required>
+                <input type="password" id="password_confirmation" name="password_confirmation"
+                    placeholder="Confirm Password" required>
 
                 <!-- Submit Button -->
                 <input type="submit" value="Sign Up">
@@ -73,4 +76,5 @@
         </div>
     </div>
 </body>
+
 </html>

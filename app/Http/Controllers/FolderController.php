@@ -26,7 +26,7 @@ class FolderController extends Controller
         return response()->json(['success' => true, 'folder' => $folder]);
     }
 
-    
+
 
     public function list($classroomId)
     {
@@ -37,19 +37,19 @@ class FolderController extends Controller
     public function getFiles($classroomId, $folderId)
     {
         $files = File::where('classroom_id', $classroomId)
-                    ->where('folder_id', $folderId)
-                    ->with('uploader:id,name') // if you want modified_by
-                    ->get()
-                    ->map(function ($file) {
-                        return [
-                            'file_name' => $file->file_name,
-                            'file_path' => $file->file_path,
-                            'modified_at' => $file->updated_at->format('M d, Y'),
-                            'modified_by' => $file->uploader->name ?? 'Unknown',
-                            'id' => $file->id
-                        ];
-                    });
-    
+            ->where('folder_id', $folderId)
+            ->with('uploader:id,name') // if you want modified_by
+            ->get()
+            ->map(function ($file) {
+                return [
+                    'file_name' => $file->file_name,
+                    'file_path' => $file->file_path,
+                    'modified_at' => $file->updated_at->format('M d, Y'),
+                    'modified_by' => $file->uploader->name ?? 'Unknown',
+                    'id' => $file->id
+                ];
+            });
+
         return response()->json($files);
     }
 
@@ -70,8 +70,4 @@ class FolderController extends Controller
 
         return response()->json(['success' => true]);
     }
-
-    
-
-
 }

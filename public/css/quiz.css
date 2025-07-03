@@ -1,53 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 
 :root {
-  /* ===== Colors ===== */
-  --body-color: #f1f4fa;
-  --sidebar-color: #FFF;
-  --primary-color: #4a90e2;
-  --primary-color-light: #F6F5FF;
-  --toggle-color: #DDD;
-  --text-color: #707070;
-  --todoo-color:#ffc21b;
-  --submitted: rgb(10, 190, 10);
-  --graded: rgb(7, 121, 214);
-  --delete:  #ff4d4d;
+    /* ===== Colors ===== */
+    --body-color: #f1f4fa;
+    --sidebar-color: #fff;
+    --primary-color: #4a90e2;
+    --primary-color-light: #f6f5ff;
+    --toggle-color: #ddd;
+    --text-color: #707070;
+    --todoo-color: #ffc21b;
+    --submitted: rgb(10, 190, 10);
+    --graded: rgb(7, 121, 214);
+    --delete: #ff4d4d;
 
-  /* ====== Transition ====== */
-  --tran-03: all 0.2s ease;
-  --tran-03: all 0.3s ease;
-  --tran-04: all 0.3s ease;
-  --tran-05: all 0.3s ease;
+    /* ====== Transition ====== */
+    --tran-03: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.3s ease;
+    --tran-05: all 0.3s ease;
 }
 
-body, html {
+body,
+html {
     height: 100%;
     overflow: hidden; /* prevent outer scrollbars */
 }
 
-
-.home{
+.home {
     height: 100vh; /* Ensures the full viewport height */
     display: flex;
     flex-direction: column;
-    color:white;
+    color: white;
 }
 
-
-
-.creation-header{
+.creation-header {
     background-color: var(--todoo-color);
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
-    color:white;
+    color: white;
     font-size: 40px;
 }
 
@@ -63,15 +61,13 @@ body, html {
     font-weight: bold;
 }
 
-
-.creation-main{
+.creation-main {
     flex-grow: 1; /* Allows it to take remaining space */
     display: flex;
     flex-direction: column;
     background-color: var(--primary-color);
-    overflow-y: auto; 
-    height: calc(100vh - 160px); 
-    
+    overflow-y: auto;
+    height: calc(100vh - 160px);
 }
 
 .creation-mainheader {
@@ -83,24 +79,21 @@ body, html {
     padding: 0 20px; /* Adds space inside the header */
 }
 
-
-.question-container{
-    
-    display:flex;
+.question-container {
+    display: flex;
     justify-content: center;
     align-items: center;
-    width:80%;
-    height:300px;
+    width: 80%;
+    height: 300px;
     margin: 40px auto;
     background-color: white;
-    border:1px solid var(--primary-color);
+    border: 1px solid var(--primary-color);
     border-radius: 20px;
-    color:black;
+    color: black;
 }
 
-.question{
+.question {
     font-size: 30px;
-
 }
 
 .question-meta {
@@ -124,8 +117,6 @@ body, html {
     color: var(--todoo-color); /* or use 'yellow' or '#ffc21b' directly */
     font-size: 20px;
 }
-
-
 
 .timer-section {
     width: 100%;
@@ -155,12 +146,7 @@ body, html {
     transition: width 1s linear;
 }
 
-
-
-
-
-.answer-container{
-    
+.answer-container {
     flex-grow: 1;
     display: flex;
     padding: 10px;
@@ -169,7 +155,6 @@ body, html {
     gap: 50px;
     align-items: center;
 }
-
 
 /* Answer Buttons - Styled like .answers */
 .answer-btn {
@@ -192,10 +177,18 @@ body, html {
 }
 
 /* Colors for each answer (Based on previous .answers styling) */
-.answer-btn:nth-child(1) { background-color: #50c5fc; }  /* Red */
-.answer-btn:nth-child(2) { background-color: #FFAEC9; }  /* Pink */
-.answer-btn:nth-child(3) { background-color: #D1A3FF; }  /* Purple */
-.answer-btn:nth-child(4) { background-color: #e9f378; }  /* Green */
+.answer-btn:nth-child(1) {
+    background-color: #50c5fc;
+} /* Red */
+.answer-btn:nth-child(2) {
+    background-color: #ffaec9;
+} /* Pink */
+.answer-btn:nth-child(3) {
+    background-color: #d1a3ff;
+} /* Purple */
+.answer-btn:nth-child(4) {
+    background-color: #e9f378;
+} /* Green */
 
 /* Hover effect */
 .answer-btn:hover {
@@ -232,9 +225,6 @@ body, html {
     opacity: 1 !important; /* Keep full visibility */
 }
 
-
-
-
 /* Badge Overlay (Modal Background) */
 .badge-overlay {
     position: fixed;
@@ -243,7 +233,7 @@ body, html {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
-    display: none;  /* Initially hidden */
+    display: none; /* Initially hidden */
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -264,16 +254,15 @@ body, html {
     width: 400px;
 }
 
-.badge-content h2{
-    color:var(--todoo-color);
-    font-size:30px;
+.badge-content h2 {
+    color: var(--todoo-color);
+    font-size: 30px;
 }
 
-.badge-content p{
-    color:var(--primary-color);
-    font-size:15px;
+.badge-content p {
+    color: var(--primary-color);
+    font-size: 15px;
 }
-
 
 /* Badge Image */
 .badge-image {
@@ -298,9 +287,8 @@ body, html {
     background: #d33;
 }
 
-
-#goBackButton{
-    margin-top:10px;
+#goBackButton {
+    margin-top: 10px;
     background-color: var(--graded);
     color: white;
     padding: 10px 20px;
@@ -317,15 +305,13 @@ body, html {
     background-color: #357ac9; /* darker blue on hover */
 }
 
-
 @media screen and (max-height: 700px) {
     .question-container {
-      height: 200px;
+        height: 200px;
     }
-  
+
     .answer-btn {
-      font-size: 30px;
-      padding: 10px;
+        font-size: 30px;
+        padding: 10px;
     }
-  }
-  
+}

@@ -1,268 +1,261 @@
 /* Google Font Import - Poppins */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 
 :root {
-  /* ===== Colors ===== */
-  --body-color: #f1f4fa;
-  --sidebar-color: #FFF;
-  --primary-color: #4a90e2;
-  --primary-color-light: #F6F5FF;
-  --toggle-color: #DDD;
-  --text-color: #707070;
-  --todoo-color:#ffc21b;
-  --submitted: rgb(10, 190, 10);
-  --graded: rgb(7, 121, 214);
-  --delete:  #ff4d4d;
+    /* ===== Colors ===== */
+    --body-color: #f1f4fa;
+    --sidebar-color: #fff;
+    --primary-color: #4a90e2;
+    --primary-color-light: #f6f5ff;
+    --toggle-color: #ddd;
+    --text-color: #707070;
+    --todoo-color: #ffc21b;
+    --submitted: rgb(10, 190, 10);
+    --graded: rgb(7, 121, 214);
+    --delete: #ff4d4d;
 
-  /* ====== Transition ====== */
-  --tran-03: all 0.2s ease;
-  --tran-03: all 0.3s ease;
-  --tran-04: all 0.3s ease;
-  --tran-05: all 0.3s ease;
+    /* ====== Transition ====== */
+    --tran-03: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.3s ease;
+    --tran-05: all 0.3s ease;
 }
-
-
 
 ::selection {
-  background-color: var(--primary-color);
-  color: #fff;
+    background-color: var(--primary-color);
+    color: #fff;
 }
-
-
 
 /* ===== Sidebar ===== */
 .sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 250px;
-  padding: 10px 14px;
-  background: var(--sidebar-color);
-  transition: var(--tran-05);
-  z-index: 100;
-  border: 1px solid #e2dfdf;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    padding: 10px 14px;
+    background: var(--sidebar-color);
+    transition: var(--tran-05);
+    z-index: 100;
+    border: 1px solid #e2dfdf;
 }
 
 .sidebar.close {
-  width: 88px;
+    width: 88px;
 }
 
 /* ===== Reusable code - Here ===== */
 .sidebar li {
-  height: 50px;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
+    height: 50px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
 }
 
 .sidebar header .image,
 .sidebar .icon {
-  min-width: 60px;
-  border-radius: 6px;
+    min-width: 60px;
+    border-radius: 6px;
 }
 
 .sidebar .icon {
-  min-width: 60px;
-  border-radius: 6px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
+    min-width: 60px;
+    border-radius: 6px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
 }
 
 .sidebar .text,
 .sidebar .icon {
-  color: var(--text-color);
-  transition: var(--tran-03);
+    color: var(--text-color);
+    transition: var(--tran-03);
 }
 
 .sidebar .text {
-  font-size: 17px;
-  font-weight: 500;
-  white-space: nowrap;
-  opacity: 1;
+    font-size: 17px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 1;
 }
 
 .sidebar.close .text {
-  opacity: 0;
+    opacity: 0;
 }
 
 /* =========================== */
 
 .sidebar header {
-  position: relative;
+    position: relative;
 }
 
 .sidebar header .image-text {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .sidebar header .logo-text {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 header .image-text .name {
-  margin-top: 2px;
-  font-size: 18px;
-  font-weight: 600;
-  padding-left: 30px;
+    margin-top: 2px;
+    font-size: 18px;
+    font-weight: 600;
+    padding-left: 30px;
 }
 
 header .image-text .profession {
-  font-size: 16px;
-  margin-top: -2px;
-  display: block;
-  padding-left: 30px;
+    font-size: 16px;
+    margin-top: -2px;
+    display: block;
+    padding-left: 30px;
 }
 
 .sidebar header .image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .sidebar header .image img {
-  width: 40px;
-  border-radius: 6px;
+    width: 40px;
+    border-radius: 6px;
 }
 
 .sidebar header .toggle {
-  position: absolute;
-  top: 50%;
-  right: -25px;
-  transform: translateY(-50%) rotate(180deg);
-  height: 25px;
-  width: 25px;
-  background-color: var(--primary-color);
-  color: var(--sidebar-color);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  cursor: pointer;
-  transition: var(--tran-05);
+    position: absolute;
+    top: 50%;
+    right: -25px;
+    transform: translateY(-50%) rotate(180deg);
+    height: 25px;
+    width: 25px;
+    background-color: var(--primary-color);
+    color: var(--sidebar-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    transition: var(--tran-05);
 }
 
 body.dark .sidebar header .toggle {
-  color: var(--text-color);
+    color: var(--text-color);
 }
 
 .sidebar.close .toggle {
-  transform: translateY(-50%) rotate(0deg);
+    transform: translateY(-50%) rotate(0deg);
 }
 
 .sidebar .menu {
-  margin-top: 40px;
+    margin-top: 40px;
 }
 
 .sidebar li.search-box {
-  border-radius: 6px;
-  background-color: var(--primary-color-light);
-  cursor: pointer;
-  transition: var(--tran-05);
+    border-radius: 6px;
+    background-color: var(--primary-color-light);
+    cursor: pointer;
+    transition: var(--tran-05);
 }
 
 .sidebar li.search-box input {
-  height: 100%;
-  width: 100%;
-  outline: none;
-  border: none;
-  background-color: var(--primary-color-light);
-  color: var(--text-color);
-  border-radius: 6px;
-  font-size: 17px;
-  font-weight: 500;
-  transition: var(--tran-05);
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: var(--primary-color-light);
+    color: var(--text-color);
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: 500;
+    transition: var(--tran-05);
 }
 
 .sidebar li a {
-  list-style: none;
-  height: 100%;
-  background-color: transparent;
-  display: flex;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: var(--tran-03);
+    list-style: none;
+    height: 100%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: var(--tran-03);
 }
 
 .sidebar li a:hover {
-  background-color: var(--primary-color);
+    background-color: var(--primary-color);
 }
 
 .sidebar li a:hover .icon,
 .sidebar li a:hover .text {
-  color: var(--sidebar-color);
+    color: var(--sidebar-color);
 }
 
-
 .sidebar .menu-bar {
-  height: calc(100% - 55px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow-y: scroll;
+    height: calc(100% - 55px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: scroll;
 }
 
 .menu-bar::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
-
 
 .menu-bar .bottom-content .toggle-switch {
-  position: absolute;
-  right: 0;
-  height: 100%;
-  min-width: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  cursor: pointer;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
-
 /*ni buat main content stick and responsive */
-.class-page{
-  background-image: url('/images/class_bg7.jpg');
-  background-size: 70%;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: repeat;
-  position: absolute;
-  top: 0;
-  left: 250px; /* Space for the sidebar when open */
-  height:auto;
-  width: calc(100% - 250px); /* Adjust width for the sidebar */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-  overflow-y: visible; /* Allow the section to expand */
+.class-page {
+    background-image: url("/images/class_bg7.jpg");
+    background-size: 70%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: repeat;
+    position: absolute;
+    top: 0;
+    left: 250px; /* Space for the sidebar when open */
+    height: auto;
+    width: calc(100% - 250px); /* Adjust width for the sidebar */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-y: visible; /* Allow the section to expand */
 }
 
 /*ni calculation for responsive dia*/
-.sidebar.close~ .class-page {
-  left: 88px; /* Sidebar collapsed width */
-  height: 100vh;
-  width: calc(100% - 88px); /* Adjust width for the collapsed sidebar */
+.sidebar.close ~ .class-page {
+    left: 88px; /* Sidebar collapsed width */
+    height: 100vh;
+    width: calc(100% - 88px); /* Adjust width for the collapsed sidebar */
 }
 
 .sidebar.close ~ .class-container {
-  margin-left: 88px; /* Adjust margin to match collapsed sidebar */
-  width: calc(100% - 88px);
+    margin-left: 88px; /* Adjust margin to match collapsed sidebar */
+    width: calc(100% - 88px);
 }
 
 /* ================== Main Content =========================*/
@@ -270,22 +263,19 @@ body.dark .sidebar header .toggle {
     background-color: #e91e63;
     color: white;
     height: 300px;
-    display:flex;
+    display: flex;
     padding-top: 140px;
     padding-left: 30px;
     align-items: center;
-    
+
     max-width: 100%; /* Keeps the banner from stretching fully */
-  
+
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-    
 }
 
-.banner-text{
-
+.banner-text {
     font-size: 25px;
-
 }
 
 /* ---------Forum Content-------*/
@@ -295,7 +285,7 @@ body.dark .sidebar header .toggle {
     color: black;
     width: 80%;
     height: 250px;
-    margin-top:50px;
+    margin-top: 50px;
     border-radius: 10px;
     margin-bottom: 50px;
     padding: 15px;
@@ -303,11 +293,9 @@ body.dark .sidebar header .toggle {
 
     display: flex;
     flex-direction: column;
-    
 
     min-height: auto; /* Ensures it can grow */
     height: auto; /* Allows it to scale */
-    
 }
 
 /* User Info */
@@ -334,22 +322,16 @@ body.dark .sidebar header .toggle {
 .post-time {
     font-size: 12px;
     color: var(--text-color);
-    
 }
 
 /* Post Content */
 
-
 .post-content h3 {
-    
     font-size: 18px;
     font-weight: bold;
-
-    
 }
 
 .post-content p {
-    
     font-size: 14px;
     line-height: 1.5;
     margin-top: 20px;
@@ -357,22 +339,22 @@ body.dark .sidebar header .toggle {
 
 /* Reply Section */
 .reply-section {
-  padding-top: 10px;
-  width: 100%;
+    padding-top: 10px;
+    width: 100%;
 }
 
 .reply-section hr {
-  border: none;
-  border-top: 1px solid #ccc;
-  margin-bottom: 10px;
+    border: none;
+    border-top: 1px solid #ccc;
+    margin-bottom: 10px;
 }
 
 .reply-section.no-comments {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .reply-section.with-comments {
-  margin-top: 30px; /* pushes it away from comment list */
+    margin-top: 30px; /* pushes it away from comment list */
 }
 
 .reply-btn {
@@ -387,200 +369,187 @@ body.dark .sidebar header .toggle {
 }
 
 .reply-btn:hover {
-    color:var(--todoo-color);
+    color: var(--todoo-color);
 }
 
 .reply-input-container {
-  display: none; 
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 10px;
-  
-  align-items: center;
-  gap: 10px;
+    display: none;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px;
+
+    align-items: center;
+    gap: 10px;
 }
 
 .reply-input-container .active {
-  display: flex; /* Shows input field when active */
+    display: flex; /* Shows input field when active */
 }
 
 .reply-input-container input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-size: 14px;
-  padding: 5px;
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    padding: 5px;
 }
 
 .reply-input-container button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  color: #007bff;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #007bff;
 }
 
 .reply-input-container button:hover {
-  color: #0056b3;
+    color: #0056b3;
 }
 
 /* ================================Comments List ===============================*/
 
-
 .comment {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-top: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .comment-author {
-  font-weight: bold;
-  font-size: 14px;
-  color: var(--todoo-color); /* optional, for match */
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--todoo-color); /* optional, for match */
 }
-
-
 
 .comment .profile-pic {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
 }
-
 
 .comment .comment-text {
-  background: #f1f3f4;
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-size: 14px;
-  margin-top: 2px;
-  display: inline-block;
-  width: fit-content;
-  max-width: 100%;
-  word-break: break-word;
+    background: #f1f3f4;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-top: 2px;
+    display: inline-block;
+    width: fit-content;
+    max-width: 100%;
+    word-break: break-word;
 }
-
 
 /* Student Name */
 .comment-details {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* ensure shrink-to-content works */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* ensure shrink-to-content works */
 }
 
-
 .comment .student-name {
-  font-weight: bold;
-  font-size: 14px;
-  color: #333;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
 }
 
 .comment .comment-time {
-  font-size: 12px;
-  color: #888;
+    font-size: 12px;
+    color: #888;
 }
 
 /* ==================================Quiz section box============================= */
 .quiz-preview-box {
-  text-decoration: none;
-  color: inherit;
+    text-decoration: none;
+    color: inherit;
 }
 
 .quiz-card {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 10px;
-  background-color: #f7f7f7;
-  transition: box-shadow 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+    transition: box-shadow 0.2s ease;
 }
 
 .quiz-card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .quiz-info strong {
-  font-size: 16px;
-  color: #000;
+    font-size: 16px;
+    color: #000;
 }
 
 .quiz-info span {
-  font-size: 14px;
-  color: #666;
+    font-size: 14px;
+    color: #666;
 }
 
 .edit-quiz-icon {
-  font-size: 18px;
-  color: #888;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  transition: color 0.2s ease;
-  z-index: 2;
+    font-size: 18px;
+    color: #888;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: color 0.2s ease;
+    z-index: 2;
 }
 
 .quiz-card .bulb-icon {
-  font-size: 34px;
-  color: #ffc107;
+    font-size: 34px;
+    color: #ffc107;
 }
 
 .quiz-card .edit-quiz-icon {
-  font-size: 28px;
-  color: #007bff;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  transition: color 0.2s ease;
-  z-index: 2;
+    font-size: 28px;
+    color: #007bff;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: color 0.2s ease;
+    z-index: 2;
 }
 
-
-
-
-.navigation-class{
-  display: flex;
-  justify-content: start; /* Aligns tabs to the left */
-  border-bottom: 2px solid var(--inactive-color);
+.navigation-class {
+    display: flex;
+    justify-content: start; /* Aligns tabs to the left */
+    border-bottom: 2px solid var(--inactive-color);
 }
 
 .tab-link {
-  background: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  color: black;
-  border-bottom: 3px solid transparent;
-  transition: 0.3s ease;
+    background: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: black;
+    border-bottom: 3px solid transparent;
+    transition: 0.3s ease;
 }
 
 .tab-link.active {
-  color: black;
-  border-bottom: 3px solid var(--todoo-color);
+    color: black;
+    border-bottom: 3px solid var(--todoo-color);
 }
 
 #posts.tab-content,
 #files.tab-content,
 #students.tab-content,
 #grading.tab-content {
-  background: transparent !important;
-  box-shadow: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
 }
-
-
-
 
 .tab-content {
     display: none; /* Hide sections by default */
     padding: 20px;
     background: #fff;
-    
 }
 
 /* Show the active tab */
@@ -588,294 +557,261 @@ body.dark .sidebar header .toggle {
     display: block;
 }
 
-
-
 .class-container {
-  display: flex;
-  gap: 50px;
-  justify-content: space-between;
-  width: 100%;
-  margin: 20px auto; /* Centers it */
-  transition: margin-left 0.3s ease-in-out;
+    display: flex;
+    gap: 50px;
+    justify-content: space-between;
+    width: 100%;
+    margin: 20px auto; /* Centers it */
+    transition: margin-left 0.3s ease-in-out;
 }
 
 /* ======================== ASSIGNMENT TABLE ======================== */
 .assignment-section {
-  order: 1; /* Ensures it's below */
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  height: auto; /*automatically adjust the height based on how many task inside */
-  align-self: flex-start; /* Buat dia tak ikut post container */
-  width:100%;
-  
+    order: 1; /* Ensures it's below */
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    height: auto; /*automatically adjust the height based on how many task inside */
+    align-self: flex-start; /* Buat dia tak ikut post container */
+    width: 100%;
 }
 
-.assignment-section h3{
-  padding-top: 10px;
-  text-align: center;
-  padding-bottom: 10px;
-  background-color:  #e91e63;
-  border-radius: 10px;
-  color:white;
-  
-  
+.assignment-section h3 {
+    padding-top: 10px;
+    text-align: center;
+    padding-bottom: 10px;
+    background-color: #e91e63;
+    border-radius: 10px;
+    color: white;
 }
 
 .assignment-table {
-  margin-top: 15px;
-  width: 100%;
-  border-collapse: collapse;
-  
+    margin-top: 15px;
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.assignment-table th, .assignment-table td {
-  padding: 10px;
-  text-align: left;
- 
- 
-  
+.assignment-table th,
+.assignment-table td {
+    padding: 10px;
+    text-align: left;
 }
-
-
 
 .assignment-table tbody {
-  display: table-row-group;
+    display: table-row-group;
 }
 
 .assignment-table th {
-  color:var(--todoo-color)
+    color: var(--todoo-color);
 }
 
-
-
 .post-section {
-  width: 100%;
-  
+    width: 100%;
 }
 
 /* Add Button Styling */
 .add-button {
-  margin-top:15px;
-  margin-bottom:10px;
-  float: left;
-  background-color: rgb(24, 192, 2);
-  color: white;
-  border: none;
-  padding: 8px ;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    float: left;
+    background-color: rgb(24, 192, 2);
+    color: white;
+    border: none;
+    padding: 8px;
 
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s ease;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
 }
 
-.plus{
-  font-size:20px;
+.plus {
+    font-size: 20px;
 }
 
 .add-button:hover {
-  background-color: #e0a800;
+    background-color: #e0a800;
 }
 
 /* Action Button Container */
 .action-buttons {
-
-  display:flex;
-  gap: 10px;
-  margin-top:10px;
-  
-  
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
 }
-
-
 
 /* View Button Styling */
 .view-button {
-  padding: 6px 12px;
-  background-color: var(--todoo-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  text-decoration: none;
-  font-weight: bold;
-  display: inline-flex; 
-  align-items: center;
+    padding: 6px 12px;
+    background-color: var(--todoo-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
 }
 
-
 /* Ensure icons are visible */
-.view-button i, .delete-button i {
-  font-size: 18px;
-  color: white;
+.view-button i,
+.delete-button i {
+    font-size: 18px;
+    color: white;
 }
 
 .view-button:hover {
-  background-color:#d79f03;
+    background-color: #d79f03;
 }
 
 /* Delete Button Styling */
 .delete-button {
-  padding: 6px 12px;
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
+    padding: 6px 12px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
 }
 
 .delete-button:hover {
-  background-color: #e60000;
+    background-color: #e60000;
 }
 
-
-.edit-button{
-  padding: 6px 12px;
-  background-color: #2489fd;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  text-decoration: none;
-  font-weight: bold;
-  display: inline-flex; 
-  align-items: center;
+.edit-button {
+    padding: 6px 12px;
+    background-color: #2489fd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
 }
 
 .edit-button:hover {
-  background-color: #0e64c7;
+    background-color: #0e64c7;
 }
-
 
 /*================================ TAB GRADING ========================*/
 
 .tab-content.active {
-  display: block; /* Show active tab */
+    display: block; /* Show active tab */
 }
 
-
 #grading .student-table {
-  background-color: white;
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 #grading .student-table th,
 #grading .student-table td {
-  padding: 12px 20px;
-  border-bottom: 1px solid #eee;
-  text-align: left;
+    padding: 12px 20px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
 }
 
 #grading .student-table th {
-  background-color: #f9f9f9;
-  color: #e44c7f;
-  font-weight: bold;
+    background-color: #f9f9f9;
+    color: #e44c7f;
+    font-weight: bold;
 }
-
-
 
 #grading #grading-title {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  color: var(--todoo-color);
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    color: var(--todoo-color);
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
-
-
-
-
-
 
 /*============================= TAB FOR STUDENT ===============================================*/
 
 .student-table {
-  width: 100%;
-  border-radius: 10px;
-  padding: 1rem;
-  border-collapse: separate;
+    width: 100%;
+    border-radius: 10px;
+    padding: 1rem;
+    border-collapse: separate;
 }
 
 .student-wrapper {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-top: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 30px;
 }
 
 /* Optional: match spacing for header */
 .student-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .student-wrapper h3 {
-  font-size:54px;
-  color: var(--todoo-color);
-  font-weight: bold;
+    font-size: 54px;
+    color: var(--todoo-color);
+    font-weight: bold;
 }
 
 .add-student-btn {
-  background-color: rgb(24, 192, 2);
-  color: white;
-  font-weight: bold;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+    background-color: rgb(24, 192, 2);
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
 
-  display: inline-block;
-  margin-left: auto;
-  margin-top: 30px;
-  margin-bottom: 30px;
+    display: inline-block;
+    margin-left: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .add-student-wrapper {
-  display: flex;
-  justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
 }
-
-
 
 /* Student Picture */
 .student-pic {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--todoo-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--todoo-color);
 }
 
+.student-table th,
+.student-table td {
+    padding: 12px 50px; /* top-bottom: 12px, left-right: 30px */
 
-
-.student-table th, .student-table td {
-  padding: 12px 50px; /* top-bottom: 12px, left-right: 30px */
-  
-  text-align: left;
-
+    text-align: left;
 }
 
 .student-table th {
-  color:#e44c7f;
-
+    color: #e44c7f;
 }
 /*============================= ===============================================*/
 
@@ -894,17 +830,16 @@ body.dark .sidebar header .toggle {
     border: 2px solid var(--todoo-color);
 }
 
-
-.grade-container{
+.grade-container {
     display: flex;
     justify-content: left;
     gap: 5px;
 }
 
 .grade {
-    width: 40px;  
-    height: 40px; 
-    border-radius: 50%; 
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     border: none;
     font-size: 16px;
     font-weight: bold;
@@ -919,35 +854,33 @@ body.dark .sidebar header .toggle {
     font-size: 16px;
     display: flex;
     align-items: center;
-    height: 40px;  /* Match button height */
-    padding: 10px 15px;  /* Adjust spacing */
+    height: 40px; /* Match button height */
+    padding: 10px 15px; /* Adjust spacing */
 }
 
 .selected-grade {
-  background-color: #4caf50;
-  color: white;
-  font-weight: bold;
+    background-color: #4caf50;
+    color: white;
+    font-weight: bold;
 }
 
 .student-pic {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
 }
-
-
 
 .undo-btn {
     border: none;
-    background-color: red;  /* Yellow */
+    background-color: red; /* Yellow */
     color: white;
     font-size: 14px;
     font-weight: bold;
     padding: 10px 15px;
-    border-radius: 8px;  /* Rounded edges */
+    border-radius: 8px; /* Rounded edges */
     cursor: pointer;
-    height: 40px;  /* Ensures it matches text height */
+    height: 40px; /* Ensures it matches text height */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -956,639 +889,617 @@ body.dark .sidebar header .toggle {
 }
 
 .undo-btn:hover {
-    background-color: #e0a800;  /* Darker yellow on hover */
+    background-color: #e0a800; /* Darker yellow on hover */
 }
 
-.grade-A { background-color: #4CAF50; color: white; }
-.grade-B { background-color: #FF9800; color: white; }
-.grade-C { background-color: #F44336; color: white; }
-.grade-D { background-color: blue; color: white; }
-
-
+.grade-A {
+    background-color: #4caf50;
+    color: white;
+}
+.grade-B {
+    background-color: #ff9800;
+    color: white;
+}
+.grade-C {
+    background-color: #f44336;
+    color: white;
+}
+.grade-D {
+    background-color: blue;
+    color: white;
+}
 
 /* Original Button Styling */
 button {
-  border: none;
-  display: flex;
-  padding: 0.75rem 1.5rem;
-  background-color: var(--todoo-color);
-  color: #ffffff;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  font-weight: 700;
-  text-align: center;
-  cursor: pointer;
-  text-transform: uppercase;
-  vertical-align: middle;
-  align-items: center;
-  border-radius: 0.5rem;
-  user-select: none;
-  gap: 0.75rem;
-  box-shadow:
-    0 4px 6px -1px #488aec31,
-    0 2px 4px -1px #488aec17;
-  transition: all 0.6s ease;
+    border: none;
+    display: flex;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--todoo-color);
+    color: #ffffff;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    vertical-align: middle;
+    align-items: center;
+    border-radius: 0.5rem;
+    user-select: none;
+    gap: 0.75rem;
+    box-shadow: 0 4px 6px -1px #488aec31, 0 2px 4px -1px #488aec17;
+    transition: all 0.6s ease;
 }
 
 button:hover {
-  box-shadow:
-    0 10px 15px -3px #488aec4f,
-    0 4px 6px -2px #488aec17;
+    box-shadow: 0 10px 15px -3px #488aec4f, 0 4px 6px -2px #488aec17;
 }
 
 button:focus,
 button:active {
-  opacity: 0.85;
-  box-shadow: none;
+    opacity: 0.85;
+    box-shadow: none;
 }
 
 button svg {
-  width: 1.25rem;
-  height: 1.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
 }
-
 
 /*============= FILE TAb ===============*/
 /* Table Styling */
 .file-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background-color: white;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
 }
 
 .file-wrapper {
-  background-color: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  margin-top: 20px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin-top: 20px;
 }
 
 .file-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .file-header #folderTitle {
-  font-size: 54px;
-  color:var(--todoo-color);
-  font-weight: bold;
+    font-size: 54px;
+    color: var(--todoo-color);
+    font-weight: bold;
 }
 
 .file-buttons {
-  display: flex;
-  gap: 10px;
+    display: flex;
+    gap: 10px;
 }
 
-
 #folderTitle {
-  font-size: 24px;
-  font-weight: bold;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .file-upload-form {
-  margin: 20px 0;
-  display: flex;
-  gap: 15px;
-  align-items: center;
-  flex-wrap: wrap;
+    margin: 20px 0;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .file-upload-form input[type="file"] {
-  padding: 6px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background-color: #f9f9f9;
-  font-family: inherit;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    font-family: inherit;
 }
 
 .upload-btn {
-  display: flex;
-  align-items: center;
-  padding: 10px 15px;
-  background-color: #ffc21b;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s ease;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
-  gap: 8px;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #ffc21b;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    gap: 8px;
 }
 
 .upload-btn:hover {
-  background-color: #e0a800;
+    background-color: #e0a800;
 }
-
 
 .file-buttons {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap; /* allows wrapping on small screens */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap; /* allows wrapping on small screens */
 }
 
-.download-button{
-  padding: 6px 12px;
-  background-color: var(--graded);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  text-decoration: none;
-  font-weight: bold;
-  display: inline-flex; 
-  align-items: center;
+.download-button {
+    padding: 6px 12px;
+    background-color: var(--graded);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
 }
 
 .add-folder-btn {
-  padding: 10px 15px;
-  background-color: var(--submitted);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  display: flex;
-  align-items: center; /* Centers icon with text */
-  gap: 8px; /* Space between icon and text */
+    padding: 10px 15px;
+    background-color: var(--submitted);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center; /* Centers icon with text */
+    gap: 8px; /* Space between icon and text */
 }
 
-
-.file-table th, .file-table td {
-  padding: 10px;
-  text-align: left;
-  
-  
+.file-table th,
+.file-table td {
+    padding: 10px;
+    text-align: left;
 }
-
 
 .file-table th {
-  background: #f4f4f4;
-  font-weight: bold;
+    background: #f4f4f4;
+    font-weight: bold;
 }
 
-
 .file-table tr {
-  border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 .file-table td {
-  vertical-align: middle;
-  padding: 12px 10px;
+    vertical-align: middle;
+    padding: 12px 10px;
 }
 
 .file-table td a {
-  display: inline; /* Make sure links are not block-stacking */
+    display: inline; /* Make sure links are not block-stacking */
 }
-
-
 
 /* No Files Message */
 .no-files {
-  text-align: center;
-  font-style: italic;
-  color: gray;
+    text-align: center;
+    font-style: italic;
+    color: gray;
 }
-
 
 #backToMainTable {
-  background: white;
-  color: black;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  cursor: pointer;
-  display: none;
+    background: white;
+    color: black;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    display: none;
 }
 #backToMainTable i {
-  margin-right: 5px;
+    margin-right: 5px;
 }
 
 /*============= MODAL FOR ADDING ASSIGNMENT =============================*/
 
 #addAssignmentModal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
-  backdrop-filter: blur(5px);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
-
 
 /* Ensure card content is visible inside modal */
 #addAssignmentModal .card {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  width: 400px;
-  text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    text-align: center;
 }
 
 #addAssignmentModal h2 {
-  color: var(--todoo-color);
-  font-weight: bold;
+    color: var(--todoo-color);
+    font-weight: bold;
 }
 
 /* Close button styling */
 .close-btn {
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
-  color: #e74c3c;
-  float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #e74c3c;
+    float: right;
 }
-
 
 /* Form Inputs */
 form label {
-  display: block;
-  font-weight: bold;
-  margin: 10px 0 5px;
-  text-align: left;
-  color:var(--primary-color);
+    display: block;
+    font-weight: bold;
+    margin: 10px 0 5px;
+    text-align: left;
+    color: var(--primary-color);
 }
 
 form input,
 form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 /* Submit Button */
 .submit-button {
-  background-color: var(--add-color);
-  color: var(--submitted);
-  padding: 10px;
-  width: 100%;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  justify-content: center;
+    background-color: var(--add-color);
+    color: var(--submitted);
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    justify-content: center;
 }
 
 .submit-button:hover {
-  background-color: rgb(2, 121, 2);
+    background-color: rgb(2, 121, 2);
 }
 
 .upload-section {
-  text-align: left;
-  margin-top: 20px;
+    text-align: left;
+    margin-top: 20px;
 }
 
 /* File Upload Container */
 .file-upload-container {
-  display: flex;
-  align-items: center;
-  gap: 10px; /* Space between button and file name */
-  padding-bottom:50px;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between button and file name */
+    padding-bottom: 50px;
 }
 
 /*===============UPLOAD UNTUK FORM CREATE ASSIGNMENT ==============================*/
 .upload-btn {
-  display: flex;
-  align-items: center;
-  padding: 10px 15px;
-  background-color: #ffc21b;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s ease;
- 
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #ffc21b;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
 }
 
 .upload-btn:hover {
-  background-color: #e0a800;
+    background-color: #e0a800;
 }
 
 /* File Name Display */
 .file-name {
-  font-size: 14px;
-  color: #555;
-  white-space: nowrap;
+    font-size: 14px;
+    color: #555;
+    white-space: nowrap;
 }
-
 
 /*===================== CREATE POST ================================*/
 
 .create-post-container {
-  background: white;
-  padding: 15px;
-  
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 80%;
+    background: white;
+    padding: 15px;
+
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
 }
 
 .post-input {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+
+    cursor: pointer;
 }
 
 .post-input input {
-  border: none;
-  outline: none;
-  width: 100%;
-  padding-left: 20px;
+    border: none;
+    outline: none;
+    width: 100%;
+    padding-left: 20px;
 }
 
 .post-expanded {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .post-expanded textarea {
-  width: 100%;
-  height: 100px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  resize: none;
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: none;
 }
 
 .post-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
 }
 
 .quiz-button {
-  background: #f4b400;
-  color: white;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
+    background: #f4b400;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .post-btn-group {
-  display: flex;
-  gap: 10px;
+    display: flex;
+    gap: 10px;
 }
 
 .cancel-button {
-  background: #ccc;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+    background: #ccc;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .post-button {
-  background: #1a73e8;
-  color: white;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+    background: #1a73e8;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-
 .delete-post-button {
-  position: absolute;
-  top:-80px;
-  right:0px;
-  background-color: #ff4d4d;
-  border: none;
-  padding: 4px 8px;
-  font-size: 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: absolute;
+    top: -80px;
+    right: 0px;
+    background-color: #ff4d4d;
+    border: none;
+    padding: 4px 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .delete-post-button i {
-  font-size: 16px;
-  margin: 0; /* ensure icon is centered without gap */
+    font-size: 16px;
+    margin: 0; /* ensure icon is centered without gap */
 }
 
 .delete-post-button:hover {
-  background-color: #e63939;
+    background-color: #e63939;
 }
-
 
 .delete-post-button i {
-  font-size: 15px !important; /* Force override if library sets it larger */
+    font-size: 15px !important; /* Force override if library sets it larger */
 }
-
 
 .post-content .delete-post-button:hover {
-  background-color: #e60000;
+    background-color: #e60000;
 }
-
-
 
 /* =================== STUDENT TAB =======================*/
 
-
-
-
-.delete-student{
-  font-size:15px;
-  background-color: var(--delete)
+.delete-student {
+    font-size: 15px;
+    background-color: var(--delete);
 }
-
-
 
 /* ================== Student Modal ================== */
 /* Hide modal by default */
-#addStudentModal { 
-  display: none; 
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4); 
-  backdrop-filter: blur(5px); 
-  justify-content: center;
-  align-items: center;
-  z-index: 1000; 
+#addStudentModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 /* Modal Content (Card) */
 #addStudentModal .card {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-  width: 350px;
-  text-align: center;
-  position: relative;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    width: 350px;
+    text-align: center;
+    position: relative;
 }
 
 /* Close Button */
 .close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 22px;
-  cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
 }
 
 /* Input Fields */
 #addStudentModal input {
-  width: 100%;
-  padding: 8px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 /* Submit Button */
 .submit-button {
-  width: 100%;
-  background: var(--submitted);
-  color: white;
-  border: none;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
+    width: 100%;
+    background: var(--submitted);
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
 /* ========================== FILE TAB(ADDITIONAL FOR CREATING FOLDER)=================
 /* Modal Styling */
 .modal {
-  display: flex; /* <-- make sure this is not "none" when active */
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(5px);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  transition: all 0.3s ease;
+    display: flex; /* <-- make sure this is not "none" when active */
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: all 0.3s ease;
 }
-
-
 
 /* Modal Content */
 .modal-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-  width: 350px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    width: 350px;
 }
 
-#folderName{
-  margin-top: 10px;
+#folderName {
+    margin-top: 10px;
 }
 
 #createFolderButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;  /* This centers the content horizontally */
-  margin-top: 15px;          /* Optional: spacing from input */
-  align-self: center;        /* Ensures the button itself is centered in the flex container */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* This centers the content horizontally */
+    margin-top: 15px; /* Optional: spacing from input */
+    align-self: center; /* Ensures the button itself is centered in the flex container */
 }
 
-
-.modal .title{
-  font-size:30px;
+.modal .title {
+    font-size: 30px;
 }
 
-.folder-input{
-  margin-top:20px;
+.folder-input {
+    margin-top: 20px;
 }
 
-.folder-options{
-  margin-top:30px;
+.folder-options {
+    margin-top: 30px;
 }
 
 /* Button Container */
 .modal-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;  /* Add spacing between buttons */
-  margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Add spacing between buttons */
+    margin-top: 30px;
 }
 
 /* Close Button */
 .close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 22px;
-  cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
 }
 
 /* Color Selection */
 .color-options {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
 }
 
 .color-choice {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid transparent;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
 }
 
 .color-choice.selected {
-  border: 2px solid black;
+    border: 2px solid black;
 }
-
 
 /* ====================BUTTONS FOR ACTIONS OF FOLDER =========================*/
 /* Ensure the action buttons are in a row */
 td .view-folder-btn,
 td .delete-btn {
-    display: inline-flex;  /* Makes buttons align in a row */
-    align-items: left;   /* Aligns icons and text properly */
-    gap: 5px;              /* Adds spacing between icon and text */
-    padding:10px 20px;  /* Button padding */
+    display: inline-flex; /* Makes buttons align in a row */
+    align-items: left; /* Aligns icons and text properly */
+    gap: 5px; /* Adds spacing between icon and text */
+    padding: 10px 20px; /* Button padding */
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
     font-weight: bold;
-    
-    white-space: nowrap;   /* Prevents text wrapping */
+
+    white-space: nowrap; /* Prevents text wrapping */
 }
 
 /* Button Colors */
@@ -1616,254 +1527,245 @@ td:last-child {
     gap: 10px; /* Space between buttons */
 }
 
-
-
-
 /*===============================CLASS CONTAINER ====================*/
 
 .parent-container {
-  display: flex;
-  flex-direction: column;
-  gap:50px;
-  width:500px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    width: 500px;
 }
 
-.class-code-container{
-  order: -1; /* Moves it to the top */
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  height: auto; /*automatically adjust the height based on how many task inside */
-
-
+.class-code-container {
+    order: -1; /* Moves it to the top */
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    height: auto; /*automatically adjust the height based on how many task inside */
 }
 
-.class-code h1{
-  font-size:30px;
-  color:var(--todoo-color)
+.class-code h1 {
+    font-size: 30px;
+    color: var(--todoo-color);
 }
-.class-code h3{
-  font-size:50px;
-  font-weight: bold;
-  color:var(--primary-color);
+.class-code h3 {
+    font-size: 50px;
+    font-weight: bold;
+    color: var(--primary-color);
 }
-
-
-
-
-
 
 /*=============================== FeedBack  Modal ====================*/
 
-
 .teacher-pic {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  object-fit: cover;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 #feedbackModal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* backdrop */
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* backdrop */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
 }
 
 /* ✅ Shown when active */
 #feedbackModal.active {
-  display: flex;
+    display: flex;
 }
 
 /* 📝 Card style inside modal */
 #feedbackModal .card {
-  background-color: #fff;
-  padding: 30px 40px;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  position: relative;
-  animation: fadeIn 0.3s ease-in-out;
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
 /* ❌ Close button */
 #feedbackModal .close-btn {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 24px;
-  cursor: pointer;
-  color: #888;
-  transition: color 0.2s;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.2s;
 }
 
 #feedbackModal .close-btn:hover {
-  color: #333;
+    color: #333;
 }
 
 /* 🧠 Header */
 #feedbackModal h2 {
-  margin-bottom: 15px;
-  font-size: 22px;
-  color: #333;
+    margin-bottom: 15px;
+    font-size: 22px;
+    color: #333;
 }
 
 /* 📤 Textarea */
 #feedbackModal textarea {
-  width: 100%;
-  min-height: 120px;
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  resize: vertical;
-  margin-bottom: 20px;
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    margin-bottom: 20px;
 }
 
 /* ✅ Submit button */
 #feedbackModal .submit-button {
-  background-color: var(--submitted);
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  font-size: 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+    background-color: var(--submitted);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 #feedbackModal .submit-button:hover {
-  background-color: var(--submitted);
+    background-color: var(--submitted);
 }
 
 /* ✨ Optional fade animation */
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
-
-.feedback-btn{
-  background-color: var(--graded);
-  font-size:15px;
+.feedback-btn {
+    background-color: var(--graded);
+    font-size: 15px;
 }
 
 /* Scrollable container for many feedbacks */
 .feedback-history-scrollable {
-  max-height: 300px;
-  overflow-y: auto;
-  margin-top: 20px;
-  padding-right: 5px;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-right: 5px;
 }
 
 /* Teacher profile image next to feedback */
 .feedback-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 5px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 5px;
 }
 
 .feedback-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .existing-feedback-card {
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  position: relative;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    position: relative;
 }
 
-
 .feedback-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .feedback-actions button {
-  padding: 6px 14px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s ease;
+    padding: 6px 14px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s ease;
 }
 
 .feedback-actions form {
-  margin: 0;
+    margin: 0;
 }
 
 .btn-edit,
 .btn-delete {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s ease;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s ease;
 }
 
 .btn-edit {
-  background-color: var(--graded);
-  color: white;
+    background-color: var(--graded);
+    color: white;
 }
 
 .btn-delete {
-  background-color: var(--delete);
-  color: white;
+    background-color: var(--delete);
+    color: white;
 }
 
 .btn-edit:hover {
-  --graded: rgb(4, 77, 137);
-  
+    --graded: rgb(4, 77, 137);
 }
 
 .btn-delete:hover {
-  --delete:  #be3939;
+    --delete: #be3939;
 }
 
 .btn-save {
-  background-color:var(--submitted);
-  color: white;
+    background-color: var(--submitted);
+    color: white;
 }
 
 .btn-cancel {
-  background-color: var(--todoo-color);
-  color: white;
+    background-color: var(--todoo-color);
+    color: white;
 }
 
 .clickable-folder-row {
-  cursor: pointer;
-  background-color: #f9f9f9;
-  transition: background-color 0.2s ease;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    transition: background-color 0.2s ease;
 }
 
 .clickable-folder-row:hover {
-  background-color: #f0f0ff;
+    background-color: #f0f0ff;
 }
 
-
 .clickable-file-row {
-  cursor: pointer;
-  background-color: #fff;
-  transition: background-color 0.2s ease;
+    cursor: pointer;
+    background-color: #fff;
+    transition: background-color 0.2s ease;
 }
 
 .clickable-file-row:hover {
-  background-color: #f0f0ff;
+    background-color: #f0f0ff;
 }

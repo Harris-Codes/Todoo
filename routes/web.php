@@ -93,8 +93,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/teacher', [ClassroomController::class, 'index'])->name('teacher.dashboard');
     Route::post('/classroom/create', [ClassroomController::class, 'store'])->name('classroom.store');
     Route::delete('/classroom/{id}', [ClassroomController::class, 'destroy'])->name('classroom.destroy');
-    
-    
 });
 
 Route::get('/classroom/{id}', [ClassroomController::class, 'show'])->name('classroom.show');
@@ -121,6 +119,8 @@ Route::post('/classrooms/{classroom}/students', [TeacherClassroomController::cla
 Route::delete('/classrooms/{classroom}/students/{student}', [TeacherClassroomController::class, 'removeStudent'])->name('classroom.removeStudent');
 //Submissions
 Route::get('/assignments/{id}/submissions', [SubmissionController::class, 'getByAssignment']);
+Route::delete('/submission/{id}', [SubmissionController::class, 'destroy'])->name('submission.destroy');
+
 //Grade
 Route::post('/submissions/{id}/grade', [SubmissionController::class, 'grade'])->name('submissions.grade');
 //Reset Grade
@@ -137,8 +137,6 @@ Route::prefix('classroom/{classroom}')->middleware('auth')->group(function () {
     Route::delete('/files/{file}', [FileController::class, 'destroy'])->name('files.delete');
     Route::post('/folders/{folder}/files', [FileController::class, 'uploadToFolder'])->name('files.upload.folder');
     Route::delete('/folders/{folder}', [FolderController::class, 'destroy'])->name('folders.destroy');
-
-
 });
 Route::post('/classroom/{classroom}/folders/{folder}/files', [FileController::class, 'uploadToFolder'])
     ->middleware('auth')
@@ -186,8 +184,8 @@ Route::post('/quiz/{quiz}/submit', [QuizController::class, 'submitAttempt'])->na
 Route::get('/quiz/{id}/leaderboard', [App\Http\Controllers\QuizController::class, 'leaderboard']);
 //Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])
-     ->middleware('auth')
-     ->name('student.dashboard');
+    ->middleware('auth')
+    ->name('student.dashboard');
 
 //Dashboard-Profile edit
 Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
@@ -197,7 +195,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/teacher/feedback/{studentId}', [FeedbackController::class, 'index'])->name('feedback.index');
     Route::put('/feedback/{id}', [FeedbackController::class, 'update'])->name('feedback.update');
     Route::delete('/feedback/{id}', [FeedbackController::class, 'destroy'])->name('feedback.destroy');
-    
 });
 
 Route::middleware('auth')->group(function () {
@@ -214,5 +211,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/teacher/badges/create/{classroom_id}', [BadgeController::class, 'create'])->name('badges.create');
     Route::post('/teacher/badges/store', [BadgeController::class, 'store'])->name('badges.store');
     Route::delete('/badges/{badge}', [BadgeController::class, 'destroy'])->name('badges.destroy');
-
 });

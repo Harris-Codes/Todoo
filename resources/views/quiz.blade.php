@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Quiz Page</title>
-   
+
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/quiz.css') }}">
     <!-- Boxicons CSS -->
@@ -16,8 +17,8 @@
 
 <body>
 
-    <section class ="home">
-        
+    <section class="home">
+
         <header class="creation-header">
             <h1>{{ $quiz->title }}</h1>
         </header>
@@ -26,7 +27,7 @@
             ⚠️ <strong>Do not refresh or close this page!</strong> Your quiz will be submitted immediately.
         </div>
 
-        <main class = "creation-main">  
+        <main class="creation-main">
         </main>
 
         <!-- Submission Success Modal -->
@@ -42,14 +43,13 @@
     </section>
 
 
-<div id="quizData" 
-     data-quiz='@json($quizData)' 
-     data-quiz-id="{{ $quiz->id }}">
-</div>
+    <div id="quizData" data-quiz='@json($quizData)' data-quiz-id="{{ $quiz->id }}">
+    </div>
 
-<div id="classroomMeta" data-classroom-id="{{ $classroom->id }}"></div>
-<audio id="sound-correct" src="{{ asset('sounds/right_answer.mp3') }}"></audio>
-<audio id="sound-wrong" src="{{ asset('sounds/wrong_answer.mp3') }}"></audio>
+    <div id="classroomMeta" data-classroom-id="{{ $classroom->id }}"></div>
+    <audio id="sound-correct" src="{{ asset('sounds/right_answer.mp3') }}"></audio>
+    <audio id="sound-wrong" src="{{ asset('sounds/wrong_answer.mp3') }}"></audio>
 </body>
 <script src="{{ asset('js/quiz.js') }}"></script>
+
 </html>

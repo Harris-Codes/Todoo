@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
+
 <body>
     <div class="container">
         <!-- Left Section -->
@@ -38,11 +40,11 @@
             </form>
 
         </div>
-        
-     
+
+
     </div>
 
-       <!-- Right Section -->
+    <!-- Right Section -->
     <div class="Containerforgraphic">
 
         <div class="right-section">
@@ -50,6 +52,7 @@
         </div>
 
     </div>
-       
+
 </body>
+
 </html>

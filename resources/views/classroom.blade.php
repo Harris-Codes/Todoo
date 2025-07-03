@@ -58,7 +58,8 @@
                     data-desc="{{ $assignment->description }}"
                     data-grade="{{ $submission?->grade }}"
                     data-attachment="{{ $assignment->file_path ?? '' }}"
-                    data-due="{{ $assignment->due_date }}">
+                    data-due="{{ $assignment->due_date }}"
+                    data-attachment="{{ $assignment->attachment_path ?? '' }}">
 
                       <td>{{ $assignment->title }}</td>
                       <td>{{ \Carbon\Carbon::parse($assignment->due_date)->format('M d, Y') }}</td>

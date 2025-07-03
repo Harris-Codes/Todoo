@@ -27,7 +27,7 @@ class AssignmentController
         Assignment::create([
             'classroom_id' => $validated['classroom_id'],
             'title' => $validated['title'],
-            'user_id'=> Auth::id(), //Add the currently logged in user (Teacher)
+            'user_id' => Auth::id(), //Add the currently logged in user (Teacher)
             'description' => $validated['description'],
             'due_date' => $validated['due_date'],
             'file_path' => $path,
@@ -48,7 +48,7 @@ class AssignmentController
 
         $data = $request->only('title', 'due_date', 'description');
 
-       
+
         if ($request->hasFile('file')) {
             $filePath = $request->file('file')->store('assignments', 'public');
             $data['file_path'] = $filePath;
@@ -61,15 +61,13 @@ class AssignmentController
 
 
 
-    
-    
+
+
     public function destroy(Assignment $assignment)
     {
-      
+
         $assignment->delete();
 
         return redirect()->back()->with('success', 'Assignment deleted.');
     }
-
-
 }

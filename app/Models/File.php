@@ -13,8 +13,8 @@ class File extends Model
         'file_name',
         'file_path'
     ];
-    
-    
+
+
     public function classroom()
     {
         return $this->belongsTo(Classroom::class);
@@ -29,5 +29,4 @@ class File extends Model
     {
         return $this->belongsTo(Folder::class);
     }
-
 }

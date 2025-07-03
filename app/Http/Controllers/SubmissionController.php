@@ -24,10 +24,10 @@ class SubmissionController extends Controller
 
         // Check for existing submission
         $existing = Submission::where('assignment_id', $assignmentId)
-                    ->where('student_id', $studentId)
-                    ->first();
+            ->where('student_id', $studentId)
+            ->first();
 
-        
+
         // ❌ Prevent resubmission if already graded
         if ($existing && $existing->grade !== null) {
             return back()->with('error', 'You cannot resubmit after your assignment has been graded.');
@@ -65,6 +65,27 @@ class SubmissionController extends Controller
         return back()->with('success', 'Assignment submitted successfully!');
     }
 
+    public function destroy($id)
+    {
+        $submission = Submission::findOrFail($id);
+
+        // It Check if submission is graded, prevent deletion
+        if ($submission->grade !== null) {
+            return back()->with('error', 'Cannot delete submission after grading.');
+        }
+
+        // Delete file from storage
+        if ($submission->file_path && Storage::disk('public')->exists($submission->file_path)) {
+            Storage::disk('public')->delete($submission->file_path);
+        }
+
+        // Delete submission record
+        $submission->delete();
+
+        return back()->with('success', 'Submission withdrawn successfully.');
+    }
+
+
     public function getByAssignment($id)
     {
         $submissions = Submission::where('assignment_id', $id)
@@ -75,10 +96,10 @@ class SubmissionController extends Controller
                     'id' => $submission->id,
                     'student_name' => $submission->student->name,
                     'file_path' => $submission->file_path,
-                    'original_filename' => basename($submission->file_path),
-                    'grade' => $submission->grade, 
+                    'original_filename' => $submission->original_filename,
+                    'grade' => $submission->grade,
                     'profile_picture' => $submission->student->profile_picture,
-                    ];
+                ];
             });
 
         return response()->json($submissions);
