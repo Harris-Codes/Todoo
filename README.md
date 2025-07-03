@@ -31,19 +31,19 @@ Gamified classroom system with quizzes, assignments, and badges built with Larav
 ![Login Page](images/screenshots/loginpage.png)
 
 ### 🖼️ Homepage
-![Homepage](images/screenshotshomepage.png)
+![Homepage](images/screenshots/homepage.png)
 
 ### 🖼️ Classroom View
-![Classroom View](images/screenshotsclassroom.png)
+![Classroom View](images/screenshots/classroom.png)
 
 ### 🖼️ Class Overview
-![Class Overview](images/screenshotsclassoverview.png)
+![Class Overview](images/screenshots/classoverview.png)
 
 ### 🖼️ Quiz Attempt
-![Quiz Attempt](images/screenshotsquiz.png)
+![Quiz Attempt](images/screenshots/quiz.png)
 
 ### 🖼️ Badge Earned Popup
-![Badge Earned](images/screenshotsBadgeEarned.png)
+![Badge Earned](images/screenshots/BadgeEarned.png)
 
 
 ---
